@@ -35,7 +35,10 @@ public sealed class ScannerWorkerClient
 
         try
         {
-            var timeout = TimeSpan.FromSeconds(Math.Clamp(request.TimeoutSeconds + 30, 60, 1800));
+            var timeoutSeconds = Math.Max(
+                request.TimeoutSeconds + 300,
+                Math.Max(request.TimeoutSeconds * 4, 180));
+            var timeout = TimeSpan.FromSeconds(Math.Clamp(timeoutSeconds, 180, 3600));
             return await ExecuteWorkerAsync(new[] { "scan", requestPath }, timeout, cancellationToken);
         }
         finally

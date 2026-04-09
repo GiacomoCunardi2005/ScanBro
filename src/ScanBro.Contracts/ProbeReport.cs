@@ -168,6 +168,35 @@ public sealed class TwainSnapshot
     public List<TwainSourceSnapshot> Sources { get; set; } = new List<TwainSourceSnapshot>();
 
     public List<TwainCapabilitySnapshot> CanonCapabilities { get; set; } = new List<TwainCapabilitySnapshot>();
+
+    public TwainNegotiationSnapshot CanonNegotiation { get; set; } = new TwainNegotiationSnapshot();
+}
+
+public sealed class TwainNegotiationSnapshot
+{
+    public int DefaultResolutionDpi { get; set; }
+
+    public int NativeResolutionDpi { get; set; }
+
+    public int MaxResolutionDpi { get; set; }
+
+    public string DefaultFrame { get; set; } = string.Empty;
+
+    public string CurrentLightPath { get; set; } = string.Empty;
+
+    public List<int> RecommendedDpiValues { get; set; } = new List<int>();
+
+    public List<string> TransferModes { get; set; } = new List<string>();
+
+    public List<string> FileFormats { get; set; } = new List<string>();
+
+    public List<string> PixelTypes { get; set; } = new List<string>();
+
+    public List<int> BitDepths { get; set; } = new List<int>();
+
+    public List<string> SupportedSizes { get; set; } = new List<string>();
+
+    public List<string> LightPaths { get; set; } = new List<string>();
 }
 
 public sealed class DiagnosticMessage

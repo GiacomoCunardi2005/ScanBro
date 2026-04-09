@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ScanBro.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+579a28e68bdd0b6ec5876bb648fd51e4d00d50b8")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ed62751c8fc69bb3e634d3859d443dd36cad429e")]
 [assembly: System.Reflection.AssemblyProductAttribute("ScanBro.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ScanBro.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

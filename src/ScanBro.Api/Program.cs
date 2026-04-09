@@ -87,10 +87,10 @@ app.MapPost("/api/scan", async (ScanRequest request, ScannerWorkerClient workerC
 
     if (string.IsNullOrWhiteSpace(invocation.StandardOutput))
     {
-        return Results.Problem(
-            title: "Worker scanner senza output",
-            detail: string.IsNullOrWhiteSpace(invocation.StandardError) ? "Nessun output disponibile." : invocation.StandardError,
-            statusCode: StatusCodes.Status500InternalServerError);
+        var syntheticResult = BuildSyntheticFailureResult(
+            request,
+            string.IsNullOrWhiteSpace(invocation.StandardError) ? "Nessun output disponibile." : invocation.StandardError);
+        return Results.Json(syntheticResult, jsonOptions, statusCode: StatusCodes.Status500InternalServerError);
     }
 
     ScanResult? scanResult;
@@ -122,3 +122,40 @@ app.MapPost("/api/scan", async (ScanRequest request, ScannerWorkerClient workerC
 });
 
 app.Run();
+
+static ScanResult BuildSyntheticFailureResult(ScanRequest request, string errorMessage)
+{
+    var normalizedMessage = errorMessage.Trim();
+    var result = new ScanResult
+    {
+        Success = false,
+        DryRun = request.DryRun,
+        SourceName = request.SourceName,
+        RequestedOutputPath = request.OutputPath,
+        RequestedTransferMode = request.TransferMode,
+        RequestedOutputFileFormat = request.OutputFileFormat,
+        ResolutionDpi = request.ResolutionDpi,
+        BitDepth = request.BitDepth,
+        ColorMode = request.ColorMode,
+        ErrorMessage = normalizedMessage,
+        FinishedAtUtc = DateTimeOffset.UtcNow,
+    };
+
+    result.Messages.Add(new DiagnosticMessage
+    {
+        Severity = "error",
+        Message = normalizedMessage,
+    });
+
+    if (normalizedMessage.Contains("Timeout", StringComparison.OrdinalIgnoreCase))
+    {
+        result.Messages.Add(new DiagnosticMessage
+        {
+            Severity = "warning",
+            Message =
+                "La scansione e` stata interrotta dal watchdog del backend. Con 2400+ dpi sul frame intero del piano scanner il driver Canon puo` impiegare diversi minuti.",
+        });
+    }
+
+    return result;
+}

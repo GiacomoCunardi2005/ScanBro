@@ -342,6 +342,7 @@ internal sealed class ScannerProbeCollector
                 }
 
                 snapshot.CanonCapabilities = ReadCapabilities(canonSource);
+                snapshot.CanonNegotiation = BuildNegotiationSnapshot(snapshot.CanonCapabilities);
                 canonSource.Close();
             }
             finally
@@ -406,6 +407,45 @@ internal sealed class ScannerProbeCollector
         return capabilities
             .OrderBy(capability => capability.Id, StringComparer.OrdinalIgnoreCase)
             .ToList();
+    }
+
+    private static TwainNegotiationSnapshot BuildNegotiationSnapshot(
+        IReadOnlyCollection<TwainCapabilitySnapshot> capabilities)
+    {
+        var snapshot = new TwainNegotiationSnapshot
+        {
+            DefaultResolutionDpi = ParseFirstInt(GetCapabilityField(capabilities, "ICapXResolution", capability => capability.Default)),
+            NativeResolutionDpi = ParseFirstInt(GetCapabilityField(capabilities, "ICapXNativeResolution", capability => capability.Current)),
+            DefaultFrame = GetCapabilityField(capabilities, "ICapFrames", capability => capability.Current),
+            CurrentLightPath = ParseNames(
+                    GetCapabilityField(capabilities, "ICapLightPath", capability => capability.Current),
+                    TryMapLightPath)
+                .FirstOrDefault() ?? string.Empty,
+        };
+
+        snapshot.MaxResolutionDpi = ParseMaxInt(GetCapabilityField(capabilities, "ICapXResolution", capability => capability.Values));
+        snapshot.RecommendedDpiValues = BuildRecommendedDpiValues(
+            snapshot.DefaultResolutionDpi,
+            snapshot.NativeResolutionDpi,
+            snapshot.MaxResolutionDpi);
+        snapshot.TransferModes = ParseNames(
+            GetCapabilityField(capabilities, "ICapXferMech", capability => capability.Values),
+            TryMapTransferMode);
+        snapshot.FileFormats = ParseNames(
+            GetCapabilityField(capabilities, "ICapImageFileFormat", capability => capability.Values),
+            TryMapFileFormat);
+        snapshot.PixelTypes = ParseNames(
+            GetCapabilityField(capabilities, "ICapPixelType", capability => capability.Values),
+            TryMapPixelType);
+        snapshot.BitDepths = ParseInts(GetCapabilityField(capabilities, "ICapBitDepth", capability => capability.Values));
+        snapshot.SupportedSizes = ParseNames(
+            GetCapabilityField(capabilities, "ICapSupportedSizes", capability => capability.Values),
+            TryMapSupportedSize);
+        snapshot.LightPaths = ParseNames(
+            GetCapabilityField(capabilities, "ICapLightPath", capability => capability.Values),
+            TryMapLightPath);
+
+        return snapshot;
     }
 
     private static string TryReadCapabilityValue(Func<object> getter)
@@ -523,6 +563,115 @@ internal sealed class ScannerProbeCollector
     private static string SafeToString(object? value)
     {
         return value is null ? string.Empty : value.ToString() ?? string.Empty;
+    }
+
+    private static string GetCapabilityField(
+        IEnumerable<TwainCapabilitySnapshot> capabilities,
+        string capabilityId,
+        Func<TwainCapabilitySnapshot, string> selector)
+    {
+        return capabilities
+            .FirstOrDefault(capability => string.Equals(capability.Id, capabilityId, StringComparison.OrdinalIgnoreCase))
+            is { } capability
+            ? selector(capability)
+            : string.Empty;
+    }
+
+    private static List<int> BuildRecommendedDpiValues(int defaultResolutionDpi, int nativeResolutionDpi, int maxResolutionDpi)
+    {
+        var seed = defaultResolutionDpi > 0 ? defaultResolutionDpi : 75;
+        var upperBound = Math.Max(seed, Math.Max(nativeResolutionDpi, maxResolutionDpi));
+        var values = new SortedSet<int>();
+        var current = seed;
+
+        values.Add(seed);
+        while (current > 75 && current % 2 == 0)
+        {
+            current /= 2;
+            values.Add(current);
+        }
+
+        current = seed;
+        while (current < upperBound && current <= 9600)
+        {
+            current *= 2;
+            values.Add(current);
+        }
+
+        return values
+            .Where(value => value >= 75 && value <= Math.Max(upperBound, 75))
+            .OrderBy(value => value)
+            .ToList();
+    }
+
+    private static List<int> ParseInts(string rawValues)
+    {
+        return rawValues
+            .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+            .Select(segment => segment.Trim())
+            .Select(segment => int.TryParse(segment, NumberStyles.Integer, CultureInfo.InvariantCulture, out var parsed) ? parsed : int.MinValue)
+            .Where(parsed => parsed != int.MinValue)
+            .Distinct()
+            .OrderBy(value => value)
+            .ToList();
+    }
+
+    private static List<string> ParseNames(string rawValues, Func<int, string?> mapper)
+    {
+        return ParseInts(rawValues)
+            .Select(mapper)
+            .Where(value => !string.IsNullOrWhiteSpace(value))
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .ToList()!;
+    }
+
+    private static int ParseFirstInt(string rawValue)
+    {
+        return int.TryParse(rawValue, NumberStyles.Integer, CultureInfo.InvariantCulture, out var parsed)
+            ? parsed
+            : 0;
+    }
+
+    private static int ParseMaxInt(string rawValues)
+    {
+        return ParseInts(rawValues).DefaultIfEmpty().Max();
+    }
+
+    private static string? TryMapTransferMode(int rawValue)
+    {
+        return TryMapEnum<XferMech>(rawValue);
+    }
+
+    private static string? TryMapFileFormat(int rawValue)
+    {
+        return TryMapEnum<FileFormat>(rawValue);
+    }
+
+    private static string? TryMapPixelType(int rawValue)
+    {
+        return TryMapEnum<PixelType>(rawValue);
+    }
+
+    private static string? TryMapSupportedSize(int rawValue)
+    {
+        return TryMapEnum<SupportedSize>(rawValue);
+    }
+
+    private static string? TryMapLightPath(int rawValue)
+    {
+        return TryMapEnum<LightPath>(rawValue);
+    }
+
+    private static string? TryMapEnum<TEnum>(int rawValue)
+        where TEnum : struct, Enum
+    {
+        var enumType = typeof(TEnum);
+        var underlyingType = Enum.GetUnderlyingType(enumType);
+        var convertedValue = Convert.ChangeType(rawValue, underlyingType, CultureInfo.InvariantCulture);
+
+        return Enum.IsDefined(enumType, convertedValue)
+            ? Enum.ToObject(enumType, convertedValue).ToString()
+            : null;
     }
 
     private static string ReadPortableExecutableArchitecture(string path)

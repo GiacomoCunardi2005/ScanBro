@@ -33,5 +33,5 @@ C:\Users\giaco\Desktop\ScanBro\src\ScanBro.Api\obj\Debug\net10.0\ScanBro.Api.pdb
 C:\Users\giaco\Desktop\ScanBro\src\ScanBro.Api\obj\Debug\net10.0\ScanBro.Api.genruntimeconfig.cache
 C:\Users\giaco\Desktop\ScanBro\src\ScanBro.Api\obj\Debug\net10.0\ref\ScanBro.Api.dll
 C:\Users\giaco\Desktop\ScanBro\src\ScanBro.Api\obj\Debug\net10.0\compressed\sn1m6ikwug-{0}-lpugdaq79e-lpugdaq79e.gz
-C:\Users\giaco\Desktop\ScanBro\src\ScanBro.Api\obj\Debug\net10.0\compressed\tf9lrw40wg-{0}-yfy2p74fjo-yfy2p74fjo.gz
-C:\Users\giaco\Desktop\ScanBro\src\ScanBro.Api\obj\Debug\net10.0\compressed\9l0j2k9oi7-{0}-myt41tiyf9-myt41tiyf9.gz
+C:\Users\giaco\Desktop\ScanBro\src\ScanBro.Api\obj\Debug\net10.0\compressed\tf9lrw40wg-{0}-mig1r6sf2c-mig1r6sf2c.gz
+C:\Users\giaco\Desktop\ScanBro\src\ScanBro.Api\obj\Debug\net10.0\compressed\9l0j2k9oi7-{0}-amgcxrz0xi-amgcxrz0xi.gz

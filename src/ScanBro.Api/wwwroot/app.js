@@ -142,6 +142,7 @@ function renderReport(report) {
   const process = report.process ?? {};
   const canon = report.canonDriver ?? {};
   const twain = report.twain ?? {};
+  const negotiation = twain.canonNegotiation ?? {};
 
   elements.probeTimestamp.textContent = `Generato: ${new Date(report.generatedAtUtc).toLocaleString("it-IT")}`;
   elements.overviewGrid.innerHTML = [
@@ -173,6 +174,19 @@ function renderReport(report) {
       ["Open ok", String(Boolean(twain.canonSourceOpenSucceeded))],
       ["Probe error", twain.probeError || ""],
     ]) +
+    renderKeyValueTable([
+      ["Native DPI", formatNumber(negotiation.nativeResolutionDpi)],
+      ["Max DPI", formatNumber(negotiation.maxResolutionDpi)],
+      ["Light path", negotiation.currentLightPath || ""],
+      ["Default frame", negotiation.defaultFrame || ""],
+      ["DPI consigliati", formatDpiList(negotiation.recommendedDpiValues)],
+      ["Transfer", formatStringList(negotiation.transferModes)],
+      ["File format", formatStringList(negotiation.fileFormats)],
+      ["Pixel type", formatStringList(negotiation.pixelTypes)],
+      ["Bit depth", formatNumberList(negotiation.bitDepths)],
+      ["Supported sizes", formatStringList(negotiation.supportedSizes)],
+      ["Light paths", formatStringList(negotiation.lightPaths)],
+    ]) +
     renderSourcesTable(twain.sources || []);
 
   elements.pnpDevices.innerHTML = renderDevices(report.pnpDevices || [], "PnP");
@@ -181,12 +195,11 @@ function renderReport(report) {
   elements.messages.innerHTML = renderMessageList(report.messages || []);
   elements.rawJson.textContent = JSON.stringify(report, null, 2);
 
+  populateSourceOptions(twain.sources || [], twain.canonSourceName);
+  populateDpiOptions(negotiation);
+
   if (!elements.outputPath.value) {
     elements.outputPath.value = suggestOutputPath();
-  }
-
-  if (twain.canonSourceName) {
-    elements.sourceName.value = twain.canonSourceName;
   }
 }
 
@@ -574,6 +587,73 @@ function escapeHtml(value) {
     .replaceAll("'", "&#39;");
 }
 
+function populateSourceOptions(sources, preferredSourceName) {
+  const sourceNames = sources
+    .map(source => source?.name)
+    .filter(Boolean);
+  const values = sourceNames.length ? sourceNames : ["CanoScan 5600F"];
+  const selectedValue = values.includes(elements.sourceName.value)
+    ? elements.sourceName.value
+    : (values.includes(preferredSourceName) ? preferredSourceName : values[0]);
+
+  elements.sourceName.innerHTML = values
+    .map(name => `<option value="${escapeHtml(name)}">${escapeHtml(name)}</option>`)
+    .join("");
+  elements.sourceName.value = selectedValue;
+}
+
+function populateDpiOptions(negotiation) {
+  const values = getRecommendedDpiValues(negotiation);
+  const preferredValue = selectPreferredDpiValue(values, Number(elements.resolutionDpi.value));
+
+  elements.resolutionDpi.innerHTML = values
+    .map(value => `<option value="${value}">${value} dpi</option>`)
+    .join("");
+  elements.resolutionDpi.value = String(preferredValue);
+}
+
+function getRecommendedDpiValues(negotiation) {
+  const probedValues = Array.isArray(negotiation?.recommendedDpiValues)
+    ? negotiation.recommendedDpiValues
+        .map(value => Number(value))
+        .filter(value => Number.isFinite(value) && value > 0)
+    : [];
+
+  if (probedValues.length) {
+    return probedValues;
+  }
+
+  return [75, 150, 300, 600, 1200, 2400, 4800, 9600];
+}
+
+function selectPreferredDpiValue(values, currentValue) {
+  if (values.includes(currentValue)) {
+    return currentValue;
+  }
+
+  if (values.includes(2400)) {
+    return 2400;
+  }
+
+  return values[values.length - 1];
+}
+
+function formatStringList(values) {
+  return Array.isArray(values) && values.length ? values.join(", ") : "";
+}
+
+function formatNumberList(values) {
+  return Array.isArray(values) && values.length ? values.join(", ") : "";
+}
+
+function formatDpiList(values) {
+  return Array.isArray(values) && values.length ? values.map(value => `${value}`).join(", ") : "";
+}
+
+function formatNumber(value) {
+  return Number.isFinite(Number(value)) && Number(value) > 0 ? String(value) : "";
+}
+
 function formatDeliveredOutput(result) {
   if (!result) {
     return "";
@@ -614,6 +694,8 @@ elements.colorMode.addEventListener("change", () => {
   elements.outputPath.value = suggestOutputPath();
 });
 
+populateSourceOptions([], "CanoScan 5600F");
+populateDpiOptions({});
 elements.outputPath.value = suggestOutputPath();
 elements.scanResult.innerHTML = `<p class="muted">Nessuna scansione eseguita.</p>`;
 loadProbe();
