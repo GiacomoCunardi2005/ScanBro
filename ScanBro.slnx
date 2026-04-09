@@ -1,0 +1,7 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/ScanBro.Api/ScanBro.Api.csproj" />
+    <Project Path="src/ScanBro.Contracts/ScanBro.Contracts.csproj" />
+    <Project Path="src/ScanBro.Scanner.Worker/ScanBro.Scanner.Worker.csproj" />
+  </Folder>
+</Solution>

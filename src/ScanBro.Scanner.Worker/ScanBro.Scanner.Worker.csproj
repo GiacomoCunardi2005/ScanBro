@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\ScanBro.Contracts\ScanBro.Contracts.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
+    <PackageReference Include="NTwain" Version="3.7.5" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Web.Extensions" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net48</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <PlatformTarget>x86</PlatformTarget>
+    <Prefer32Bit>true</Prefer32Bit>
+    <UseWindowsForms>true</UseWindowsForms>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+
+</Project>

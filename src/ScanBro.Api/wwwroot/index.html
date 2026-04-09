@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ScanBro Probe</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div class="page-shell">
+    <header class="hero">
+      <p class="eyebrow">ScanBro</p>
+      <h1>Control room del CanoScan 5600F</h1>
+      <p class="lede">
+        Questa pagina interroga il worker locale, mostra cosa Windows, WIA e TWAIN espongono davvero
+        del tuo setup attuale e negozia i parametri che il driver Canon accetta senza UI.
+      </p>
+      <div class="hero-actions">
+        <button id="reload-button" class="primary-button" type="button">Ricarica probe</button>
+        <span id="status-pill" class="status-pill">In attesa</span>
+      </div>
+    </header>
+
+    <main class="content-grid">
+      <section class="panel panel-wide">
+        <div class="panel-header">
+          <h2>Panoramica</h2>
+          <p id="probe-timestamp">Nessun dato ancora caricato.</p>
+        </div>
+        <div id="overview-grid" class="stat-grid"></div>
+      </section>
+
+      <section class="panel panel-wide">
+        <div class="panel-header">
+          <h2>Scansione Driver</h2>
+          <p>Il backend negozia file o memory transfer col driver Canon e mostra anche il formato realmente consegnato dallo scanner.</p>
+        </div>
+        <form id="scan-form" class="scan-form">
+          <label>
+            <span>Sorgente TWAIN</span>
+            <input id="source-name" name="sourceName" type="text" value="CanoScan 5600F">
+          </label>
+          <label>
+            <span>Output file</span>
+            <input id="output-path" name="outputPath" type="text">
+          </label>
+          <label>
+            <span>Formato output</span>
+            <select id="output-file-format" name="outputFileFormat">
+              <option value="Auto">Auto</option>
+              <option value="Tiff">Tiff</option>
+              <option value="Bmp">Bmp</option>
+            </select>
+          </label>
+          <label>
+            <span>Transfer mode</span>
+            <select id="transfer-mode" name="transferMode">
+              <option value="Auto">Auto</option>
+              <option value="Memory">Memory</option>
+              <option value="File">File</option>
+            </select>
+          </label>
+          <label>
+            <span>DPI</span>
+            <input id="resolution-dpi" name="resolutionDpi" type="number" min="25" max="9600" step="1" value="2400">
+          </label>
+          <label>
+            <span>Bit depth</span>
+            <select id="bit-depth" name="bitDepth">
+              <option value="48">48-bit</option>
+              <option value="24">24-bit</option>
+              <option value="16">16-bit</option>
+              <option value="8">8-bit</option>
+              <option value="1">1-bit</option>
+            </select>
+          </label>
+          <label>
+            <span>Color mode</span>
+            <select id="color-mode" name="colorMode">
+              <option value="Color">Color</option>
+              <option value="Grayscale">Grayscale</option>
+              <option value="BlackWhite">BlackWhite</option>
+            </select>
+          </label>
+          <label>
+            <span>Timeout (s)</span>
+            <input id="timeout-seconds" name="timeoutSeconds" type="number" min="15" max="1800" step="1" value="180">
+          </label>
+          <label class="checkbox-row">
+            <input id="hide-indicators" name="hideIndicators" type="checkbox" checked>
+            <span>Nascondi indicatori driver</span>
+          </label>
+          <label class="checkbox-row">
+            <input id="dry-run" name="dryRun" type="checkbox" checked>
+            <span>Dry run: valida capability senza acquisizione</span>
+          </label>
+          <div class="scan-actions">
+            <button id="scan-button" class="primary-button" type="submit">Esegui</button>
+            <button id="output-suggestion-button" class="secondary-button" type="button">Nuovo nome file</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="panel panel-wide">
+        <div class="panel-header">
+          <h2>Risultato Scan</h2>
+          <p id="scan-status-text">Nessuna scansione eseguita.</p>
+        </div>
+        <div id="scan-result"></div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-header">
+          <h2>Canon Driver</h2>
+        </div>
+        <div id="canon-driver"></div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-header">
+          <h2>TWAIN</h2>
+        </div>
+        <div id="twain-summary"></div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-header">
+          <h2>Dispositivi PnP</h2>
+        </div>
+        <div id="pnp-devices"></div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-header">
+          <h2>Dispositivi WIA</h2>
+        </div>
+        <div id="wia-devices"></div>
+      </section>
+
+      <section class="panel panel-wide">
+        <div class="panel-header">
+          <h2>Capability TWAIN Canon</h2>
+          <p>Dump delle capability supportate dalla sorgente 5600F.</p>
+        </div>
+        <div id="twain-capabilities"></div>
+      </section>
+
+      <section class="panel panel-wide">
+        <div class="panel-header">
+          <h2>Messaggi</h2>
+        </div>
+        <div id="messages"></div>
+      </section>
+
+      <section class="panel panel-wide">
+        <div class="panel-header">
+          <h2>JSON grezzo</h2>
+        </div>
+        <details class="raw-json">
+          <summary>Apri report completo</summary>
+          <pre id="raw-json"></pre>
+        </details>
+      </section>
+    </main>
+  </div>
+
+  <script src="/app.js" defer></script>
+</body>
+</html>
