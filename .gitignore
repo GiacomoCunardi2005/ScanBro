@@ -1,0 +1,12 @@
+# .NET build artifacts
+**/[Bb]in/
+**/[Oo]bj/
+
+# Common local user files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# IDE/runtime caches
+.vs/

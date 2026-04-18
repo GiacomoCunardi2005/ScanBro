@@ -6,6 +6,7 @@ using ScanBro.Contracts;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddSingleton<ScannerWorkerClient>();
+builder.Services.AddSingleton<ScannerOperationGate>();
 builder.Services.ConfigureHttpJsonOptions(options =>
 {
     options.SerializerOptions.Converters.Add(new JsonStringEnumConverter());
@@ -29,96 +30,145 @@ app.MapGet("/api/health", () => Results.Json(new
     utc = DateTimeOffset.UtcNow,
 }));
 
-app.MapGet("/api/probe", async (ScannerWorkerClient workerClient, CancellationToken cancellationToken) =>
+app.MapGet("/api/probe", async (
+    ScannerWorkerClient workerClient,
+    ScannerOperationGate operationGate,
+    CancellationToken cancellationToken) =>
 {
-    var result = await workerClient.RunProbeAsync(cancellationToken);
-
-    if (!result.WorkerPathFound)
+    var operationLease = operationGate.TryEnter("probe", out var busySnapshot);
+    if (operationLease is null)
     {
-        return Results.Problem(
-            title: "Worker scanner mancante",
-            detail: result.StandardError,
-            statusCode: StatusCodes.Status503ServiceUnavailable);
+        return BuildScannerBusyResult(busySnapshot);
     }
 
-    if (result.ExitCode != 0)
+    using (operationLease)
     {
-        return Results.Problem(
-            title: "Worker scanner terminato con errore",
-            detail: string.IsNullOrWhiteSpace(result.StandardError) ? result.StandardOutput : result.StandardError,
-            statusCode: StatusCodes.Status500InternalServerError);
-    }
+        var result = await workerClient.RunProbeAsync(cancellationToken);
 
-    ProbeReport? report;
-    try
-    {
-        report = JsonSerializer.Deserialize<ProbeReport>(result.StandardOutput, jsonOptions);
-    }
-    catch (JsonException jsonException)
-    {
-        return Results.Problem(
-            title: "JSON del worker non valido",
-            detail: jsonException.Message,
-            statusCode: StatusCodes.Status500InternalServerError);
-    }
+        if (!result.WorkerPathFound)
+        {
+            return Results.Problem(
+                title: "Worker scanner mancante",
+                detail: result.StandardError,
+                statusCode: StatusCodes.Status503ServiceUnavailable);
+        }
 
-    if (report is null)
-    {
-        return Results.Problem(
-            title: "Probe vuoto",
-            detail: "Il worker non ha restituito un report utilizzabile.",
-            statusCode: StatusCodes.Status500InternalServerError);
-    }
+        if (result.ExitCode != 0)
+        {
+            if (result.TimedOut)
+            {
+                return Results.Problem(
+                    title: "Probe timeout",
+                    detail: result.StandardError,
+                    statusCode: StatusCodes.Status504GatewayTimeout);
+            }
 
-    return Results.Json(report, jsonOptions);
+            return Results.Problem(
+                title: "Worker scanner terminato con errore",
+                detail: string.IsNullOrWhiteSpace(result.StandardError) ? result.StandardOutput : result.StandardError,
+                statusCode: StatusCodes.Status500InternalServerError);
+        }
+
+        ProbeReport? report;
+        try
+        {
+            report = JsonSerializer.Deserialize<ProbeReport>(result.StandardOutput, jsonOptions);
+        }
+        catch (JsonException jsonException)
+        {
+            return Results.Problem(
+                title: "JSON del worker non valido",
+                detail: jsonException.Message,
+                statusCode: StatusCodes.Status500InternalServerError);
+        }
+
+        if (report is null)
+        {
+            return Results.Problem(
+                title: "Probe vuoto",
+                detail: "Il worker non ha restituito un report utilizzabile.",
+                statusCode: StatusCodes.Status500InternalServerError);
+        }
+
+        return Results.Json(report, jsonOptions);
+    }
 });
 
-app.MapPost("/api/scan", async (ScanRequest request, ScannerWorkerClient workerClient, CancellationToken cancellationToken) =>
+app.MapPost("/api/scan", async (
+    ScanRequest request,
+    ScannerWorkerClient workerClient,
+    ScannerOperationGate operationGate,
+    CancellationToken cancellationToken) =>
 {
-    var invocation = await workerClient.RunScanAsync(request, cancellationToken);
-
-    if (!invocation.WorkerPathFound)
+    var operationLease = operationGate.TryEnter("scan", out var busySnapshot);
+    if (operationLease is null)
     {
-        return Results.Problem(
-            title: "Worker scanner mancante",
-            detail: invocation.StandardError,
-            statusCode: StatusCodes.Status503ServiceUnavailable);
+        return BuildScannerBusyResult(busySnapshot);
     }
 
-    if (string.IsNullOrWhiteSpace(invocation.StandardOutput))
+    using (operationLease)
     {
-        var syntheticResult = BuildSyntheticFailureResult(
-            request,
-            string.IsNullOrWhiteSpace(invocation.StandardError) ? "Nessun output disponibile." : invocation.StandardError);
-        return Results.Json(syntheticResult, jsonOptions, statusCode: StatusCodes.Status500InternalServerError);
-    }
+        var invocation = await workerClient.RunScanAsync(request, cancellationToken);
 
-    ScanResult? scanResult;
-    try
-    {
-        scanResult = JsonSerializer.Deserialize<ScanResult>(invocation.StandardOutput, jsonOptions);
-    }
-    catch (JsonException jsonException)
-    {
-        return Results.Problem(
-            title: "JSON scan non valido",
-            detail: jsonException.Message,
-            statusCode: StatusCodes.Status500InternalServerError);
-    }
+        if (!invocation.WorkerPathFound)
+        {
+            return Results.Problem(
+                title: "Worker scanner mancante",
+                detail: invocation.StandardError,
+                statusCode: StatusCodes.Status503ServiceUnavailable);
+        }
 
-    if (scanResult is null)
-    {
-        return Results.Problem(
-            title: "Risultato scansione vuoto",
-            detail: "Il worker non ha restituito un risultato utilizzabile.",
-            statusCode: StatusCodes.Status500InternalServerError);
+        if (invocation.TimedOut)
+        {
+            var timeoutMessage = string.IsNullOrWhiteSpace(invocation.StandardError)
+                ? $"Timeout del worker scanner dopo {invocation.TimeoutSeconds:0} secondi."
+                : invocation.StandardError;
+            var syntheticResult = BuildSyntheticFailureResult(request, timeoutMessage);
+            syntheticResult.Messages.Add(new DiagnosticMessage
+            {
+                Severity = "info",
+                Message = request.DryRun
+                    ? "Il dry run usa un timeout backend ridotto per evitare attese lunghe."
+                    : "Per scansioni molto lente prova ad aumentare timeoutSeconds oppure riduci DPI/area di acquisizione.",
+            });
+            return Results.Json(syntheticResult, jsonOptions, statusCode: StatusCodes.Status504GatewayTimeout);
+        }
+
+        if (string.IsNullOrWhiteSpace(invocation.StandardOutput))
+        {
+            var syntheticResult = BuildSyntheticFailureResult(
+                request,
+                string.IsNullOrWhiteSpace(invocation.StandardError) ? "Nessun output disponibile." : invocation.StandardError);
+            return Results.Json(syntheticResult, jsonOptions, statusCode: StatusCodes.Status500InternalServerError);
+        }
+
+        ScanResult? scanResult;
+        try
+        {
+            scanResult = JsonSerializer.Deserialize<ScanResult>(invocation.StandardOutput, jsonOptions);
+        }
+        catch (JsonException jsonException)
+        {
+            return Results.Problem(
+                title: "JSON scan non valido",
+                detail: jsonException.Message,
+                statusCode: StatusCodes.Status500InternalServerError);
+        }
+
+        if (scanResult is null)
+        {
+            return Results.Problem(
+                title: "Risultato scansione vuoto",
+                detail: "Il worker non ha restituito un risultato utilizzabile.",
+                statusCode: StatusCodes.Status500InternalServerError);
+        }
+
+        var statusCode = scanResult.Success
+            ? StatusCodes.Status200OK
+            : StatusCodes.Status500InternalServerError;
+
+        return Results.Json(scanResult, jsonOptions, statusCode: statusCode);
     }
-
-    var statusCode = scanResult.Success
-        ? StatusCodes.Status200OK
-        : StatusCodes.Status500InternalServerError;
-
-    return Results.Json(scanResult, jsonOptions, statusCode: statusCode);
 });
 
 app.Run();
@@ -158,4 +208,21 @@ static ScanResult BuildSyntheticFailureResult(ScanRequest request, string errorM
     }
 
     return result;
+}
+
+static IResult BuildScannerBusyResult(ScannerOperationSnapshot snapshot)
+{
+    var operationName = string.IsNullOrWhiteSpace(snapshot.OperationName)
+        ? "scanner-operation"
+        : snapshot.OperationName;
+    var detail = $"E` gia` in corso un'operazione scanner ({operationName}). Attendi il completamento e riprova.";
+
+    return Results.Json(new
+    {
+        title = "Scanner occupato",
+        detail,
+        status = StatusCodes.Status423Locked,
+        currentOperation = operationName,
+        startedAtUtc = snapshot.StartedAtUtc,
+    }, statusCode: StatusCodes.Status423Locked);
 }

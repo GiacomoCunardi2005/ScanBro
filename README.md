@@ -21,7 +21,7 @@ ScanBro uses a **custom USB driver** approach via **libusb-win32** for complete 
 ```
 ┌─────────────────────────────────────────┐
 │   Browser UI (React + TypeScript)      │
-│   http://localhost:5000                 │
+│   http://localhost:5094                 │
 └──────────────┬──────────────────────────┘
                │ WebSocket + REST
 ┌──────────────▼──────────────────────────┐
@@ -202,8 +202,8 @@ npm run build
 cd src/ScanBro.Api
 dotnet run
 
-# Backend starts on http://localhost:5000
-# Open browser to http://localhost:5000
+# Backend starts on http://localhost:5094
+# Open browser to http://localhost:5094
 ```
 
 ## 📁 Project Structure
