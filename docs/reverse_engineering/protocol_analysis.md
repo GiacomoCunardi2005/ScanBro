@@ -78,6 +78,24 @@ Observed counts for scanner address in `02_preview_lowres_scannerwindwos.pcapng`
 
 Interrupt-IN payload on `0x83` was not observed in these three files.
 
+## Confirmed on hardware
+
+Validation scope below comes from Windows x64 active custom-control runs using `tools/device_test`.
+
+### Hardware transport checks
+
+| Label | Validation step | Transfer / endpoint | Request bytes | Response bytes |
+|---|---|---|---|---|
+| confirmed | `device_test` default mode | enumerate/open/descriptors | n/a | device `04A9:1906` opened; descriptor/config/interface parsing succeeded |
+| confirmed | `device_test` default mode | interface claim | n/a | interface claim succeeded |
+| confirmed | `device_test` default mode | endpoint map | n/a | `0x81` bulk IN, `0x02` bulk OUT, `0x83` interrupt IN |
+
+### Hardware probe checks
+
+| Label | Validation step | Transfer / endpoint | Request bytes | Response bytes |
+|---|---|---|---|---|
+| confirmed | `device_test --safe-probe` | vendor control IN / `ep0` | `C0 0C 8E 00 00 00 01 00` | `00` |
+
 ## Hypothesis
 
 - likely: repeated `C0 04 8E 00 22 xx 02 00` reads behave like status/polling reads.

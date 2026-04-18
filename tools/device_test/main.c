@@ -49,7 +49,7 @@ static int parse_hex_u16(const char *text, uint16_t *out_value)
 
 static void print_usage(const char *program_name)
 {
-    printf("Usage: %s [--vid HEX] [--pid HEX] [--safe-probe]\n", program_name);
+    printf("Usage: %s [--vid HEX] [--pid HEX] [--safe-probe] [--sequence-probe]\n", program_name);
     printf("Defaults: --vid 04A9 --pid 1906\n");
 }
 
@@ -172,6 +172,7 @@ int main(int argc, char **argv)
     uint16_t target_vid = SB_CANON_5600F_VID;
     uint16_t target_pid = SB_CANON_5600F_PID;
     int run_safe_probe = 0;
+    int run_sequence_probe = 0;
     int claim_interface;
     int status;
     int arg_index;
@@ -208,7 +209,19 @@ int main(int argc, char **argv)
             continue;
         }
 
+        if (strcmp(argv[arg_index], "--sequence-probe") == 0)
+        {
+            run_sequence_probe = 1;
+            continue;
+        }
+
         print_usage(argv[0]);
+        return 2;
+    }
+
+    if (run_safe_probe && run_sequence_probe)
+    {
+        fprintf(stderr, "Choose only one probe mode at a time: --safe-probe or --sequence-probe.\n");
         return 2;
     }
 
@@ -368,6 +381,83 @@ int main(int argc, char **argv)
         libusb_unref_device(target_device);
         sb_usb_shutdown(context);
         return probe_status >= 0 ? 0 : 1;
+    }
+
+    if (run_sequence_probe)
+    {
+        const uint8_t step1_setup[8] = {0xC0, 0x0C, 0x8E, 0x00, 0x00, 0x00, 0x01, 0x00};
+        const uint8_t step2_setup[8] = {0xC0, 0x04, 0x8E, 0x00, 0x22, 0x06, 0x02, 0x00};
+        const uint8_t step3_setup[8] = {0x40, 0x04, 0x83, 0x00, 0x00, 0x00, 0x02, 0x00};
+        const uint8_t step3_payload[2] = {0x0E, 0x01};
+        uint8_t step1_response[1] = {0};
+        uint8_t step2_response[2] = {0};
+        int step_status;
+
+        printf("\nSequence probe mode enabled: running one short observed raw sequence only.\n");
+        printf("No preview replay and no bulk streaming will be executed.\n");
+
+        sb_usb_hex_dump("sequence-probe step1 request bytes", step1_setup, sizeof(step1_setup));
+        step_status = sb_usb_vendor_control_in(
+            target_handle,
+            0x0C,
+            0x008E,
+            0x0000,
+            step1_response,
+            (uint16_t)sizeof(step1_response),
+            kTransferTimeoutMs);
+        if (step_status < 0)
+        {
+            fprintf(stderr, "Sequence probe failed at step 1.\n");
+            libusb_close(target_handle);
+            libusb_unref_device(target_device);
+            sb_usb_shutdown(context);
+            return 1;
+        }
+        sb_usb_hex_dump("sequence-probe step1 response bytes", step1_response, (size_t)step_status);
+
+        sb_usb_hex_dump("sequence-probe step2 request bytes", step2_setup, sizeof(step2_setup));
+        step_status = sb_usb_vendor_control_in(
+            target_handle,
+            0x04,
+            0x008E,
+            0x0622,
+            step2_response,
+            (uint16_t)sizeof(step2_response),
+            kTransferTimeoutMs);
+        if (step_status < 0)
+        {
+            fprintf(stderr, "Sequence probe failed at step 2.\n");
+            libusb_close(target_handle);
+            libusb_unref_device(target_device);
+            sb_usb_shutdown(context);
+            return 1;
+        }
+        sb_usb_hex_dump("sequence-probe step2 response bytes", step2_response, (size_t)step_status);
+
+        sb_usb_hex_dump("sequence-probe step3 request bytes", step3_setup, sizeof(step3_setup));
+        sb_usb_hex_dump("sequence-probe step3 payload bytes", step3_payload, sizeof(step3_payload));
+        step_status = sb_usb_vendor_control_out(
+            target_handle,
+            0x04,
+            0x0083,
+            0x0000,
+            step3_payload,
+            (uint16_t)sizeof(step3_payload),
+            kTransferTimeoutMs);
+        if (step_status < 0)
+        {
+            fprintf(stderr, "Sequence probe failed at step 3.\n");
+            libusb_close(target_handle);
+            libusb_unref_device(target_device);
+            sb_usb_shutdown(context);
+            return 1;
+        }
+
+        printf("Sequence probe completed. Exiting immediately.\n");
+        libusb_close(target_handle);
+        libusb_unref_device(target_device);
+        sb_usb_shutdown(context);
+        return 0;
     }
 
     printf("\nProtocol replay scaffold now available in src/ScanBro.UsbDriver:\n");
