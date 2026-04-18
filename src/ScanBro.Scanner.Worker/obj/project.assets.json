@@ -639,7 +639,7 @@
             "version": "[13.0.4, )"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.104\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.106\\RuntimeIdentifierGraph.json"
       }
     },
     "runtimes": {

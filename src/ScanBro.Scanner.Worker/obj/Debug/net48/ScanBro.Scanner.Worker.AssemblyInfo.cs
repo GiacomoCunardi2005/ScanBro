@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ScanBro.Scanner.Worker")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ed62751c8fc69bb3e634d3859d443dd36cad429e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+18cf8b063797944c6ba951f2d75b23357c3a144b")]
 [assembly: System.Reflection.AssemblyProductAttribute("ScanBro.Scanner.Worker")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ScanBro.Scanner.Worker")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
