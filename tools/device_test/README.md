@@ -10,7 +10,7 @@ Current scope:
 - print descriptors/configuration/interface/endpoint details
 - attempt interface claim with clear error reporting
 
-It does **not** execute preview replay yet.
+It also contains experimental replay modes, including `--preview-attempt` and `--preview-attempt-03` / `--preview-attempt-lamp-window`.
 
 ## Validation target (Windows x64 only)
 
@@ -71,6 +71,14 @@ Optional overrides:
 ```powershell
 tools/device_test/build-x64/Debug/device_test.exe --vid 04A9 --pid 1906
 ```
+
+## Experimental replay notes (`--preview-attempt-03`)
+
+- The mode uses a strict setup/readiness flow before pointer write + bulk IN.
+- The setup now includes a pre-kickoff transition block aligned with `03_scan_1200dpi_mpnavigator_ex.pcapng` lead-in (`2629..2653`): `0x0C22/0x0D22/0x4B22/0x4C22/0x4D22/0x6C22/0x0122` with corresponding writes (`0c00`, `0d01`, `6cf0`, `0140`).
+- After that block, it runs a bounded `0x6B22 == 8755` kickoff-readiness gate (timeout + iteration cap) before the existing kickoff sequence (`2742/2747/2749/2751/2753/2755/2759`).
+- Checkpoint-1 still requires `0x4422 == 0e55` and `0x4522 == 7855` (not required in the same poll iteration) before pointer write and bulk-IN start.
+- Any unsatisfied gate fails explicitly with non-zero exit.
 
 ## Driver-State Workflow (Do Not Mix)
 

@@ -118,3 +118,18 @@ No hypothesis above is treated as confirmed protocol semantics.
 - unknown: whether `0x83` interrupt endpoint is required in active custom-stack execution.
 - unknown: timing constraints between control polling and bulk reads.
 - unknown: whether capture-observed transfers are sufficient without Canon-side hidden preconditions.
+
+## Addendum (2026-04-18): 03 capture lamp-window readiness findings
+
+These findings come from targeted replay work against `pcapng/03_scan_1200dpi_mpnavigator_ex.pcapng` using `device_test --preview-attempt-03`.
+
+- confirmed: a strict checkpoint gate on `0x4422==0e55` and `0x4522==7855` exposed that the replay never reached data-ready state when upstream setup was incomplete (`0x4222/0x4322/0x4422/0x4522` stayed at base `0055` in that failed run).
+- confirmed: adding the later kickoff block alone (`2742..2759`) failed immediately when the first kickoff poll read `0x6B22 -> 0055` instead of `8755`; bytes saved remained `0`.
+- confirmed: in the 03 capture, the immediate upstream lead-in to frame `2742` includes:
+  - `2629`: IN `0x0C22 -> 0055` then `2631`: OUT `0c00`
+  - `2633`: IN `0x0D22 -> 0055` then `2635`: OUT `0d01`
+  - `2637/2639/2641`: IN `0x4B22/0x4C22/0x4D22 -> 0055`
+  - `2643`: IN `0x6C22 -> f055` then `2645`: OUT `6cf0`
+  - `2651`: IN `0x0122 -> 4055` then `2653`: OUT `0140`
+  - first kickoff read appears at `2742`: IN `0x6B22 -> 8755`
+- interpretation: the missing/misordered part is upstream of frame `2742`; pointer payload shape and bulk transport are not the first divergence point for this failure.

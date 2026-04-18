@@ -3,6 +3,7 @@
 #include <string.h>
 #include <ctype.h>
 #include <errno.h>
+#include <time.h>
 
 #if defined(_WIN32)
 #include <direct.h>
@@ -233,6 +234,15 @@ typedef struct preview_lamp_poll_step
     const char *expected_response_hex;
 } preview_lamp_poll_step;
 
+typedef struct preview_lamp_transition_step
+{
+    unsigned int poll_frame_number;
+    uint16_t poll_index;
+    const char *expected_response_hex;
+    unsigned int write_frame_number;
+    const char *write_payload_hex;
+} preview_lamp_transition_step;
+
 static const char kPreviewBulkPayloadAHex[] =
     "4c1d4c1d4c1d4c1d4c1d4c1d4c1d4c1d4c1df71ca21c4d1cf81ba31b4e1bf91a"
     "a41a4f1afa19a5195019fb18a5185018fb17a6175117fc16a7165216fd15a815"
@@ -379,6 +389,32 @@ static const preview_lamp_poll_step kPreviewLampWindowPollSteps[] =
     {3133U, 0x4322U, "0055"},
     {3135U, 0x4422U, "0e55"},
     {3137U, 0x4522U, "7855"}
+};
+
+static const preview_lamp_poll_step kPreviewLampWindowKickoffPollSteps[] =
+{
+    {2742U, 0x6B22U, "8755"},
+    {2749U, 0x0122U, "4055"},
+    {2753U, 0x0D22U, "0055"}
+};
+
+static const preview_lamp_transition_step kPreviewLampWindowPreKickoffTransitionSteps[] =
+{
+    {2629U, 0x0C22U, "0055", 2631U, "0c00"},
+    {2633U, 0x0D22U, "0055", 2635U, "0d01"},
+    {2637U, 0x4B22U, "0055", 0U, NULL},
+    {2639U, 0x4C22U, "0055", 0U, NULL},
+    {2641U, 0x4D22U, "0055", 0U, NULL},
+    {2643U, 0x6C22U, "f055", 2645U, "6cf0"},
+    {2651U, 0x0122U, "4055", 2653U, "0140"}
+};
+
+static const preview_control_step kPreviewLampWindowKickoffWriteSteps[] =
+{
+    {2747U, 0, 0x04, 0x0083U, 0x0000U, 2U, "6b87"},
+    {2751U, 0, 0x04, 0x0083U, 0x0000U, 2U, "0141"},
+    {2755U, 0, 0x04, 0x0083U, 0x0000U, 2U, "0d01"},
+    {2759U, 0, 0x04, 0x0083U, 0x0000U, 2U, "0fff"}
 };
 
 static const preview_control_step kPreviewLampWindowPointerStep =
@@ -939,6 +975,89 @@ static int preview_run_control_in_step_with_capture(
     return 1;
 }
 
+static uint64_t preview_now_ms(void)
+{
+    struct timespec now;
+    if (timespec_get(&now, TIME_UTC) != TIME_UTC)
+    {
+        return 0U;
+    }
+
+    return ((uint64_t)now.tv_sec * 1000U) + ((uint64_t)now.tv_nsec / 1000000U);
+}
+
+static int preview_run_control_in_step_with_capture_unbounded(
+    libusb_device_handle *target_handle,
+    preview_runtime_state *state,
+    const preview_control_step *step,
+    uint8_t *out_response,
+    size_t out_response_size,
+    size_t *out_response_length)
+{
+    uint8_t response_buffer[64];
+    int status;
+    char stage_label[192];
+
+    if (step == NULL || out_response == NULL || out_response_length == NULL)
+    {
+        return 0;
+    }
+
+    if (!step->is_in)
+    {
+        preview_set_failure(state, "control IN capture helper used with OUT step");
+        return 0;
+    }
+
+    if (step->length > (uint16_t)sizeof(response_buffer))
+    {
+        snprintf(
+            stage_label,
+            sizeof(stage_label),
+            "frame %u control IN response buffer too small",
+            step->frame_number);
+        preview_set_failure(state, stage_label);
+        return 0;
+    }
+
+    snprintf(
+        stage_label,
+        sizeof(stage_label),
+        "frame %u control IN request=0x%02x value=0x%04x index=0x%04x len=%u",
+        step->frame_number,
+        step->request,
+        step->value,
+        step->index,
+        step->length);
+
+    printf("[preview-attempt] %s\n", stage_label);
+
+    status = sb_usb_vendor_control_in(
+        target_handle,
+        step->request,
+        step->value,
+        step->index,
+        response_buffer,
+        step->length,
+        kTransferTimeoutMs);
+
+    if (status < 0)
+    {
+        preview_set_failure(state, stage_label);
+        return 0;
+    }
+
+    if ((size_t)status > out_response_size)
+    {
+        preview_set_failure(state, "control IN capture output buffer too small");
+        return 0;
+    }
+
+    memcpy(out_response, response_buffer, (size_t)status);
+    *out_response_length = (size_t)status;
+    return 1;
+}
+
 static int preview_run_preamble_sequence(
     libusb_device_handle *target_handle,
     preview_runtime_state *state)
@@ -1370,10 +1489,24 @@ static int run_preview_attempt_lamp_window_mode(libusb_device_handle *target_han
     preview_runtime_state state;
     uint8_t bulk_in_buffer[8192];
     unsigned int capture_loop_timeouts = 0U;
+    unsigned int checkpoint_poll_iteration = 0U;
+    unsigned int seen_4422_iteration = 0U;
+    unsigned int seen_4522_iteration = 0U;
+    unsigned int seen_4422_frame_hint = 0U;
+    unsigned int seen_4522_frame_hint = 0U;
+    unsigned int setup_kickoff_gate_iteration = 0U;
+    uint64_t readiness_started_ms = 0U;
+    uint64_t readiness_deadline_ms = 0U;
+    uint64_t setup_kickoff_gate_started_ms = 0U;
+    uint64_t setup_kickoff_gate_deadline_ms = 0U;
+    uint64_t readiness_timeout_ms = (uint64_t)kTransferTimeoutMs * (uint64_t)kPreviewMaxConsecutiveTimeouts;
+    unsigned int readiness_iteration_cap = kPreviewMaxTotalTransfers;
     size_t step_index;
     int checkpoint_poll_pass = 0;
     int checkpoint_pointer_pass = 0;
     int checkpoint_bulk_non_zero_pass = 0;
+    int seen_4422_0e55 = 0;
+    int seen_4522_7855 = 0;
     char poll_4422_hex[32];
     char poll_4522_hex[32];
 
@@ -1410,10 +1543,11 @@ static int run_preview_attempt_lamp_window_mode(libusb_device_handle *target_han
     }
 
     printf(
-        "[preview-attempt-03][checkpoint-1] poll progression begin (frames 3129/3133/3135/3137, indexes 0x4222..0x4522)\n");
-    for (step_index = 0; step_index < (sizeof(kPreviewLampWindowPollSteps) / sizeof(kPreviewLampWindowPollSteps[0])); ++step_index)
+        "[preview-attempt-03][setup] pre-kickoff transition begin (frames 2629/2631/2633/2635/2637/2639/2641/2643/2645/2651/2653)\n");
+    for (step_index = 0; step_index < (sizeof(kPreviewLampWindowPreKickoffTransitionSteps) / sizeof(kPreviewLampWindowPreKickoffTransitionSteps[0])); ++step_index)
     {
         preview_control_step poll_step;
+        preview_control_step write_step;
         uint8_t response_buffer[8];
         size_t response_length = 0U;
         uint8_t expected_buffer[8];
@@ -1423,26 +1557,27 @@ static int run_preview_attempt_lamp_window_mode(libusb_device_handle *target_han
         char expected_hex[32];
 
         memset(&poll_step, 0, sizeof(poll_step));
+        memset(&write_step, 0, sizeof(write_step));
         memset(response_buffer, 0, sizeof(response_buffer));
         memset(expected_buffer, 0, sizeof(expected_buffer));
         snprintf(response_hex, sizeof(response_hex), "<none>");
         snprintf(expected_hex, sizeof(expected_hex), "<none>");
 
-        poll_step.frame_number = kPreviewLampWindowPollSteps[step_index].frame_number;
+        poll_step.frame_number = kPreviewLampWindowPreKickoffTransitionSteps[step_index].poll_frame_number;
         poll_step.is_in = 1;
         poll_step.request = 0x04;
         poll_step.value = 0x008EU;
-        poll_step.index = kPreviewLampWindowPollSteps[step_index].index;
+        poll_step.index = kPreviewLampWindowPreKickoffTransitionSteps[step_index].poll_index;
         poll_step.length = 2U;
         poll_step.payload_hex = NULL;
 
         if (!decode_hex_string(
-                kPreviewLampWindowPollSteps[step_index].expected_response_hex,
+                kPreviewLampWindowPreKickoffTransitionSteps[step_index].expected_response_hex,
                 expected_buffer,
                 sizeof(expected_buffer),
                 &expected_length))
         {
-            preview_set_failure(&state, "checkpoint-1 expected response decode failed");
+            preview_set_failure(&state, "setup pre-kickoff expected response decode failed");
             goto fail;
         }
 
@@ -1463,34 +1598,376 @@ static int run_preview_attempt_lamp_window_mode(libusb_device_handle *target_han
                          (memcmp(response_buffer, expected_buffer, response_length) == 0);
 
         printf(
-            "[preview-attempt-03][checkpoint-1] frame=%u index=0x%04X response=%s expected=%s match=%s\n",
+            "[preview-attempt-03][setup] pre-kickoff frame=%u index=0x%04X response=%s expected=%s match=%s\n",
             poll_step.frame_number,
             poll_step.index,
             response_hex,
             expected_hex,
             expected_match ? "yes" : "no");
 
-        if (poll_step.index == 0x4422U)
+        if (!expected_match)
         {
-            snprintf(poll_4422_hex, sizeof(poll_4422_hex), "%s", response_hex);
+            preview_set_failure(&state, "setup pre-kickoff poll response mismatch");
+            goto fail;
         }
-        else if (poll_step.index == 0x4522U)
+
+        if (kPreviewLampWindowPreKickoffTransitionSteps[step_index].write_payload_hex != NULL)
         {
-            snprintf(poll_4522_hex, sizeof(poll_4522_hex), "%s", response_hex);
+            write_step.frame_number = kPreviewLampWindowPreKickoffTransitionSteps[step_index].write_frame_number;
+            write_step.is_in = 0;
+            write_step.request = 0x04;
+            write_step.value = 0x0083U;
+            write_step.index = 0x0000U;
+            write_step.length = 2U;
+            write_step.payload_hex = kPreviewLampWindowPreKickoffTransitionSteps[step_index].write_payload_hex;
+
+            printf(
+                "[preview-attempt-03][setup] pre-kickoff frame=%u payload=%s\n",
+                write_step.frame_number,
+                write_step.payload_hex);
+            if (!preview_run_control_step(target_handle, &state, &write_step))
+            {
+                goto fail;
+            }
+        }
+    }
+    printf("[preview-attempt-03][setup] pre-kickoff transition complete\n");
+
+    setup_kickoff_gate_started_ms = preview_now_ms();
+    setup_kickoff_gate_deadline_ms = setup_kickoff_gate_started_ms + readiness_timeout_ms;
+    printf(
+        "[preview-attempt-03][setup] kickoff-readiness gate begin (frame hint 2742 index=0x6B22 target=8755)\n");
+    while (1)
+    {
+        preview_control_step poll_step;
+        uint8_t response_buffer[8];
+        size_t response_length = 0U;
+        uint8_t expected_buffer[8];
+        size_t expected_length = 0U;
+        int expected_match;
+        char response_hex[32];
+        char expected_hex[32];
+
+        setup_kickoff_gate_iteration++;
+        if (setup_kickoff_gate_iteration > readiness_iteration_cap)
+        {
+            char message[192];
+            snprintf(
+                message,
+                sizeof(message),
+                "setup kickoff-readiness gate not satisfied before iteration cap (max iterations=%u)",
+                readiness_iteration_cap);
+            preview_set_failure(&state, message);
+            goto fail;
+        }
+        if (preview_now_ms() >= setup_kickoff_gate_deadline_ms)
+        {
+            char message[192];
+            snprintf(
+                message,
+                sizeof(message),
+                "setup kickoff-readiness gate timed out (limit=%llu ms)",
+                (unsigned long long)readiness_timeout_ms);
+            preview_set_failure(&state, message);
+            goto fail;
+        }
+
+        memset(&poll_step, 0, sizeof(poll_step));
+        memset(response_buffer, 0, sizeof(response_buffer));
+        memset(expected_buffer, 0, sizeof(expected_buffer));
+        snprintf(response_hex, sizeof(response_hex), "<none>");
+        snprintf(expected_hex, sizeof(expected_hex), "<none>");
+
+        poll_step.frame_number = kPreviewLampWindowKickoffPollSteps[0].frame_number;
+        poll_step.is_in = 1;
+        poll_step.request = 0x04;
+        poll_step.value = 0x008EU;
+        poll_step.index = kPreviewLampWindowKickoffPollSteps[0].index;
+        poll_step.length = 2U;
+        poll_step.payload_hex = NULL;
+
+        if (!decode_hex_string(
+                kPreviewLampWindowKickoffPollSteps[0].expected_response_hex,
+                expected_buffer,
+                sizeof(expected_buffer),
+                &expected_length))
+        {
+            preview_set_failure(&state, "setup kickoff-readiness expected response decode failed");
+            goto fail;
+        }
+
+        if (!preview_run_control_in_step_with_capture_unbounded(
+                target_handle,
+                &state,
+                &poll_step,
+                response_buffer,
+                sizeof(response_buffer),
+                &response_length))
+        {
+            goto fail;
+        }
+
+        preview_format_compact_hex(response_buffer, response_length, response_hex, sizeof(response_hex));
+        preview_format_compact_hex(expected_buffer, expected_length, expected_hex, sizeof(expected_hex));
+        expected_match = (response_length == expected_length) &&
+                         (memcmp(response_buffer, expected_buffer, response_length) == 0);
+
+        printf(
+            "[preview-attempt-03][setup] kickoff-readiness iter=%u frame=%u index=0x%04X response=%s expected=%s match=%s\n",
+            setup_kickoff_gate_iteration,
+            poll_step.frame_number,
+            poll_step.index,
+            response_hex,
+            expected_hex,
+            expected_match ? "yes" : "no");
+
+        if (expected_match)
+        {
+            break;
+        }
+    }
+    printf(
+        "[preview-attempt-03][setup] kickoff-readiness gate complete iteration=%u elapsed_ms=%llu\n",
+        setup_kickoff_gate_iteration,
+        (unsigned long long)(preview_now_ms() - setup_kickoff_gate_started_ms));
+
+    printf(
+        "[preview-attempt-03][setup] kickoff begin (frames 2742/2747/2749/2751/2753/2755/2759)\n");
+    for (step_index = 0; step_index < (sizeof(kPreviewLampWindowKickoffPollSteps) / sizeof(kPreviewLampWindowKickoffPollSteps[0])); ++step_index)
+    {
+        preview_control_step poll_step;
+        uint8_t response_buffer[8];
+        size_t response_length = 0U;
+        uint8_t expected_buffer[8];
+        size_t expected_length = 0U;
+        int expected_match;
+        char response_hex[32];
+        char expected_hex[32];
+
+        memset(&poll_step, 0, sizeof(poll_step));
+        memset(response_buffer, 0, sizeof(response_buffer));
+        memset(expected_buffer, 0, sizeof(expected_buffer));
+        snprintf(response_hex, sizeof(response_hex), "<none>");
+        snprintf(expected_hex, sizeof(expected_hex), "<none>");
+
+        poll_step.frame_number = kPreviewLampWindowKickoffPollSteps[step_index].frame_number;
+        poll_step.is_in = 1;
+        poll_step.request = 0x04;
+        poll_step.value = 0x008EU;
+        poll_step.index = kPreviewLampWindowKickoffPollSteps[step_index].index;
+        poll_step.length = 2U;
+        poll_step.payload_hex = NULL;
+
+        if (!decode_hex_string(
+                kPreviewLampWindowKickoffPollSteps[step_index].expected_response_hex,
+                expected_buffer,
+                sizeof(expected_buffer),
+                &expected_length))
+        {
+            preview_set_failure(&state, "setup kickoff expected response decode failed");
+            goto fail;
+        }
+
+        if (!preview_run_control_in_step_with_capture(
+                target_handle,
+                &state,
+                &poll_step,
+                response_buffer,
+                sizeof(response_buffer),
+                &response_length))
+        {
+            goto fail;
+        }
+
+        preview_format_compact_hex(response_buffer, response_length, response_hex, sizeof(response_hex));
+        preview_format_compact_hex(expected_buffer, expected_length, expected_hex, sizeof(expected_hex));
+        expected_match = (response_length == expected_length) &&
+                         (memcmp(response_buffer, expected_buffer, response_length) == 0);
+
+        printf(
+            "[preview-attempt-03][setup] frame=%u index=0x%04X response=%s expected=%s match=%s\n",
+            poll_step.frame_number,
+            poll_step.index,
+            response_hex,
+            expected_hex,
+            expected_match ? "yes" : "no");
+
+        if (!expected_match)
+        {
+            preview_set_failure(&state, "setup kickoff poll response mismatch");
+            goto fail;
+        }
+
+        printf(
+            "[preview-attempt-03][setup] frame=%u payload=%s\n",
+            kPreviewLampWindowKickoffWriteSteps[step_index].frame_number,
+            kPreviewLampWindowKickoffWriteSteps[step_index].payload_hex);
+        if (!preview_run_control_step(target_handle, &state, &kPreviewLampWindowKickoffWriteSteps[step_index]))
+        {
+            goto fail;
         }
     }
 
-    checkpoint_poll_pass =
-        (strcmp(poll_4422_hex, "<missing>") != 0) &&
-        (strcmp(poll_4522_hex, "<missing>") != 0) &&
-        (strcmp(poll_4422_hex, "0055") != 0) &&
-        (strcmp(poll_4522_hex, "0055") != 0);
+    printf(
+        "[preview-attempt-03][setup] frame=%u payload=%s\n",
+        kPreviewLampWindowKickoffWriteSteps[3].frame_number,
+        kPreviewLampWindowKickoffWriteSteps[3].payload_hex);
+    if (!preview_run_control_step(target_handle, &state, &kPreviewLampWindowKickoffWriteSteps[3]))
+    {
+        goto fail;
+    }
+
+    printf("[preview-attempt-03][setup] kickoff complete\n");
+
+    readiness_started_ms = preview_now_ms();
+    readiness_deadline_ms = readiness_started_ms + readiness_timeout_ms;
+    printf(
+        "[preview-attempt-03][checkpoint-1] poll progression begin (frames 3129/3133/3135/3137, indexes 0x4222..0x4522)\n");
+    while (!(seen_4422_0e55 && seen_4522_7855))
+    {
+        checkpoint_poll_iteration++;
+        if (checkpoint_poll_iteration > readiness_iteration_cap)
+        {
+            char message[192];
+            snprintf(
+                message,
+                sizeof(message),
+                "checkpoint-1 readiness gate not satisfied before iteration cap (max iterations=%u)",
+                readiness_iteration_cap);
+            preview_set_failure(&state, message);
+            goto fail;
+        }
+        if (preview_now_ms() >= readiness_deadline_ms)
+        {
+            char message[192];
+            snprintf(
+                message,
+                sizeof(message),
+                "checkpoint-1 readiness gate timed out (limit=%llu ms)",
+                (unsigned long long)readiness_timeout_ms);
+            preview_set_failure(&state, message);
+            goto fail;
+        }
+
+        for (step_index = 0; step_index < (sizeof(kPreviewLampWindowPollSteps) / sizeof(kPreviewLampWindowPollSteps[0])); ++step_index)
+        {
+            preview_control_step poll_step;
+            uint8_t response_buffer[8];
+            size_t response_length = 0U;
+            uint8_t expected_buffer[8];
+            size_t expected_length = 0U;
+            int expected_match;
+            char response_hex[32];
+            char expected_hex[32];
+
+            memset(&poll_step, 0, sizeof(poll_step));
+            memset(response_buffer, 0, sizeof(response_buffer));
+            memset(expected_buffer, 0, sizeof(expected_buffer));
+            snprintf(response_hex, sizeof(response_hex), "<none>");
+            snprintf(expected_hex, sizeof(expected_hex), "<none>");
+
+            poll_step.frame_number = kPreviewLampWindowPollSteps[step_index].frame_number;
+            poll_step.is_in = 1;
+            poll_step.request = 0x04;
+            poll_step.value = 0x008EU;
+            poll_step.index = kPreviewLampWindowPollSteps[step_index].index;
+            poll_step.length = 2U;
+            poll_step.payload_hex = NULL;
+
+            if (!decode_hex_string(
+                    kPreviewLampWindowPollSteps[step_index].expected_response_hex,
+                    expected_buffer,
+                    sizeof(expected_buffer),
+                    &expected_length))
+            {
+                preview_set_failure(&state, "checkpoint-1 expected response decode failed");
+                goto fail;
+            }
+
+            if (!preview_run_control_in_step_with_capture_unbounded(
+                    target_handle,
+                    &state,
+                    &poll_step,
+                    response_buffer,
+                    sizeof(response_buffer),
+                    &response_length))
+            {
+                goto fail;
+            }
+
+            preview_format_compact_hex(response_buffer, response_length, response_hex, sizeof(response_hex));
+            preview_format_compact_hex(expected_buffer, expected_length, expected_hex, sizeof(expected_hex));
+            expected_match = (response_length == expected_length) &&
+                             (memcmp(response_buffer, expected_buffer, response_length) == 0);
+
+            if (poll_step.index == 0x4422U)
+            {
+                snprintf(poll_4422_hex, sizeof(poll_4422_hex), "%s", response_hex);
+                if (!seen_4422_0e55 && expected_match)
+                {
+                    seen_4422_0e55 = 1;
+                    seen_4422_iteration = checkpoint_poll_iteration;
+                    seen_4422_frame_hint = poll_step.frame_number;
+                    printf(
+                        "[preview-attempt-03][checkpoint-1] first_seen seen_4422_0e55 iteration=%u frame_hint=%u\n",
+                        seen_4422_iteration,
+                        seen_4422_frame_hint);
+                }
+            }
+            else if (poll_step.index == 0x4522U)
+            {
+                snprintf(poll_4522_hex, sizeof(poll_4522_hex), "%s", response_hex);
+                if (!seen_4522_7855 && expected_match)
+                {
+                    seen_4522_7855 = 1;
+                    seen_4522_iteration = checkpoint_poll_iteration;
+                    seen_4522_frame_hint = poll_step.frame_number;
+                    printf(
+                        "[preview-attempt-03][checkpoint-1] first_seen seen_4522_7855 iteration=%u frame_hint=%u\n",
+                        seen_4522_iteration,
+                        seen_4522_frame_hint);
+                }
+            }
+
+            printf(
+                "[preview-attempt-03][checkpoint-1] iter=%u frame=%u index=0x%04X response=%s expected=%s match=%s seen_4422_0e55=%s seen_4522_7855=%s\n",
+                checkpoint_poll_iteration,
+                poll_step.frame_number,
+                poll_step.index,
+                response_hex,
+                expected_hex,
+                expected_match ? "yes" : "no",
+                seen_4422_0e55 ? "yes" : "no",
+                seen_4522_7855 ? "yes" : "no");
+        }
+
+        printf(
+            "[preview-attempt-03][checkpoint-1] iter=%u current_0x4422=%s current_0x4522=%s seen_4422_0e55=%s seen_4522_7855=%s first_seen_4422_iteration=%u first_seen_4422_frame_hint=%u first_seen_4522_iteration=%u first_seen_4522_frame_hint=%u\n",
+            checkpoint_poll_iteration,
+            poll_4422_hex,
+            poll_4522_hex,
+            seen_4422_0e55 ? "yes" : "no",
+            seen_4522_7855 ? "yes" : "no",
+            seen_4422_iteration,
+            seen_4422_frame_hint,
+            seen_4522_iteration,
+            seen_4522_frame_hint);
+    }
+
+    checkpoint_poll_pass = seen_4422_0e55 && seen_4522_7855;
 
     printf(
-        "[preview-attempt-03][checkpoint-1] summary 0x4422=%s 0x4522=%s transitioned_non_0055=%s\n",
+        "[preview-attempt-03][checkpoint-1] summary current_0x4422=%s current_0x4522=%s seen_4422_0e55=%s seen_4522_7855=%s first_seen_4422_iteration=%u first_seen_4422_frame_hint=%u first_seen_4522_iteration=%u first_seen_4522_frame_hint=%u readiness_gate=%s readiness_elapsed_ms=%llu\n",
         poll_4422_hex,
         poll_4522_hex,
-        checkpoint_poll_pass ? "yes" : "no");
+        seen_4422_0e55 ? "yes" : "no",
+        seen_4522_7855 ? "yes" : "no",
+        seen_4422_iteration,
+        seen_4422_frame_hint,
+        seen_4522_iteration,
+        seen_4522_frame_hint,
+        checkpoint_poll_pass ? "pass" : "fail",
+        (unsigned long long)(preview_now_ms() - readiness_started_ms));
 
     printf(
         "[preview-attempt-03][checkpoint-2] pointer write frame=%u payload=%s\n",
