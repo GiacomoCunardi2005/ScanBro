@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ScanBro.Contracts")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ed62751c8fc69bb3e634d3859d443dd36cad429e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+83bc2f67502f14b4c31718f71f02fe6dcfaaab92")]
 [assembly: System.Reflection.AssemblyProductAttribute("ScanBro.Contracts")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ScanBro.Contracts")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
