@@ -1,0 +1,4 @@
+C:/Users/giaco/Desktop/ScanBro/tools/device_test/build-x64/CMakeFiles/device_test.dir
+C:/Users/giaco/Desktop/ScanBro/tools/device_test/build-x64/CMakeFiles/ALL_BUILD.dir
+C:/Users/giaco/Desktop/ScanBro/tools/device_test/build-x64/CMakeFiles/ZERO_CHECK.dir
+C:/Users/giaco/Desktop/ScanBro/tools/device_test/build-x64/ScanBro.UsbDriver/CMakeFiles/scanbro_usb.dir

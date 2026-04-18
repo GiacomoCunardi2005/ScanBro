@@ -1,0 +1,8 @@
+{
+	"InstallScripts" : 
+	[
+		"C:/Users/giaco/Desktop/ScanBro/tools/device_test/build-x64/cmake_install.cmake",
+		"C:/Users/giaco/Desktop/ScanBro/tools/device_test/build-x64/ScanBro.UsbDriver/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

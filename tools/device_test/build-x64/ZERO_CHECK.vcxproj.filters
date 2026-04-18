@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\giaco\Desktop\ScanBro\tools\device_test\build-x64\CMakeFiles\944ed91a33faca4a6e6b2a187685f1eb\generate.stamp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{F7FB2A17-C657-36C8-A4E2-C2202FBAA741}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

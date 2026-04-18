@@ -1,0 +1,10 @@
+^C:\USERS\GIACO\DESKTOP\SCANBRO\TOOLS\DEVICE_TEST\BUILD-X64\CMAKEFILES\944ED91A33FACA4A6E6B2A187685F1EB\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/giaco/Desktop/ScanBro/tools/device_test -BC:/Users/giaco/Desktop/ScanBro/tools/device_test/build-x64 --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/Users/giaco/Desktop/ScanBro/tools/device_test/build-x64/ScanBroDeviceTest.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

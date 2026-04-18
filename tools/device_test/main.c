@@ -49,7 +49,7 @@ static int parse_hex_u16(const char *text, uint16_t *out_value)
 
 static void print_usage(const char *program_name)
 {
-    printf("Usage: %s [--vid HEX] [--pid HEX]\n", program_name);
+    printf("Usage: %s [--vid HEX] [--pid HEX] [--safe-probe]\n", program_name);
     printf("Defaults: --vid 04A9 --pid 1906\n");
 }
 
@@ -171,6 +171,7 @@ int main(int argc, char **argv)
     ssize_t device_count;
     uint16_t target_vid = SB_CANON_5600F_VID;
     uint16_t target_pid = SB_CANON_5600F_PID;
+    int run_safe_probe = 0;
     int claim_interface;
     int status;
     int arg_index;
@@ -198,6 +199,12 @@ int main(int argc, char **argv)
                 return 2;
             }
             ++arg_index;
+            continue;
+        }
+
+        if (strcmp(argv[arg_index], "--safe-probe") == 0)
+        {
+            run_safe_probe = 1;
             continue;
         }
 
@@ -327,6 +334,40 @@ int main(int argc, char **argv)
     else
     {
         printf("No interface found to claim.\n");
+    }
+
+    if (run_safe_probe)
+    {
+        const uint8_t safe_probe_setup[8] = {0xC0, 0x0C, 0x8E, 0x00, 0x00, 0x00, 0x01, 0x00};
+        uint8_t safe_probe_response[1] = {0};
+        int probe_status;
+
+        printf("\nSafe probe mode enabled: sending one observed vendor IN request only.\n");
+        printf("No multi-step replay will be executed.\n");
+        sb_usb_hex_dump("safe-probe request bytes", safe_probe_setup, sizeof(safe_probe_setup));
+
+        probe_status = sb_usb_vendor_control_in(
+            target_handle,
+            0x0C,
+            0x008E,
+            0x0000,
+            safe_probe_response,
+            (uint16_t)sizeof(safe_probe_response),
+            kTransferTimeoutMs);
+
+        if (probe_status >= 0)
+        {
+            sb_usb_hex_dump("safe-probe response bytes", safe_probe_response, (size_t)probe_status);
+        }
+        else
+        {
+            fprintf(stderr, "Safe probe failed.\n");
+        }
+
+        libusb_close(target_handle);
+        libusb_unref_device(target_device);
+        sb_usb_shutdown(context);
+        return probe_status >= 0 ? 0 : 1;
     }
 
     printf("\nProtocol replay scaffold now available in src/ScanBro.UsbDriver:\n");
