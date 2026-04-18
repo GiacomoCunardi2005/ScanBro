@@ -61,6 +61,8 @@ Descriptor bytes indicate:
 | confirmed | `02_scan_lowres_wjndowscanner.pcapng` | `pkt 428 (request) -> pkt 429 (response)` | vendor control IN / `ep0` | `C0 04 8E 00 22 06 02 00` | `F8 55` |
 | confirmed | `01_open_scanner.pcapng` | `pkt 2610 (request) -> pkt 2611 (response)` | vendor control OUT / `ep0` | `40 04 83 00 00 00 02 00` + payload `0E 01` | `<none>` (status stage only) |
 | confirmed | `02_preview_lowres_scannerwindwos.pcapng` | `pkt 1062 (request) -> pkt 1063 (response)` | vendor control OUT / `ep0` | `40 04 83 00 00 00 02 00` + payload `0E 01` | `<none>` (status stage only) |
+| confirmed | `02_preview_lowres_scannerwindwos.pcapng` | `pkt 1070 (request) -> pkt 1071 (response)` | vendor control OUT / `ep0` | `40 04 83 00 00 00 02 00` + payload `0E 00` | `<none>` (status stage only) |
+| confirmed | `02_preview_lowres_scannerwindwos.pcapng` | `pkt 1072 (request) -> pkt 1073 (response)` | vendor control OUT / `ep0` | `40 04 83 00 00 00 02 00` + payload `01 40` | `<none>` (status stage only) |
 | confirmed | `02_scan_lowres_wjndowscanner.pcapng` | `pkt 4718 (request) -> pkt 4719 (response)` | vendor control OUT / `ep0` | `40 04 83 00 00 00 02 00` + payload `6C F0` | `<none>` (status stage only) |
 
 ### Preview-path transport activity
@@ -95,6 +97,9 @@ Validation scope below comes from Windows x64 active custom-control runs using `
 | Label | Validation step | Transfer / endpoint | Request bytes | Response bytes |
 |---|---|---|---|---|
 | confirmed | `device_test --safe-probe` | vendor control IN / `ep0` | `C0 0C 8E 00 00 00 01 00` | `00` |
+| confirmed | repeated consecutive `device_test --sequence-probe` runs | step 1 vendor control IN / `ep0` | `C0 0C 8E 00 00 00 01 00` | `00` |
+| confirmed | repeated consecutive `device_test --sequence-probe` runs | step 2 vendor control IN / `ep0` | `C0 04 8E 00 22 06 02 00` | `00 55` |
+| confirmed | repeated consecutive `device_test --sequence-probe` runs | step 3 vendor control OUT / `ep0` | `40 04 83 00 00 00 02 00` + payload `0E 01` | `<none>` (completed successfully) |
 
 ## Hypothesis
 
