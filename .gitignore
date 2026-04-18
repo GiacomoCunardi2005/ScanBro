@@ -10,3 +10,4 @@
 
 # IDE/runtime caches
 .vs/
+pcapng/*.pcapng
