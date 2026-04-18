@@ -409,6 +409,26 @@ static const preview_lamp_transition_step kPreviewLampWindowPreKickoffTransition
     {2651U, 0x0122U, "4055", 2653U, "0140"}
 };
 
+static const preview_lamp_poll_step kPreviewLampWindowPre6CPrimePollSteps[] =
+{
+    {1895U, 0x6B22U, "8755"},
+    {1899U, 0x0122U, "4055"},
+    {1903U, 0x0D22U, "0055"},
+    {1909U, 0x0122U, "4155"}
+};
+
+static const preview_control_step kPreviewLampWindowPre6CPrimeWriteSteps[] =
+{
+    {1897U, 0, 0x04, 0x0083U, 0x0000U, 2U, "6b87"},
+    {1901U, 0, 0x04, 0x0083U, 0x0000U, 2U, "0141"},
+    {1905U, 0, 0x04, 0x0083U, 0x0000U, 2U, "0d01"},
+    {1907U, 0, 0x04, 0x0083U, 0x0000U, 2U, "0fff"},
+    {1911U, 0, 0x04, 0x0083U, 0x0000U, 2U, "0140"}
+};
+
+static const preview_control_step kPreviewLampWindow6CToF0WriteStep =
+    {2005U, 0, 0x04, 0x0083U, 0x0000U, 2U, "6cf0"};
+
 static const preview_control_step kPreviewLampWindowKickoffWriteSteps[] =
 {
     {2747U, 0, 0x04, 0x0083U, 0x0000U, 2U, "6b87"},
@@ -1543,6 +1563,167 @@ static int run_preview_attempt_lamp_window_mode(libusb_device_handle *target_han
     }
 
     printf(
+        "[preview-attempt-03][setup] pre-6c upstream prime begin (frames 1895/1897/1899/1901/1903/1905/1907/1909/1911)\n");
+    for (step_index = 0U; step_index < 3U; ++step_index)
+    {
+        preview_control_step poll_step;
+        uint8_t response_buffer[8];
+        size_t response_length = 0U;
+        uint8_t expected_buffer[8];
+        size_t expected_length = 0U;
+        int expected_match;
+        char response_hex[32];
+        char expected_hex[32];
+
+        memset(&poll_step, 0, sizeof(poll_step));
+        memset(response_buffer, 0, sizeof(response_buffer));
+        memset(expected_buffer, 0, sizeof(expected_buffer));
+        snprintf(response_hex, sizeof(response_hex), "<none>");
+        snprintf(expected_hex, sizeof(expected_hex), "<none>");
+
+        poll_step.frame_number = kPreviewLampWindowPre6CPrimePollSteps[step_index].frame_number;
+        poll_step.is_in = 1;
+        poll_step.request = 0x04;
+        poll_step.value = 0x008EU;
+        poll_step.index = kPreviewLampWindowPre6CPrimePollSteps[step_index].index;
+        poll_step.length = 2U;
+        poll_step.payload_hex = NULL;
+
+        if (!decode_hex_string(
+                kPreviewLampWindowPre6CPrimePollSteps[step_index].expected_response_hex,
+                expected_buffer,
+                sizeof(expected_buffer),
+                &expected_length))
+        {
+            preview_set_failure(&state, "setup pre-6c upstream prime expected response decode failed");
+            goto fail;
+        }
+
+        if (!preview_run_control_in_step_with_capture(
+                target_handle,
+                &state,
+                &poll_step,
+                response_buffer,
+                sizeof(response_buffer),
+                &response_length))
+        {
+            goto fail;
+        }
+
+        preview_format_compact_hex(response_buffer, response_length, response_hex, sizeof(response_hex));
+        preview_format_compact_hex(expected_buffer, expected_length, expected_hex, sizeof(expected_hex));
+        expected_match = (response_length == expected_length) &&
+                         (memcmp(response_buffer, expected_buffer, response_length) == 0);
+
+        printf(
+            "[preview-attempt-03][setup] pre-6c upstream prime frame=%u index=0x%04X response=%s expected=%s match=%s\n",
+            poll_step.frame_number,
+            poll_step.index,
+            response_hex,
+            expected_hex,
+            expected_match ? "yes" : "no");
+
+        if (!expected_match)
+        {
+            preview_set_failure(&state, "setup pre-6c upstream prime poll response mismatch");
+            goto fail;
+        }
+
+        printf(
+            "[preview-attempt-03][setup] pre-6c upstream prime frame=%u payload=%s\n",
+            kPreviewLampWindowPre6CPrimeWriteSteps[step_index].frame_number,
+            kPreviewLampWindowPre6CPrimeWriteSteps[step_index].payload_hex);
+        if (!preview_run_control_step(target_handle, &state, &kPreviewLampWindowPre6CPrimeWriteSteps[step_index]))
+        {
+            goto fail;
+        }
+    }
+
+    printf(
+        "[preview-attempt-03][setup] pre-6c upstream prime frame=%u payload=%s\n",
+        kPreviewLampWindowPre6CPrimeWriteSteps[3].frame_number,
+        kPreviewLampWindowPre6CPrimeWriteSteps[3].payload_hex);
+    if (!preview_run_control_step(target_handle, &state, &kPreviewLampWindowPre6CPrimeWriteSteps[3]))
+    {
+        goto fail;
+    }
+
+    {
+        preview_control_step poll_step;
+        uint8_t response_buffer[8];
+        size_t response_length = 0U;
+        uint8_t expected_buffer[8];
+        size_t expected_length = 0U;
+        int expected_match;
+        char response_hex[32];
+        char expected_hex[32];
+
+        memset(&poll_step, 0, sizeof(poll_step));
+        memset(response_buffer, 0, sizeof(response_buffer));
+        memset(expected_buffer, 0, sizeof(expected_buffer));
+        snprintf(response_hex, sizeof(response_hex), "<none>");
+        snprintf(expected_hex, sizeof(expected_hex), "<none>");
+
+        poll_step.frame_number = kPreviewLampWindowPre6CPrimePollSteps[3].frame_number;
+        poll_step.is_in = 1;
+        poll_step.request = 0x04;
+        poll_step.value = 0x008EU;
+        poll_step.index = kPreviewLampWindowPre6CPrimePollSteps[3].index;
+        poll_step.length = 2U;
+        poll_step.payload_hex = NULL;
+
+        if (!decode_hex_string(
+                kPreviewLampWindowPre6CPrimePollSteps[3].expected_response_hex,
+                expected_buffer,
+                sizeof(expected_buffer),
+                &expected_length))
+        {
+            preview_set_failure(&state, "setup pre-6c upstream prime final expected response decode failed");
+            goto fail;
+        }
+
+        if (!preview_run_control_in_step_with_capture(
+                target_handle,
+                &state,
+                &poll_step,
+                response_buffer,
+                sizeof(response_buffer),
+                &response_length))
+        {
+            goto fail;
+        }
+
+        preview_format_compact_hex(response_buffer, response_length, response_hex, sizeof(response_hex));
+        preview_format_compact_hex(expected_buffer, expected_length, expected_hex, sizeof(expected_hex));
+        expected_match = (response_length == expected_length) &&
+                         (memcmp(response_buffer, expected_buffer, response_length) == 0);
+
+        printf(
+            "[preview-attempt-03][setup] pre-6c upstream prime frame=%u index=0x%04X response=%s expected=%s match=%s\n",
+            poll_step.frame_number,
+            poll_step.index,
+            response_hex,
+            expected_hex,
+            expected_match ? "yes" : "no");
+
+        if (!expected_match)
+        {
+            preview_set_failure(&state, "setup pre-6c upstream prime final poll response mismatch");
+            goto fail;
+        }
+    }
+
+    printf(
+        "[preview-attempt-03][setup] pre-6c upstream prime frame=%u payload=%s\n",
+        kPreviewLampWindowPre6CPrimeWriteSteps[4].frame_number,
+        kPreviewLampWindowPre6CPrimeWriteSteps[4].payload_hex);
+    if (!preview_run_control_step(target_handle, &state, &kPreviewLampWindowPre6CPrimeWriteSteps[4]))
+    {
+        goto fail;
+    }
+    printf("[preview-attempt-03][setup] pre-6c upstream prime complete\n");
+
+    printf(
         "[preview-attempt-03][setup] pre-kickoff transition begin (frames 2629/2631/2633/2635/2637/2639/2641/2643/2645/2651/2653)\n");
     for (step_index = 0; step_index < (sizeof(kPreviewLampWindowPreKickoffTransitionSteps) / sizeof(kPreviewLampWindowPreKickoffTransitionSteps[0])); ++step_index)
     {
@@ -1581,21 +1762,122 @@ static int run_preview_attempt_lamp_window_mode(libusb_device_handle *target_han
             goto fail;
         }
 
-        if (!preview_run_control_in_step_with_capture(
-                target_handle,
-                &state,
-                &poll_step,
-                response_buffer,
-                sizeof(response_buffer),
-                &response_length))
+        if (poll_step.index == 0x6C22U)
         {
-            goto fail;
-        }
+            unsigned int progression_iteration = 0U;
+            uint64_t progression_started_ms = preview_now_ms();
+            uint64_t progression_deadline_ms = progression_started_ms + readiness_timeout_ms;
+            int seen_f155 = 0;
+            int wrote_6cf0 = 0;
+            char last_6c22_hex[32];
 
-        preview_format_compact_hex(response_buffer, response_length, response_hex, sizeof(response_hex));
-        preview_format_compact_hex(expected_buffer, expected_length, expected_hex, sizeof(expected_hex));
-        expected_match = (response_length == expected_length) &&
-                         (memcmp(response_buffer, expected_buffer, response_length) == 0);
+            snprintf(last_6c22_hex, sizeof(last_6c22_hex), "<none>");
+
+            while (1)
+            {
+                char message[192];
+                int is_f155;
+
+                progression_iteration++;
+                if (progression_iteration > readiness_iteration_cap)
+                {
+                    snprintf(
+                        message,
+                        sizeof(message),
+                        "setup pre-kickoff 0x6C22 progression not satisfied before iteration cap (max iterations=%u last_response=%s seen_f155=%s wrote_6cf0=%s)",
+                        readiness_iteration_cap,
+                        last_6c22_hex,
+                        seen_f155 ? "yes" : "no",
+                        wrote_6cf0 ? "yes" : "no");
+                    preview_set_failure(&state, message);
+                    goto fail;
+                }
+
+                if (preview_now_ms() >= progression_deadline_ms)
+                {
+                    snprintf(
+                        message,
+                        sizeof(message),
+                        "setup pre-kickoff 0x6C22 progression timed out (limit=%llu ms last_response=%s seen_f155=%s wrote_6cf0=%s)",
+                        (unsigned long long)readiness_timeout_ms,
+                        last_6c22_hex,
+                        seen_f155 ? "yes" : "no",
+                        wrote_6cf0 ? "yes" : "no");
+                    preview_set_failure(&state, message);
+                    goto fail;
+                }
+
+                if (!preview_run_control_in_step_with_capture_unbounded(
+                        target_handle,
+                        &state,
+                        &poll_step,
+                        response_buffer,
+                        sizeof(response_buffer),
+                        &response_length))
+                {
+                    goto fail;
+                }
+
+                preview_format_compact_hex(response_buffer, response_length, response_hex, sizeof(response_hex));
+                preview_format_compact_hex(expected_buffer, expected_length, expected_hex, sizeof(expected_hex));
+                expected_match = (response_length == expected_length) &&
+                                 (memcmp(response_buffer, expected_buffer, response_length) == 0);
+                snprintf(last_6c22_hex, sizeof(last_6c22_hex), "%s", response_hex);
+
+                is_f155 = (response_length == 2U) &&
+                          (response_buffer[0] == 0xF1U) &&
+                          (response_buffer[1] == 0x55U);
+                if (is_f155)
+                {
+                    seen_f155 = 1;
+                }
+
+                printf(
+                    "[preview-attempt-03][setup] pre-kickoff 0x6C22 progression iter=%u response=%s expected=%s match=%s seen_f155=%s wrote_6cf0=%s\n",
+                    progression_iteration,
+                    response_hex,
+                    expected_hex,
+                    expected_match ? "yes" : "no",
+                    seen_f155 ? "yes" : "no",
+                    wrote_6cf0 ? "yes" : "no");
+
+                if (expected_match)
+                {
+                    break;
+                }
+
+                if (!wrote_6cf0 && is_f155)
+                {
+                    printf(
+                        "[preview-attempt-03][setup] pre-kickoff 0x6C22 progression frame=%u payload=%s\n",
+                        kPreviewLampWindow6CToF0WriteStep.frame_number,
+                        kPreviewLampWindow6CToF0WriteStep.payload_hex);
+                    if (!preview_run_control_step(target_handle, &state, &kPreviewLampWindow6CToF0WriteStep))
+                    {
+                        goto fail;
+                    }
+                    wrote_6cf0 = 1;
+                }
+            }
+        }
+        else
+        {
+            if (!preview_run_control_in_step_with_capture(
+                    target_handle,
+                    &state,
+                    &poll_step,
+                    response_buffer,
+                    sizeof(response_buffer),
+                    &response_length))
+            {
+                goto fail;
+            }
+
+            preview_format_compact_hex(response_buffer, response_length, response_hex, sizeof(response_hex));
+            preview_format_compact_hex(expected_buffer, expected_length, expected_hex, sizeof(expected_hex));
+            expected_match = (response_length == expected_length) &&
+                             (memcmp(response_buffer, expected_buffer, response_length) == 0);
+        }
 
         printf(
             "[preview-attempt-03][setup] pre-kickoff frame=%u index=0x%04X response=%s expected=%s match=%s\n",

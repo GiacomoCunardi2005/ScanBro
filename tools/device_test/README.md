@@ -75,7 +75,12 @@ tools/device_test/build-x64/Debug/device_test.exe --vid 04A9 --pid 1906
 ## Experimental replay notes (`--preview-attempt-03`)
 
 - The mode uses a strict setup/readiness flow before pointer write + bulk IN.
+- New hardware finding: repeating `6cf0` did not move `0x6C22` from `8355` to `f055` in the failing state (hypothesis ruled out).
+- The mode now runs an upstream pre-`0x6C22` prime block aligned with capture `1895..1911`: polls `0x6B22/0x0122/0x0D22/0x0122` with writes `6b87/0141/0d01/0fff/0140`.
 - The setup now includes a pre-kickoff transition block aligned with `03_scan_1200dpi_mpnavigator_ex.pcapng` lead-in (`2629..2653`): `0x0C22/0x0D22/0x4B22/0x4C22/0x4D22/0x6C22/0x0122` with corresponding writes (`0c00`, `0d01`, `6cf0`, `0140`).
+- First divergence point remains pre-kickoff `0x6C22`; real run observed `0x6C22 -> 8355` where capture-grounded expectation was `f055`.
+- Capture decode detail: the first `0x6C22 -> f055` in the full 03 trace is preceded by a broader transition region (`~1941..2142`) with additional control writes/status toggles, reinforcing that `6cf0` alone is not sufficient in an arbitrary state.
+- `0x6C22` handling is now progression-based (not brute-force): poll until `f055`, with a single transition write `6cf0` only if `f155` is observed first.
 - After that block, it runs a bounded `0x6B22 == 8755` kickoff-readiness gate (timeout + iteration cap) before the existing kickoff sequence (`2742/2747/2749/2751/2753/2755/2759`).
 - Checkpoint-1 still requires `0x4422 == 0e55` and `0x4522 == 7855` (not required in the same poll iteration) before pointer write and bulk-IN start.
 - Any unsatisfied gate fails explicitly with non-zero exit.

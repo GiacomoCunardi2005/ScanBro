@@ -133,3 +133,17 @@ These findings come from targeted replay work against `pcapng/03_scan_1200dpi_mp
   - `2651`: IN `0x0122 -> 4055` then `2653`: OUT `0140`
   - first kickoff read appears at `2742`: IN `0x6B22 -> 8755`
 - interpretation: the missing/misordered part is upstream of frame `2742`; pointer payload shape and bulk transport are not the first divergence point for this failure.
+- confirmed (newer run): after adding the pre-kickoff `2629..2653` block, first mismatch moved earlier to `0x6C22`:
+  - observed on hardware: `0x6C22 -> 8355`
+  - expected from capture at that point: `0x6C22 -> f055`
+  - failure remained explicit (`setup pre-kickoff poll response mismatch`, `bytes saved before failure: 0`)
+- confirmed (03-capture timeline): `0x6C22` reaches `f055` only after `REG6C` is driven with `6cf0`.
+  - first explicit transition in the relevant trace: `1833` IN `0x6C22 -> f155`, then `1836` OUT `6cf0`, then `2143` IN `0x6C22 -> f055`.
+  - the same conditioning appears again in the lead-in near the failing window: `2515/2519` IN `0x6C22 -> f055` with `2517/2521` OUT `6cf0`, then `2643` IN `0x6C22 -> f055`.
+- confirmed (frame-level decode detail): between `1911` and the first `2143` observation of `0x6C22 -> f055`, the capture also contains a larger control-transition region (`~1941..2142`) with repeated status/write activity (including `0d04`, `0x52..0x59`, `0x16/0x17/0x18/0x1a/0x1d`, and `0x02xx` toggles), so `6cf0` is not the only state-driving input in that span.
+- confirmed (latest real run): repeated `6cf0` writes in the failing state did **not** move `0x6C22` from `8355` to `f055`; each iteration stayed at `8355`, then the run ended with transfer-cap failure and `bytes saved before failure: 0`.
+- conclusion update: the "`6cf0` alone is sufficient" hypothesis is now ruled out for this state. `0x6C22` must be treated as reflecting an upstream state transition; fixing requires upstream sequencing before the `0x6C22` check.
+- implementation note: replay logic was updated to stop brute-force `6cf0` retries and instead:
+  - run an upstream pre-`0x6C22` prime sequence aligned with capture frames `1895..1911` (`6B22/0122/0D22/0122` polls with writes `6b87/0141/0d01/0fff/0140`),
+  - then run `0x6C22` progression gate with at most one `6cf0` write, only after `f155` is observed.
+- interpretation update: current first proven divergence point is now the `0x6C22` state transition (`8355` observed where `f055` is expected), so the remaining missing piece is upstream/immediately around forcing `REG6C` into `f0` state before kickoff readiness.
