@@ -147,3 +147,55 @@ These findings come from targeted replay work against `pcapng/03_scan_1200dpi_mp
   - run an upstream pre-`0x6C22` prime sequence aligned with capture frames `1895..1911` (`6B22/0122/0D22/0122` polls with writes `6b87/0141/0d01/0fff/0140`),
   - then run `0x6C22` progression gate with at most one `6cf0` write, only after `f155` is observed.
 - interpretation update: current first proven divergence point is now the `0x6C22` state transition (`8355` observed where `f055` is expected), so the remaining missing piece is upstream/immediately around forcing `REG6C` into `f0` state before kickoff readiness.
+
+## Addendum (2026-04-19): clean state-machine rewrite of `--preview-attempt-03`
+
+These findings come from the rewritten `device_test --preview-attempt-03` path that separates:
+
+- setup/preamble
+- capture-grounded transition drivers
+- readiness observation
+- read trigger
+- bulk read
+
+Confirmed outcomes:
+
+- confirmed: repeated `6cf0` does **not** move `0x6C22` from `8355` to `f055` on real hardware in the failing state.
+- confirmed: the earlier "`pre-6c upstream prime`" replay block failure was a state-misalignment failure (`0x6B22` observed `0055` where that block expected `8755`), not proof that the block is irrelevant.
+- confirmed: blindly prepending older capture windows is no longer a trustworthy strategy for this path.
+- confirmed: the active method is now state-machine reconstruction plus clean test redesign, with bounded gates and explicit state snapshots on failure.
+
+Latest run behavior with the rewritten mode:
+
+- preamble replay completes.
+- phase-1 transition gate repeatedly observes:
+  - `0x0C22 -> 0055`
+  - `0x6B22 -> 0055`
+  - `0x0122 -> 4055`
+  - `0x0D22 -> 0055`
+  - `0x6C22 -> 8355`
+- only `0c00` is emitted (because its precondition is met); `6b87/0141/0d01/0fff/0140` are not emitted because `0x6B22` never reaches `8755`.
+- run fails at the phase-1 iteration cap with explicit state dump and `bytes saved before failure: 0`.
+
+Interpretation update:
+
+- current blocker is now clearly upstream state convergence (`0x6B22` readiness + `0x6C22` transition), not pointer payload or bulk-IN mechanics.
+
+Runtime instrumentation update (2026-04-19):
+
+- confirmed: `tools/device_test` now mirrors runtime `stdout` + `stderr` to repo-local logs while preserving live console output.
+- deterministic latest log path: `tools/device_test/logs/device_test.latest.log`.
+- per-run history path pattern: `tools/device_test/logs/device_test.YYYYMMDD-HHMMSS.log`.
+- workflow decision: read `device_test.latest.log` first for each debug cycle so analysis is grounded in the exact saved run output.
+- latest instrumented run with `--preview-attempt-03` reproduced the same phase-1 stall (`0x6B22=0055`, `0x0122=4055`, `0x0D22=0055`, `0x6C22=8355`; only `0c00` write emitted; iteration-cap failure, `bytes saved before failure: 0`).
+- follow-up targeted phase-1 patch: a pre-kickoff `0d01` edge was added (`0c00` completed + `0x0D22==0055` -> write `0d01` with frame hint `2635`).
+- latest run after that patch confirms `0d01-pre` now fires (`writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no]`) while core state remains stuck (`0x6B22=0055`, `0x6C22=8355`) and still ends at phase-1 iteration cap.
+- follow-up targeted phase-1 patch: `0141` eligibility was moved off the `6b87` gate and anchored to `0d01-pre + 0x0122=4055`, aligning with the `REG0D -> REG01_SCAN -> REG0F` start ordering from `gl847_begin_scan`.
+- latest run after that change confirms the start-sequence writes now fire (`writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:no]`), but `0x6B22` remains `0055` and `0x6C22` remains `8355`, so phase-1 still fails at iteration cap with `bytes saved before failure: 0`.
+- follow-up targeted phase-1 patch: `6b87` was changed from an observation-gated write (`0x6B22` already `8755`) to a phase-1 driver write (`0d01-pre` done and `0x6B22` in `0055` or `8755`).
+- latest run after that change confirms `iter=1 frame=2747 action=write 6b87 payload=6b87`, and from iter 2 onward `0x6B22` is `8755` (first real phase-1 hardware-state transition in this harness).
+- failure remains explicit and upstream: `0x6C22` stays `8355`, `seen_6c22_f155=no`, `seen_6c22_f055=no`, `6cf0` stays not emitted by current gate, and phase-1 still ends at iteration cap with `bytes saved before failure: 0`.
+- rationale from GL847 reference: `gl847_begin_scan()` explicitly drives `REG6C` (`GPIO10` clear) as part of scan-start sequencing, so gating `6cf0` only on observed `f155` can deadlock the driver path when the device sits at `8355`.
+- follow-up targeted phase-1 patch: `6cf0` eligibility was widened from "`0x6C22` already `f155`" to a one-shot driver edge that can also fire when `0d01-pre` is done and `0x6C22` remains `8355`.
+- latest real run after that patch confirms the new edge is active (`iter=1 frame=2645 action=write 6cf0 payload=6cf0`, summaries show `writes=[...,6cf0:yes]`).
+- result: `0x6C22` still remains `8355` with `seen_6c22_f155=no` and `seen_6c22_f055=no`; phase-1 still fails at iteration cap with `bytes saved before failure: 0`, so the next blocker remains upstream of `REG6C` progression.

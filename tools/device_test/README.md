@@ -72,18 +72,58 @@ Optional overrides:
 tools/device_test/build-x64/Debug/device_test.exe --vid 04A9 --pid 1906
 ```
 
+## Runtime log files (stdout + stderr tee)
+
+`device_test` now keeps normal console output and mirrors the same output to repo-local log files.
+
+- Stable latest log: `tools/device_test/logs/device_test.latest.log`
+- Timestamped history log (one per run): `tools/device_test/logs/device_test.YYYYMMDD-HHMMSS.log`
+- Scope: both `stdout` and `stderr` lines emitted by `device_test`/`scanbro_usb`
+- The `tools/device_test/logs` directory is created automatically on run.
+
+Debug workflow for `--preview-attempt-03`:
+
+1. Run `.\tools\device_test\build-x64\Debug\device_test.exe --preview-attempt-03`
+2. Read `tools/device_test/logs/device_test.latest.log` first
+3. Analyze from that exact saved output before forming hypotheses
+
 ## Experimental replay notes (`--preview-attempt-03`)
 
-- The mode uses a strict setup/readiness flow before pointer write + bulk IN.
-- New hardware finding: repeating `6cf0` did not move `0x6C22` from `8355` to `f055` in the failing state (hypothesis ruled out).
-- The mode now runs an upstream pre-`0x6C22` prime block aligned with capture `1895..1911`: polls `0x6B22/0x0122/0x0D22/0x0122` with writes `6b87/0141/0d01/0fff/0140`.
-- The setup now includes a pre-kickoff transition block aligned with `03_scan_1200dpi_mpnavigator_ex.pcapng` lead-in (`2629..2653`): `0x0C22/0x0D22/0x4B22/0x4C22/0x4D22/0x6C22/0x0122` with corresponding writes (`0c00`, `0d01`, `6cf0`, `0140`).
-- First divergence point remains pre-kickoff `0x6C22`; real run observed `0x6C22 -> 8355` where capture-grounded expectation was `f055`.
-- Capture decode detail: the first `0x6C22 -> f055` in the full 03 trace is preceded by a broader transition region (`~1941..2142`) with additional control writes/status toggles, reinforcing that `6cf0` alone is not sufficient in an arbitrary state.
-- `0x6C22` handling is now progression-based (not brute-force): poll until `f055`, with a single transition write `6cf0` only if `f155` is observed first.
-- After that block, it runs a bounded `0x6B22 == 8755` kickoff-readiness gate (timeout + iteration cap) before the existing kickoff sequence (`2742/2747/2749/2751/2753/2755/2759`).
-- Checkpoint-1 still requires `0x4422 == 0e55` and `0x4522 == 7855` (not required in the same poll iteration) before pointer write and bulk-IN start.
-- Any unsatisfied gate fails explicitly with non-zero exit.
+- The mode was rewritten as a clean state-machine path (not layered prepend replay).
+- Active phase order is now explicit in code/logs:
+  - setup/preamble
+  - transition drivers
+  - readiness observation
+  - read trigger
+  - bulk read
+- Confirmed hardware finding: repeating `6cf0` does **not** move `0x6C22` from `8355` to `f055` in the failing state.
+- Confirmed finding from the older layered attempt: the prepended "`pre-6c upstream prime`" block can fail immediately because first poll may read `0x6B22 -> 0055` instead of expected `8755`.
+- Conclusion now enforced in workflow: blindly prepending older capture blocks is not a trustworthy strategy.
+- Initial run result with rewritten mode:
+  - preamble completes
+  - phase-1 repeatedly observes `0x6B22=0055`, `0x0122=4055`, `0x0D22=0055`, `0x6C22=8355`
+  - only `0c00` is emitted (its precondition is met); `6b87/0141/0d01/0fff/0140` are not emitted because `0x6B22` never reaches `8755`
+  - failure is explicit at phase-1 gate with full state snapshot and `bytes saved before failure: 0`
+  - latest logged run after tee-log instrumentation reproduces the same phase-1 failure profile; use `tools/device_test/logs/device_test.latest.log` as the canonical run artifact.
+- Latest targeted phase-1 patch outcome:
+  - `0d01` pre-kickoff eligibility was added (`0c00` already emitted + `0x0D22=0055` -> write `0d01` at frame hint `2635`)
+  - confirmed in latest log: `writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no]`
+  - interpretation: the first post-`0c00` causal edge is now represented in harness behavior, but `0x6B22` still remains `0055`, so kickoff-path writes never become eligible.
+- Follow-up targeted phase-1 patch outcome:
+  - `0141` eligibility was decoupled from `6b87` and tied to the `0d01-pre` edge plus `0x0122=4055` (to mirror the `REG0D -> REG01_SCAN -> REG0F` start ordering from `gl847_begin_scan` semantics).
+  - confirmed in latest log: `writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:no]` while observed state remains `0x6B22=0055` and `0x6C22=8355`.
+  - interpretation: start-sequence writes can be issued without `6b87`, but they are still not sufficient to lift the upstream `0x6B22/0x6C22` transition on real hardware.
+- Follow-up targeted phase-1 patch outcome:
+  - `6b87` eligibility was changed from "`0x6B22` must already be `8755`" to a phase-1 driver gate (`0d01-pre` done, `0x6B22` in `0055` or `8755`).
+  - confirmed in latest log: `iter=1 frame=2747 action=write 6b87 payload=6b87`, then from iter 2 onward `0x6B22` reports `8755`.
+  - confirmed latest failing summary: `writes=[0c00:yes,0d01-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:no]` with `0x6C22=8355` and no `f155/f055`, so phase-1 still ends at iteration cap.
+  - interpretation: the first real upstream hardware transition now occurs (`0x6B22: 0055 -> 8755`), but `REG6C` progression remains blocked and is now the primary phase-1 blocker.
+- Follow-up targeted phase-1 patch outcome:
+  - `6cf0` eligibility was widened from "`0x6C22` already `f155`" to a one-shot driver edge that can also fire when `0d01-pre` is complete and `0x6C22` is still `8355`.
+  - rationale: this matches `gl847_begin_scan` semantics where `REG6C` (`GPIO10`) is driven as part of scan start sequencing, not only after observing `f155`.
+  - confirmed in the latest real run (`tools/device_test/logs/device_test.latest.log`): `iter=1 frame=2645 action=write 6cf0 payload=6cf0` and phase-1 summaries now report `writes=[...,6cf0:yes]`.
+  - confirmed remaining blocker: `0x6C22` still stays `8355` for all iterations, `seen_6c22_f155=no`, `seen_6c22_f055=no`, and phase-1 still fails at iteration cap with `bytes saved before failure: 0`.
+- Next-phase direction: continue state-machine reconstruction upstream of kickoff readiness and `0x6C22` transition before revisiting pointer/bulk stages.
 
 ## Driver-State Workflow (Do Not Mix)
 

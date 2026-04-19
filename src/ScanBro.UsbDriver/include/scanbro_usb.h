@@ -1,6 +1,7 @@
 #ifndef SCANBRO_USB_H
 #define SCANBRO_USB_H
 
+#include <stdio.h>
 #include <stddef.h>
 #include <stdint.h>
 
@@ -85,6 +86,11 @@ int sb_usb_bulk_in(
 
 void sb_usb_hex_dump(const char *label, const uint8_t *data, size_t length);
 void sb_usb_log_libusb_error(const char *operation, int status_code);
+void sb_usb_log_session_begin(void);
+void sb_usb_log_session_end(void);
+const char *sb_usb_log_latest_path(void);
+const char *sb_usb_log_history_path(void);
+int sb_usb_log_printf(FILE *stream, const char *format, ...);
 
 #ifdef __cplusplus
 }

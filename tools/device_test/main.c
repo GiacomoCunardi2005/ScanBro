@@ -14,7 +14,361 @@
 #define SB_MKDIR(path) mkdir(path, 0777)
 #endif
 
+#if 0
+typedef struct preview03_transition_result
+{
+    int wrote_0c00;
+    int wrote_0d01_pre;
+    int wrote_6b87;
+    int wrote_0141;
+    int wrote_0d01;
+    int wrote_0fff;
+    int wrote_0140;
+    int wrote_6cf0;
+    int seen_6c22_f155;
+    int seen_6c22_f055;
+    char last_0c22[32];
+    char last_6b22[32];
+    char last_0122[32];
+    char last_0d22[32];
+    char last_6c22[32];
+} preview03_transition_result;
+
+typedef struct preview03_readiness_result
+{
+    int seen_4422_0e55;
+    int seen_4522_7855;
+    unsigned int seen_4422_iteration;
+    unsigned int seen_4522_iteration;
+    char last_4222[32];
+    char last_4322[32];
+    char last_4422[32];
+    char last_4522[32];
+} preview03_readiness_result;
+
+static int preview03_run_transition_phase(
+    libusb_device_handle *target_handle,
+    preview_runtime_state *state,
+    uint64_t phase_timeout_ms,
+    unsigned int iteration_cap,
+    preview03_transition_result *out_result)
+{
+    unsigned int iteration = 0U;
+    uint64_t started_ms;
+    uint64_t deadline_ms;
+
+    if (target_handle == NULL || state == NULL || out_result == NULL)
+    {
+        return 0;
+    }
+
+    memset(out_result, 0, sizeof(*out_result));
+    snprintf(out_result->last_0c22, sizeof(out_result->last_0c22), "<missing>");
+    snprintf(out_result->last_6b22, sizeof(out_result->last_6b22), "<missing>");
+    snprintf(out_result->last_0122, sizeof(out_result->last_0122), "<missing>");
+    snprintf(out_result->last_0d22, sizeof(out_result->last_0d22), "<missing>");
+    snprintf(out_result->last_6c22, sizeof(out_result->last_6c22), "<missing>");
+
+    printf("[preview-attempt-03][phase-1-transition] begin causal transition driving\n");
+    started_ms = preview_now_ms();
+    deadline_ms = started_ms + phase_timeout_ms;
+
+    while (1)
+    {
+        uint8_t response_0c22[8];
+        uint8_t response_6b22[8];
+        uint8_t response_0122[8];
+        uint8_t response_0d22[8];
+        uint8_t response_6c22[8];
+        size_t response_0c22_length = 0U;
+        size_t response_6b22_length = 0U;
+        size_t response_0122_length = 0U;
+        size_t response_0d22_length = 0U;
+        size_t response_6c22_length = 0U;
+        char failure_message[256];
+
+        iteration++;
+        if (iteration > iteration_cap)
+        {
+            snprintf(
+                failure_message,
+                sizeof(failure_message),
+                "phase-1 transition gate not satisfied before iteration cap (iter_cap=%u last_0c22=%s last_6b22=%s last_0122=%s last_0d22=%s last_6c22=%s writes=[0c00:%s,6b87:%s,0141:%s,0d01:%s,0fff:%s,0140:%s,6cf0:%s])",
+                iteration_cap,
+                out_result->last_0c22,
+                out_result->last_6b22,
+                out_result->last_0122,
+                out_result->last_0d22,
+                out_result->last_6c22,
+                out_result->wrote_0c00 ? "yes" : "no",
+                out_result->wrote_6b87 ? "yes" : "no",
+                out_result->wrote_0141 ? "yes" : "no",
+                out_result->wrote_0d01 ? "yes" : "no",
+                out_result->wrote_0fff ? "yes" : "no",
+                out_result->wrote_0140 ? "yes" : "no",
+                out_result->wrote_6cf0 ? "yes" : "no");
+            preview_set_failure(state, failure_message);
+            return 0;
+        }
+
+        if (preview_now_ms() >= deadline_ms)
+        {
+            snprintf(
+                failure_message,
+                sizeof(failure_message),
+                "phase-1 transition gate timed out (limit=%llu ms last_0c22=%s last_6b22=%s last_0122=%s last_0d22=%s last_6c22=%s writes=[0c00:%s,6b87:%s,0141:%s,0d01:%s,0fff:%s,0140:%s,6cf0:%s])",
+                (unsigned long long)phase_timeout_ms,
+                out_result->last_0c22,
+                out_result->last_6b22,
+                out_result->last_0122,
+                out_result->last_0d22,
+                out_result->last_6c22,
+                out_result->wrote_0c00 ? "yes" : "no",
+                out_result->wrote_6b87 ? "yes" : "no",
+                out_result->wrote_0141 ? "yes" : "no",
+                out_result->wrote_0d01 ? "yes" : "no",
+                out_result->wrote_0fff ? "yes" : "no",
+                out_result->wrote_0140 ? "yes" : "no",
+                out_result->wrote_6cf0 ? "yes" : "no");
+            preview_set_failure(state, failure_message);
+            return 0;
+        }
+
+        if (!preview_poll_state_register(
+                target_handle,
+                state,
+                "phase-1-transition",
+                iteration,
+                &kPreview03TransitionPollSteps[0],
+                response_0c22,
+                sizeof(response_0c22),
+                &response_0c22_length,
+                out_result->last_0c22,
+                sizeof(out_result->last_0c22)))
+        {
+            return 0;
+        }
+
+        if (!preview_poll_state_register(
+                target_handle,
+                state,
+                "phase-1-transition",
+                iteration,
+                &kPreview03TransitionPollSteps[1],
+                response_6b22,
+                sizeof(response_6b22),
+                &response_6b22_length,
+                out_result->last_6b22,
+                sizeof(out_result->last_6b22)))
+        {
+            return 0;
+        }
+
+        if (!preview_poll_state_register(
+                target_handle,
+                state,
+                "phase-1-transition",
+                iteration,
+                &kPreview03TransitionPollSteps[2],
+                response_0122,
+                sizeof(response_0122),
+                &response_0122_length,
+                out_result->last_0122,
+                sizeof(out_result->last_0122)))
+        {
+            return 0;
+        }
+
+        if (!preview_poll_state_register(
+                target_handle,
+                state,
+                "phase-1-transition",
+                iteration,
+                &kPreview03TransitionPollSteps[3],
+                response_0d22,
+                sizeof(response_0d22),
+                &response_0d22_length,
+                out_result->last_0d22,
+                sizeof(out_result->last_0d22)))
+        {
+            return 0;
+        }
+
+        if (!preview_poll_state_register(
+                target_handle,
+                state,
+                "phase-1-transition",
+                iteration,
+                &kPreview03TransitionPollSteps[4],
+                response_6c22,
+                sizeof(response_6c22),
+                &response_6c22_length,
+                out_result->last_6c22,
+                sizeof(out_result->last_6c22)))
+        {
+            return 0;
+        }
+
+        if (!out_result->wrote_0c00 &&
+            preview_response_is_two_byte_value(response_0c22, response_0c22_length, 0x00U, 0x55U))
+        {
+            if (!preview_run_state_write_step(
+                    target_handle,
+                    state,
+                    "phase-1-transition",
+                    iteration,
+                    &kPreview03Write0C00Step))
+            {
+                return 0;
+            }
+            out_result->wrote_0c00 = 1;
+        }
+
+        if (!out_result->wrote_6b87 &&
+            preview_response_is_two_byte_value(response_6b22, response_6b22_length, 0x87U, 0x55U))
+        {
+            if (!preview_run_state_write_step(
+                    target_handle,
+                    state,
+                    "phase-1-transition",
+                    iteration,
+                    &kPreview03Write6B87Step))
+            {
+                return 0;
+            }
+            out_result->wrote_6b87 = 1;
+        }
+
+        if (!out_result->wrote_0141 &&
+            preview_response_is_two_byte_value(response_0122, response_0122_length, 0x40U, 0x55U))
+        {
+            if (!preview_run_state_write_step(
+                    target_handle,
+                    state,
+                    "phase-1-transition",
+                    iteration,
+                    &kPreview03Write0141Step))
+            {
+                return 0;
+            }
+            out_result->wrote_0141 = 1;
+        }
+
+        if (out_result->wrote_0141 &&
+            !out_result->wrote_0d01 &&
+            preview_response_is_two_byte_value(response_0d22, response_0d22_length, 0x00U, 0x55U))
+        {
+            if (!preview_run_state_write_step(
+                    target_handle,
+                    state,
+                    "phase-1-transition",
+                    iteration,
+                    &kPreview03Write0D01Step))
+            {
+                return 0;
+            }
+            out_result->wrote_0d01 = 1;
+        }
+
+        if (out_result->wrote_0d01 && !out_result->wrote_0fff)
+        {
+            if (!preview_run_state_write_step(
+                    target_handle,
+                    state,
+                    "phase-1-transition",
+                    iteration,
+                    &kPreview03Write0FFFStep))
+            {
+                return 0;
+            }
+            out_result->wrote_0fff = 1;
+        }
+
+        if (out_result->wrote_0fff &&
+            !out_result->wrote_0140 &&
+            (preview_response_is_two_byte_value(response_0122, response_0122_length, 0x41U, 0x55U) ||
+             preview_response_is_two_byte_value(response_0122, response_0122_length, 0x40U, 0x55U)))
+        {
+            if (!preview_run_state_write_step(
+                    target_handle,
+                    state,
+                    "phase-1-transition",
+                    iteration,
+                    &kPreview03Write0140Step))
+            {
+                return 0;
+            }
+            out_result->wrote_0140 = 1;
+        }
+
+        if (preview_response_is_two_byte_value(response_6c22, response_6c22_length, 0xF1U, 0x55U))
+        {
+            out_result->seen_6c22_f155 = 1;
+        }
+        if (preview_response_is_two_byte_value(response_6c22, response_6c22_length, 0xF0U, 0x55U))
+        {
+            out_result->seen_6c22_f055 = 1;
+        }
+
+        if (!out_result->wrote_6cf0 &&
+            (out_result->seen_6c22_f155 ||
+             (out_result->wrote_0d01_pre &&
+              preview_response_is_two_byte_value(response_6c22, response_6c22_length, 0x83U, 0x55U))))
+        {
+            if (!preview_run_state_write_step(
+                    target_handle,
+                    state,
+                    "phase-1-transition",
+                    iteration,
+                    &kPreview03Write6CF0Step))
+            {
+                return 0;
+            }
+            out_result->wrote_6cf0 = 1;
+        }
+
+        printf(
+            "[preview-attempt-03][phase-1-transition] iter=%u summary 0c22=%s 6b22=%s 0122=%s 0d22=%s 6c22=%s writes=[0c00:%s,6b87:%s,0141:%s,0d01:%s,0fff:%s,0140:%s,6cf0:%s] seen_6c22_f155=%s seen_6c22_f055=%s\n",
+            iteration,
+            out_result->last_0c22,
+            out_result->last_6b22,
+            out_result->last_0122,
+            out_result->last_0d22,
+            out_result->last_6c22,
+            out_result->wrote_0c00 ? "yes" : "no",
+            out_result->wrote_6b87 ? "yes" : "no",
+            out_result->wrote_0141 ? "yes" : "no",
+            out_result->wrote_0d01 ? "yes" : "no",
+            out_result->wrote_0fff ? "yes" : "no",
+            out_result->wrote_0140 ? "yes" : "no",
+            out_result->wrote_6cf0 ? "yes" : "no",
+            out_result->seen_6c22_f155 ? "yes" : "no",
+            out_result->seen_6c22_f055 ? "yes" : "no");
+
+        if (out_result->wrote_0c00 &&
+            out_result->wrote_6b87 &&
+            out_result->wrote_0141 &&
+            out_result->wrote_0d01 &&
+            out_result->wrote_0fff &&
+            out_result->wrote_0140 &&
+            out_result->seen_6c22_f055)
+        {
+            break;
+        }
+    }
+
+    printf(
+        "[preview-attempt-03][phase-1-transition] complete elapsed_ms=%llu last_6c22=%s\n",
+        (unsigned long long)(preview_now_ms() - started_ms),
+        out_result->last_6c22);
+    return 1;
+}
+#endif
+
 #include "scanbro_usb.h"
+
+#define printf(...) sb_usb_log_printf(stdout, __VA_ARGS__)
+#define fprintf(stream, ...) sb_usb_log_printf((stream), __VA_ARGS__)
 
 static const unsigned int kTransferTimeoutMs = 2000U;
 static const unsigned int kPreviewBulkInTimeoutMs = 500U;
@@ -227,21 +581,23 @@ typedef struct preview_pointer_step
     unsigned int poll_frames[4];
 } preview_pointer_step;
 
-typedef struct preview_lamp_poll_step
+typedef struct preview_state_poll_step
 {
     unsigned int frame_number;
     uint16_t index;
-    const char *expected_response_hex;
-} preview_lamp_poll_step;
+    const char *label;
+} preview_state_poll_step;
 
-typedef struct preview_lamp_transition_step
+typedef struct preview_state_write_step
 {
-    unsigned int poll_frame_number;
-    uint16_t poll_index;
-    const char *expected_response_hex;
-    unsigned int write_frame_number;
-    const char *write_payload_hex;
-} preview_lamp_transition_step;
+    unsigned int frame_number;
+    uint8_t request;
+    uint16_t value;
+    uint16_t index;
+    uint16_t length;
+    const char *payload_hex;
+    const char *label;
+} preview_state_write_step;
 
 static const char kPreviewBulkPayloadAHex[] =
     "4c1d4c1d4c1d4c1d4c1d4c1d4c1d4c1d4c1df71ca21c4d1cf81ba31b4e1bf91a"
@@ -383,64 +739,43 @@ static const preview_pointer_step kPreviewPointerSteps[] =
 
 static const uint16_t kPreviewPointerPollIndices[4] = {0x4222U, 0x4322U, 0x4422U, 0x4522U};
 
-static const preview_lamp_poll_step kPreviewLampWindowPollSteps[] =
+static const preview_state_poll_step kPreview03TransitionPollSteps[] =
 {
-    {3129U, 0x4222U, "0055"},
-    {3133U, 0x4322U, "0055"},
-    {3135U, 0x4422U, "0e55"},
-    {3137U, 0x4522U, "7855"}
+    {2629U, 0x0C22U, "0x0C22"},
+    {2742U, 0x6B22U, "0x6B22"},
+    {2749U, 0x0122U, "0x0122"},
+    {2753U, 0x0D22U, "0x0D22"},
+    {2643U, 0x6C22U, "0x6C22"}
 };
 
-static const preview_lamp_poll_step kPreviewLampWindowKickoffPollSteps[] =
+static const preview_state_poll_step kPreview03ReadinessPollSteps[] =
 {
-    {2742U, 0x6B22U, "8755"},
-    {2749U, 0x0122U, "4055"},
-    {2753U, 0x0D22U, "0055"}
+    {3129U, 0x4222U, "0x4222"},
+    {3133U, 0x4322U, "0x4322"},
+    {3135U, 0x4422U, "0x4422"},
+    {3137U, 0x4522U, "0x4522"}
 };
 
-static const preview_lamp_transition_step kPreviewLampWindowPreKickoffTransitionSteps[] =
-{
-    {2629U, 0x0C22U, "0055", 2631U, "0c00"},
-    {2633U, 0x0D22U, "0055", 2635U, "0d01"},
-    {2637U, 0x4B22U, "0055", 0U, NULL},
-    {2639U, 0x4C22U, "0055", 0U, NULL},
-    {2641U, 0x4D22U, "0055", 0U, NULL},
-    {2643U, 0x6C22U, "f055", 2645U, "6cf0"},
-    {2651U, 0x0122U, "4055", 2653U, "0140"}
-};
+static const preview_state_write_step kPreview03Write6B87Step =
+    {2747U, 0x04U, 0x0083U, 0x0000U, 2U, "6b87", "write 6b87"};
+static const preview_state_write_step kPreview03Write0141Step =
+    {2751U, 0x04U, 0x0083U, 0x0000U, 2U, "0141", "write 0141"};
+static const preview_state_write_step kPreview03Write0D01PreStep =
+    {2635U, 0x04U, 0x0083U, 0x0000U, 2U, "0d01", "write 0d01 (pre-kickoff)"};
+static const preview_state_write_step kPreview03Write0D01Step =
+    {2755U, 0x04U, 0x0083U, 0x0000U, 2U, "0d01", "write 0d01"};
+static const preview_state_write_step kPreview03Write0FFFStep =
+    {2759U, 0x04U, 0x0083U, 0x0000U, 2U, "0fff", "write 0fff"};
+static const preview_state_write_step kPreview03Write0140Step =
+    {2653U, 0x04U, 0x0083U, 0x0000U, 2U, "0140", "write 0140"};
+static const preview_state_write_step kPreview03Write0C00Step =
+    {2631U, 0x04U, 0x0083U, 0x0000U, 2U, "0c00", "write 0c00"};
+static const preview_state_write_step kPreview03Write6CF0Step =
+    {2645U, 0x04U, 0x0083U, 0x0000U, 2U, "6cf0", "write 6cf0"};
+static const preview_state_write_step kPreview03PointerWriteStep =
+    {3139U, 0x04U, 0x0082U, 0x0000U, 8U, "00000010f01c0000", "pointer write"};
 
-static const preview_lamp_poll_step kPreviewLampWindowPre6CPrimePollSteps[] =
-{
-    {1895U, 0x6B22U, "8755"},
-    {1899U, 0x0122U, "4055"},
-    {1903U, 0x0D22U, "0055"},
-    {1909U, 0x0122U, "4155"}
-};
-
-static const preview_control_step kPreviewLampWindowPre6CPrimeWriteSteps[] =
-{
-    {1897U, 0, 0x04, 0x0083U, 0x0000U, 2U, "6b87"},
-    {1901U, 0, 0x04, 0x0083U, 0x0000U, 2U, "0141"},
-    {1905U, 0, 0x04, 0x0083U, 0x0000U, 2U, "0d01"},
-    {1907U, 0, 0x04, 0x0083U, 0x0000U, 2U, "0fff"},
-    {1911U, 0, 0x04, 0x0083U, 0x0000U, 2U, "0140"}
-};
-
-static const preview_control_step kPreviewLampWindow6CToF0WriteStep =
-    {2005U, 0, 0x04, 0x0083U, 0x0000U, 2U, "6cf0"};
-
-static const preview_control_step kPreviewLampWindowKickoffWriteSteps[] =
-{
-    {2747U, 0, 0x04, 0x0083U, 0x0000U, 2U, "6b87"},
-    {2751U, 0, 0x04, 0x0083U, 0x0000U, 2U, "0141"},
-    {2755U, 0, 0x04, 0x0083U, 0x0000U, 2U, "0d01"},
-    {2759U, 0, 0x04, 0x0083U, 0x0000U, 2U, "0fff"}
-};
-
-static const preview_control_step kPreviewLampWindowPointerStep =
-    {3139U, 0, 0x04, 0x0082U, 0x0000U, 8U, "00000010f01c0000"};
-
-static const unsigned int kPreviewLampWindowBulkFrameHints[] = {3144U, 3146U};
+static const unsigned int kPreview03BulkFrameHints[] = {3144U, 3146U};
 
 static int decode_hex_nibble(char ch, uint8_t *out_value)
 {
@@ -1078,6 +1413,130 @@ static int preview_run_control_in_step_with_capture_unbounded(
     return 1;
 }
 
+static int preview_response_is_two_byte_value(
+    const uint8_t *response,
+    size_t response_length,
+    uint8_t byte0,
+    uint8_t byte1)
+{
+    return response != NULL &&
+           response_length == 2U &&
+           response[0] == byte0 &&
+           response[1] == byte1;
+}
+
+static int preview_poll_state_register(
+    libusb_device_handle *target_handle,
+    preview_runtime_state *state,
+    const char *phase_label,
+    unsigned int iteration,
+    const preview_state_poll_step *poll_spec,
+    uint8_t *out_response,
+    size_t out_response_size,
+    size_t *out_response_length,
+    char *out_response_hex,
+    size_t out_response_hex_size)
+{
+    preview_control_step poll_step;
+    char failure_message[256];
+
+    if (target_handle == NULL ||
+        state == NULL ||
+        phase_label == NULL ||
+        poll_spec == NULL ||
+        out_response == NULL ||
+        out_response_length == NULL ||
+        out_response_hex == NULL)
+    {
+        return 0;
+    }
+
+    memset(&poll_step, 0, sizeof(poll_step));
+    memset(out_response, 0, out_response_size);
+    *out_response_length = 0U;
+    snprintf(out_response_hex, out_response_hex_size, "<none>");
+
+    poll_step.frame_number = poll_spec->frame_number;
+    poll_step.is_in = 1;
+    poll_step.request = 0x04;
+    poll_step.value = 0x008EU;
+    poll_step.index = poll_spec->index;
+    poll_step.length = 2U;
+    poll_step.payload_hex = NULL;
+
+    if (!preview_run_control_in_step_with_capture_unbounded(
+            target_handle,
+            state,
+            &poll_step,
+            out_response,
+            out_response_size,
+            out_response_length))
+    {
+        return 0;
+    }
+
+    preview_format_compact_hex(out_response, *out_response_length, out_response_hex, out_response_hex_size);
+
+    if (*out_response_length != 2U)
+    {
+        snprintf(
+            failure_message,
+            sizeof(failure_message),
+            "%s poll returned unexpected length (index=0x%04X actual=%zu expected=2)",
+            phase_label,
+            poll_spec->index,
+            *out_response_length);
+        preview_set_failure(state, failure_message);
+        return 0;
+    }
+
+    printf(
+        "[preview-attempt-03][%s] iter=%u frame=%u %s response=%s\n",
+        phase_label,
+        iteration,
+        poll_spec->frame_number,
+        poll_spec->label,
+        out_response_hex);
+    return 1;
+}
+
+static int preview_run_state_write_step(
+    libusb_device_handle *target_handle,
+    preview_runtime_state *state,
+    const char *phase_label,
+    unsigned int iteration,
+    const preview_state_write_step *write_spec)
+{
+    preview_control_step write_step;
+
+    if (target_handle == NULL ||
+        state == NULL ||
+        phase_label == NULL ||
+        write_spec == NULL)
+    {
+        return 0;
+    }
+
+    memset(&write_step, 0, sizeof(write_step));
+    write_step.frame_number = write_spec->frame_number;
+    write_step.is_in = 0;
+    write_step.request = write_spec->request;
+    write_step.value = write_spec->value;
+    write_step.index = write_spec->index;
+    write_step.length = write_spec->length;
+    write_step.payload_hex = write_spec->payload_hex;
+
+    printf(
+        "[preview-attempt-03][%s] iter=%u frame=%u action=%s payload=%s\n",
+        phase_label,
+        iteration,
+        write_spec->frame_number,
+        write_spec->label,
+        write_spec->payload_hex);
+
+    return preview_run_control_step(target_handle, state, &write_step);
+}
+
 static int preview_run_preamble_sequence(
     libusb_device_handle *target_handle,
     preview_runtime_state *state)
@@ -1504,6 +1963,7 @@ fail:
     return 1;
 }
 
+#if 0
 static int run_preview_attempt_lamp_window_mode(libusb_device_handle *target_handle)
 {
     preview_runtime_state state;
@@ -2419,6 +2879,782 @@ fail:
     fprintf(stderr, "[preview-attempt-03] bytes saved before failure: %zu\n", state.total_bytes);
     return 1;
 }
+#endif
+
+typedef struct preview03_transition_result
+{
+    int wrote_0c00;
+    int wrote_0d01_pre;
+    int wrote_6b87;
+    int wrote_0141;
+    int wrote_0d01;
+    int wrote_0fff;
+    int wrote_0140;
+    int wrote_6cf0;
+    int seen_6c22_f155;
+    int seen_6c22_f055;
+    char last_0c22[32];
+    char last_6b22[32];
+    char last_0122[32];
+    char last_0d22[32];
+    char last_6c22[32];
+} preview03_transition_result;
+
+typedef struct preview03_readiness_result
+{
+    int seen_4422_0e55;
+    int seen_4522_7855;
+    unsigned int seen_4422_iteration;
+    unsigned int seen_4522_iteration;
+    char last_4222[32];
+    char last_4322[32];
+    char last_4422[32];
+    char last_4522[32];
+} preview03_readiness_result;
+
+static int preview03_run_transition_phase(
+    libusb_device_handle *target_handle,
+    preview_runtime_state *state,
+    uint64_t phase_timeout_ms,
+    unsigned int iteration_cap,
+    preview03_transition_result *out_result)
+{
+    unsigned int iteration = 0U;
+    uint64_t started_ms;
+    uint64_t deadline_ms;
+
+    if (target_handle == NULL || state == NULL || out_result == NULL)
+    {
+        return 0;
+    }
+
+    memset(out_result, 0, sizeof(*out_result));
+    snprintf(out_result->last_0c22, sizeof(out_result->last_0c22), "<missing>");
+    snprintf(out_result->last_6b22, sizeof(out_result->last_6b22), "<missing>");
+    snprintf(out_result->last_0122, sizeof(out_result->last_0122), "<missing>");
+    snprintf(out_result->last_0d22, sizeof(out_result->last_0d22), "<missing>");
+    snprintf(out_result->last_6c22, sizeof(out_result->last_6c22), "<missing>");
+
+    printf("[preview-attempt-03][phase-1-transition] begin causal transition driving\n");
+    started_ms = preview_now_ms();
+    deadline_ms = started_ms + phase_timeout_ms;
+
+    while (1)
+    {
+        uint8_t response_0c22[8];
+        uint8_t response_6b22[8];
+        uint8_t response_0122[8];
+        uint8_t response_0d22[8];
+        uint8_t response_6c22[8];
+        size_t response_0c22_length = 0U;
+        size_t response_6b22_length = 0U;
+        size_t response_0122_length = 0U;
+        size_t response_0d22_length = 0U;
+        size_t response_6c22_length = 0U;
+        char failure_message[256];
+
+        iteration++;
+        if (iteration > iteration_cap)
+        {
+            snprintf(
+                failure_message,
+                sizeof(failure_message),
+                "phase-1 transition gate not satisfied before iteration cap (iter_cap=%u last_0c22=%s last_6b22=%s last_0122=%s last_0d22=%s last_6c22=%s writes=[0c00:%s,0d01-pre:%s,6b87:%s,0141:%s,0d01:%s,0fff:%s,0140:%s,6cf0:%s])",
+                iteration_cap,
+                out_result->last_0c22,
+                out_result->last_6b22,
+                out_result->last_0122,
+                out_result->last_0d22,
+                out_result->last_6c22,
+                out_result->wrote_0c00 ? "yes" : "no",
+                out_result->wrote_0d01_pre ? "yes" : "no",
+                out_result->wrote_6b87 ? "yes" : "no",
+                out_result->wrote_0141 ? "yes" : "no",
+                out_result->wrote_0d01 ? "yes" : "no",
+                out_result->wrote_0fff ? "yes" : "no",
+                out_result->wrote_0140 ? "yes" : "no",
+                out_result->wrote_6cf0 ? "yes" : "no");
+            preview_set_failure(state, failure_message);
+            return 0;
+        }
+
+        if (preview_now_ms() >= deadline_ms)
+        {
+            snprintf(
+                failure_message,
+                sizeof(failure_message),
+                "phase-1 transition gate timed out (limit=%llu ms last_0c22=%s last_6b22=%s last_0122=%s last_0d22=%s last_6c22=%s writes=[0c00:%s,0d01-pre:%s,6b87:%s,0141:%s,0d01:%s,0fff:%s,0140:%s,6cf0:%s])",
+                (unsigned long long)phase_timeout_ms,
+                out_result->last_0c22,
+                out_result->last_6b22,
+                out_result->last_0122,
+                out_result->last_0d22,
+                out_result->last_6c22,
+                out_result->wrote_0c00 ? "yes" : "no",
+                out_result->wrote_0d01_pre ? "yes" : "no",
+                out_result->wrote_6b87 ? "yes" : "no",
+                out_result->wrote_0141 ? "yes" : "no",
+                out_result->wrote_0d01 ? "yes" : "no",
+                out_result->wrote_0fff ? "yes" : "no",
+                out_result->wrote_0140 ? "yes" : "no",
+                out_result->wrote_6cf0 ? "yes" : "no");
+            preview_set_failure(state, failure_message);
+            return 0;
+        }
+
+        if (!preview_poll_state_register(
+                target_handle,
+                state,
+                "phase-1-transition",
+                iteration,
+                &kPreview03TransitionPollSteps[0],
+                response_0c22,
+                sizeof(response_0c22),
+                &response_0c22_length,
+                out_result->last_0c22,
+                sizeof(out_result->last_0c22)))
+        {
+            return 0;
+        }
+
+        if (!preview_poll_state_register(
+                target_handle,
+                state,
+                "phase-1-transition",
+                iteration,
+                &kPreview03TransitionPollSteps[1],
+                response_6b22,
+                sizeof(response_6b22),
+                &response_6b22_length,
+                out_result->last_6b22,
+                sizeof(out_result->last_6b22)))
+        {
+            return 0;
+        }
+
+        if (!preview_poll_state_register(
+                target_handle,
+                state,
+                "phase-1-transition",
+                iteration,
+                &kPreview03TransitionPollSteps[2],
+                response_0122,
+                sizeof(response_0122),
+                &response_0122_length,
+                out_result->last_0122,
+                sizeof(out_result->last_0122)))
+        {
+            return 0;
+        }
+
+        if (!preview_poll_state_register(
+                target_handle,
+                state,
+                "phase-1-transition",
+                iteration,
+                &kPreview03TransitionPollSteps[3],
+                response_0d22,
+                sizeof(response_0d22),
+                &response_0d22_length,
+                out_result->last_0d22,
+                sizeof(out_result->last_0d22)))
+        {
+            return 0;
+        }
+
+        if (!preview_poll_state_register(
+                target_handle,
+                state,
+                "phase-1-transition",
+                iteration,
+                &kPreview03TransitionPollSteps[4],
+                response_6c22,
+                sizeof(response_6c22),
+                &response_6c22_length,
+                out_result->last_6c22,
+                sizeof(out_result->last_6c22)))
+        {
+            return 0;
+        }
+
+        if (!out_result->wrote_0c00 &&
+            preview_response_is_two_byte_value(response_0c22, response_0c22_length, 0x00U, 0x55U))
+        {
+            if (!preview_run_state_write_step(
+                    target_handle,
+                    state,
+                    "phase-1-transition",
+                    iteration,
+                    &kPreview03Write0C00Step))
+            {
+                return 0;
+            }
+            out_result->wrote_0c00 = 1;
+        }
+
+        if (!out_result->wrote_0d01_pre &&
+            out_result->wrote_0c00 &&
+            preview_response_is_two_byte_value(response_0d22, response_0d22_length, 0x00U, 0x55U))
+        {
+            if (!preview_run_state_write_step(
+                    target_handle,
+                    state,
+                    "phase-1-transition",
+                    iteration,
+                    &kPreview03Write0D01PreStep))
+            {
+                return 0;
+            }
+            out_result->wrote_0d01_pre = 1;
+        }
+
+        if (!out_result->wrote_6b87 &&
+            out_result->wrote_0d01_pre &&
+            (preview_response_is_two_byte_value(response_6b22, response_6b22_length, 0x00U, 0x55U) ||
+             preview_response_is_two_byte_value(response_6b22, response_6b22_length, 0x87U, 0x55U)))
+        {
+            if (!preview_run_state_write_step(
+                    target_handle,
+                    state,
+                    "phase-1-transition",
+                    iteration,
+                    &kPreview03Write6B87Step))
+            {
+                return 0;
+            }
+            out_result->wrote_6b87 = 1;
+        }
+
+        if (out_result->wrote_0d01_pre &&
+            !out_result->wrote_0141 &&
+            preview_response_is_two_byte_value(response_0122, response_0122_length, 0x40U, 0x55U))
+        {
+            if (!preview_run_state_write_step(
+                    target_handle,
+                    state,
+                    "phase-1-transition",
+                    iteration,
+                    &kPreview03Write0141Step))
+            {
+                return 0;
+            }
+            out_result->wrote_0141 = 1;
+        }
+
+        if (out_result->wrote_0141 &&
+            !out_result->wrote_0d01 &&
+            preview_response_is_two_byte_value(response_0d22, response_0d22_length, 0x00U, 0x55U))
+        {
+            if (!preview_run_state_write_step(
+                    target_handle,
+                    state,
+                    "phase-1-transition",
+                    iteration,
+                    &kPreview03Write0D01Step))
+            {
+                return 0;
+            }
+            out_result->wrote_0d01 = 1;
+        }
+
+        if (out_result->wrote_0d01 && !out_result->wrote_0fff)
+        {
+            if (!preview_run_state_write_step(
+                    target_handle,
+                    state,
+                    "phase-1-transition",
+                    iteration,
+                    &kPreview03Write0FFFStep))
+            {
+                return 0;
+            }
+            out_result->wrote_0fff = 1;
+        }
+
+        if (out_result->wrote_0fff &&
+            !out_result->wrote_0140 &&
+            (preview_response_is_two_byte_value(response_0122, response_0122_length, 0x41U, 0x55U) ||
+             preview_response_is_two_byte_value(response_0122, response_0122_length, 0x40U, 0x55U)))
+        {
+            if (!preview_run_state_write_step(
+                    target_handle,
+                    state,
+                    "phase-1-transition",
+                    iteration,
+                    &kPreview03Write0140Step))
+            {
+                return 0;
+            }
+            out_result->wrote_0140 = 1;
+        }
+
+        if (preview_response_is_two_byte_value(response_6c22, response_6c22_length, 0xF1U, 0x55U))
+        {
+            out_result->seen_6c22_f155 = 1;
+        }
+        if (preview_response_is_two_byte_value(response_6c22, response_6c22_length, 0xF0U, 0x55U))
+        {
+            out_result->seen_6c22_f055 = 1;
+        }
+
+        if (!out_result->wrote_6cf0 &&
+            (out_result->seen_6c22_f155 ||
+             (out_result->wrote_0d01_pre &&
+              preview_response_is_two_byte_value(response_6c22, response_6c22_length, 0x83U, 0x55U))))
+        {
+            if (!preview_run_state_write_step(
+                    target_handle,
+                    state,
+                    "phase-1-transition",
+                    iteration,
+                    &kPreview03Write6CF0Step))
+            {
+                return 0;
+            }
+            out_result->wrote_6cf0 = 1;
+        }
+
+        printf(
+            "[preview-attempt-03][phase-1-transition] iter=%u summary 0c22=%s 6b22=%s 0122=%s 0d22=%s 6c22=%s writes=[0c00:%s,0d01-pre:%s,6b87:%s,0141:%s,0d01:%s,0fff:%s,0140:%s,6cf0:%s] seen_6c22_f155=%s seen_6c22_f055=%s\n",
+            iteration,
+            out_result->last_0c22,
+            out_result->last_6b22,
+            out_result->last_0122,
+            out_result->last_0d22,
+            out_result->last_6c22,
+            out_result->wrote_0c00 ? "yes" : "no",
+            out_result->wrote_0d01_pre ? "yes" : "no",
+            out_result->wrote_6b87 ? "yes" : "no",
+            out_result->wrote_0141 ? "yes" : "no",
+            out_result->wrote_0d01 ? "yes" : "no",
+            out_result->wrote_0fff ? "yes" : "no",
+            out_result->wrote_0140 ? "yes" : "no",
+            out_result->wrote_6cf0 ? "yes" : "no",
+            out_result->seen_6c22_f155 ? "yes" : "no",
+            out_result->seen_6c22_f055 ? "yes" : "no");
+
+        if (out_result->wrote_0c00 &&
+            out_result->wrote_6b87 &&
+            out_result->wrote_0141 &&
+            out_result->wrote_0d01 &&
+            out_result->wrote_0fff &&
+            out_result->wrote_0140 &&
+            out_result->seen_6c22_f055)
+        {
+            break;
+        }
+    }
+
+    printf(
+        "[preview-attempt-03][phase-1-transition] complete elapsed_ms=%llu last_6c22=%s\n",
+        (unsigned long long)(preview_now_ms() - started_ms),
+        out_result->last_6c22);
+    return 1;
+}
+
+static int preview03_run_readiness_phase(
+    libusb_device_handle *target_handle,
+    preview_runtime_state *state,
+    uint64_t phase_timeout_ms,
+    unsigned int iteration_cap,
+    preview03_readiness_result *out_result)
+{
+    unsigned int iteration = 0U;
+    uint64_t started_ms;
+    uint64_t deadline_ms;
+
+    if (target_handle == NULL || state == NULL || out_result == NULL)
+    {
+        return 0;
+    }
+
+    memset(out_result, 0, sizeof(*out_result));
+    snprintf(out_result->last_4222, sizeof(out_result->last_4222), "<missing>");
+    snprintf(out_result->last_4322, sizeof(out_result->last_4322), "<missing>");
+    snprintf(out_result->last_4422, sizeof(out_result->last_4422), "<missing>");
+    snprintf(out_result->last_4522, sizeof(out_result->last_4522), "<missing>");
+
+    printf("[preview-attempt-03][phase-2-readiness] begin 0x4222..0x4522 readiness observation\n");
+    started_ms = preview_now_ms();
+    deadline_ms = started_ms + phase_timeout_ms;
+
+    while (!(out_result->seen_4422_0e55 && out_result->seen_4522_7855))
+    {
+        uint8_t response_4222[8];
+        uint8_t response_4322[8];
+        uint8_t response_4422[8];
+        uint8_t response_4522[8];
+        size_t response_4222_length = 0U;
+        size_t response_4322_length = 0U;
+        size_t response_4422_length = 0U;
+        size_t response_4522_length = 0U;
+        char failure_message[256];
+
+        iteration++;
+        if (iteration > iteration_cap)
+        {
+            snprintf(
+                failure_message,
+                sizeof(failure_message),
+                "phase-2 readiness not satisfied before iteration cap (iter_cap=%u last_4222=%s last_4322=%s last_4422=%s last_4522=%s seen_4422_0e55=%s seen_4522_7855=%s)",
+                iteration_cap,
+                out_result->last_4222,
+                out_result->last_4322,
+                out_result->last_4422,
+                out_result->last_4522,
+                out_result->seen_4422_0e55 ? "yes" : "no",
+                out_result->seen_4522_7855 ? "yes" : "no");
+            preview_set_failure(state, failure_message);
+            return 0;
+        }
+
+        if (preview_now_ms() >= deadline_ms)
+        {
+            snprintf(
+                failure_message,
+                sizeof(failure_message),
+                "phase-2 readiness timed out (limit=%llu ms last_4222=%s last_4322=%s last_4422=%s last_4522=%s seen_4422_0e55=%s seen_4522_7855=%s)",
+                (unsigned long long)phase_timeout_ms,
+                out_result->last_4222,
+                out_result->last_4322,
+                out_result->last_4422,
+                out_result->last_4522,
+                out_result->seen_4422_0e55 ? "yes" : "no",
+                out_result->seen_4522_7855 ? "yes" : "no");
+            preview_set_failure(state, failure_message);
+            return 0;
+        }
+
+        if (!preview_poll_state_register(
+                target_handle,
+                state,
+                "phase-2-readiness",
+                iteration,
+                &kPreview03ReadinessPollSteps[0],
+                response_4222,
+                sizeof(response_4222),
+                &response_4222_length,
+                out_result->last_4222,
+                sizeof(out_result->last_4222)))
+        {
+            return 0;
+        }
+        if (!preview_poll_state_register(
+                target_handle,
+                state,
+                "phase-2-readiness",
+                iteration,
+                &kPreview03ReadinessPollSteps[1],
+                response_4322,
+                sizeof(response_4322),
+                &response_4322_length,
+                out_result->last_4322,
+                sizeof(out_result->last_4322)))
+        {
+            return 0;
+        }
+        if (!preview_poll_state_register(
+                target_handle,
+                state,
+                "phase-2-readiness",
+                iteration,
+                &kPreview03ReadinessPollSteps[2],
+                response_4422,
+                sizeof(response_4422),
+                &response_4422_length,
+                out_result->last_4422,
+                sizeof(out_result->last_4422)))
+        {
+            return 0;
+        }
+        if (!preview_poll_state_register(
+                target_handle,
+                state,
+                "phase-2-readiness",
+                iteration,
+                &kPreview03ReadinessPollSteps[3],
+                response_4522,
+                sizeof(response_4522),
+                &response_4522_length,
+                out_result->last_4522,
+                sizeof(out_result->last_4522)))
+        {
+            return 0;
+        }
+
+        if (!out_result->seen_4422_0e55 &&
+            preview_response_is_two_byte_value(response_4422, response_4422_length, 0x0EU, 0x55U))
+        {
+            out_result->seen_4422_0e55 = 1;
+            out_result->seen_4422_iteration = iteration;
+        }
+
+        if (!out_result->seen_4522_7855 &&
+            preview_response_is_two_byte_value(response_4522, response_4522_length, 0x78U, 0x55U))
+        {
+            out_result->seen_4522_7855 = 1;
+            out_result->seen_4522_iteration = iteration;
+        }
+
+        printf(
+            "[preview-attempt-03][phase-2-readiness] iter=%u summary 4222=%s 4322=%s 4422=%s 4522=%s seen_4422_0e55=%s seen_4522_7855=%s\n",
+            iteration,
+            out_result->last_4222,
+            out_result->last_4322,
+            out_result->last_4422,
+            out_result->last_4522,
+            out_result->seen_4422_0e55 ? "yes" : "no",
+            out_result->seen_4522_7855 ? "yes" : "no");
+    }
+
+    printf(
+        "[preview-attempt-03][phase-2-readiness] complete first_seen_4422_iter=%u first_seen_4522_iter=%u elapsed_ms=%llu\n",
+        out_result->seen_4422_iteration,
+        out_result->seen_4522_iteration,
+        (unsigned long long)(preview_now_ms() - started_ms));
+    return 1;
+}
+
+static int run_preview_attempt_lamp_window_mode(libusb_device_handle *target_handle)
+{
+    preview_runtime_state state;
+    preview03_transition_result transition_result;
+    preview03_readiness_result readiness_result;
+    uint8_t bulk_in_buffer[8192];
+    unsigned int capture_loop_timeouts = 0U;
+    uint64_t phase_timeout_ms = (uint64_t)kTransferTimeoutMs * (uint64_t)kPreviewMaxConsecutiveTimeouts;
+    unsigned int transition_iteration_cap = 96U;
+    unsigned int readiness_iteration_cap = 96U;
+    size_t step_index;
+    int checkpoint_pointer_pass = 0;
+    int checkpoint_bulk_non_zero_pass = 0;
+    int checkpoint_poll_pass = 0;
+
+    memset(&state, 0, sizeof(state));
+    memset(&transition_result, 0, sizeof(transition_result));
+    memset(&readiness_result, 0, sizeof(readiness_result));
+
+    if (!ensure_preview_output_directory())
+    {
+        return 1;
+    }
+
+    state.output_file = fopen(kPreviewDumpPath, "wb");
+    if (state.output_file == NULL)
+    {
+        fprintf(stderr, "[preview-attempt-03] cannot open output file: %s\n", kPreviewDumpPath);
+        return 1;
+    }
+
+    printf("\n[preview-attempt-03] mode enabled.\n");
+    printf("[preview-attempt-03] design: clean state-machine reconstruction (not prepend replay).\n");
+    printf("[preview-attempt-03] source-of-truth window: 03_lamp_on_window_min_3129_3178.pcapng\n");
+    printf("[preview-attempt-03] raw output: %s\n", kPreviewDumpPath);
+    printf(
+        "[preview-attempt-03] limits: timeout=%u ms bulk-in-size=%d max-bytes=%zu max-bulk-in-transfers=%u max-total-transfers=%u\n",
+        kPreviewBulkInTimeoutMs,
+        kPreviewBulkInReadSize,
+        kPreviewMaxBytes,
+        kPreviewMaxBulkInTransfers,
+        kPreviewMaxTotalTransfers);
+    printf("[preview-attempt-03] phases: setup-preamble -> transition-drivers -> readiness-observation -> read-trigger -> bulk-read\n");
+
+    if (!preview_run_preamble_sequence(target_handle, &state))
+    {
+        goto fail;
+    }
+
+    if (!preview03_run_transition_phase(
+            target_handle,
+            &state,
+            phase_timeout_ms,
+            transition_iteration_cap,
+            &transition_result))
+    {
+        goto fail;
+    }
+
+    if (!preview03_run_readiness_phase(
+            target_handle,
+            &state,
+            phase_timeout_ms,
+            readiness_iteration_cap,
+            &readiness_result))
+    {
+        goto fail;
+    }
+    checkpoint_poll_pass = readiness_result.seen_4422_0e55 && readiness_result.seen_4522_7855;
+
+    printf("[preview-attempt-03][phase-3-trigger] submitting read pointer\n");
+    if (!preview_run_state_write_step(
+            target_handle,
+            &state,
+            "phase-3-trigger",
+            1U,
+            &kPreview03PointerWriteStep))
+    {
+        goto fail;
+    }
+    checkpoint_pointer_pass = 1;
+    printf("[preview-attempt-03][phase-3-trigger] complete pointer_submitted=yes\n");
+
+    printf("[preview-attempt-03][phase-4-bulk] first bulk-IN checks begin (frame hints 3144/3146)\n");
+    for (step_index = 0; step_index < (sizeof(kPreview03BulkFrameHints) / sizeof(kPreview03BulkFrameHints[0])); ++step_index)
+    {
+        int transferred = 0;
+        int timed_out = 0;
+        size_t non_zero_count = 0U;
+
+        if (!preview_run_bulk_in_step(
+                target_handle,
+                &state,
+                kPreview03BulkFrameHints[step_index],
+                bulk_in_buffer,
+                kPreviewBulkInReadSize,
+                &transferred,
+                &timed_out))
+        {
+            goto fail;
+        }
+
+        if (timed_out)
+        {
+            printf(
+                "[preview-attempt-03][phase-4-bulk] frame_hint=%u timed_out=yes\n",
+                kPreview03BulkFrameHints[step_index]);
+            continue;
+        }
+
+        if (transferred > 0)
+        {
+            non_zero_count = preview_count_non_zero_bytes(bulk_in_buffer, (size_t)transferred);
+        }
+
+        if (non_zero_count > 0U)
+        {
+            checkpoint_bulk_non_zero_pass = 1;
+        }
+
+        printf(
+            "[preview-attempt-03][phase-4-bulk] frame_hint=%u transferred=%d non_zero_bytes=%zu non_zero_seen=%s\n",
+            kPreview03BulkFrameHints[step_index],
+            transferred,
+            non_zero_count,
+            (non_zero_count > 0U) ? "yes" : "no");
+    }
+
+    printf(
+        "[preview-attempt-03][phase-4-bulk] initial summary first_non_zero_bulk_seen=%s\n",
+        checkpoint_bulk_non_zero_pass ? "yes" : "no");
+
+    while (state.total_bytes < kPreviewMaxBytes &&
+           state.bulk_in_transfers < kPreviewMaxBulkInTransfers)
+    {
+        int transferred = 0;
+        int timed_out = 0;
+
+        if (!preview_run_bulk_in_step(
+                target_handle,
+                &state,
+                0U,
+                bulk_in_buffer,
+                kPreviewBulkInReadSize,
+                &transferred,
+                &timed_out))
+        {
+            goto fail;
+        }
+
+        if (timed_out)
+        {
+            capture_loop_timeouts++;
+            if (capture_loop_timeouts >= kPreviewMaxConsecutiveTimeouts)
+            {
+                preview_set_failure(&state, "phase-4 capture-loop stopped after consecutive bulk IN timeouts");
+                break;
+            }
+        }
+        else
+        {
+            if (!checkpoint_bulk_non_zero_pass && transferred > 0)
+            {
+                size_t non_zero_count = preview_count_non_zero_bytes(bulk_in_buffer, (size_t)transferred);
+                if (non_zero_count > 0U)
+                {
+                    checkpoint_bulk_non_zero_pass = 1;
+                    printf(
+                        "[preview-attempt-03][phase-4-bulk] capture-loop observed first non-zero bulk chunk non_zero_bytes=%zu\n",
+                        non_zero_count);
+                }
+            }
+            capture_loop_timeouts = 0U;
+        }
+    }
+
+    fclose(state.output_file);
+    state.output_file = NULL;
+    preview_log_saved_file_summary(kPreviewDumpPath);
+
+    printf(
+        "[preview-attempt-03] checkpoint summary: readiness_observation=%s pointer_write=%s first_non_zero_bulk=%s\n",
+        checkpoint_poll_pass ? "pass" : "fail",
+        checkpoint_pointer_pass ? "pass" : "fail",
+        checkpoint_bulk_non_zero_pass ? "pass" : "fail");
+
+    if (state.total_bytes == 0U)
+    {
+        if (state.failure_stage[0] == '\0')
+        {
+            preview_set_failure(&state, "phase-4 bulk IN data phase not reached before stop condition");
+        }
+        fprintf(stderr, "[preview-attempt-03] failed: %s\n", state.failure_stage);
+        fprintf(stderr, "[preview-attempt-03] no raw data saved to %s\n", kPreviewDumpPath);
+        return 1;
+    }
+
+    if (!(checkpoint_poll_pass && checkpoint_pointer_pass && checkpoint_bulk_non_zero_pass))
+    {
+        if (state.failure_stage[0] == '\0')
+        {
+            preview_set_failure(&state, "one or more phase checkpoints not satisfied");
+        }
+        fprintf(stderr, "[preview-attempt-03] failed: %s\n", state.failure_stage);
+        fprintf(stderr, "[preview-attempt-03] bytes saved before failure: %zu\n", state.total_bytes);
+        return 1;
+    }
+
+    printf(
+        "[preview-attempt-03] completed: saved %zu bytes to %s\n",
+        state.total_bytes,
+        kPreviewDumpPath);
+    printf(
+        "[preview-attempt-03] transfer counters: total=%u bulk-in=%u\n",
+        state.total_transfers,
+        state.bulk_in_transfers);
+
+    if (state.failure_stage[0] != '\0')
+    {
+        printf("[preview-attempt-03] stop reason: %s\n", state.failure_stage);
+    }
+
+    return 0;
+
+fail:
+    if (state.output_file != NULL)
+    {
+        fclose(state.output_file);
+        state.output_file = NULL;
+    }
+
+    if (state.failure_stage[0] == '\0')
+    {
+        preview_set_failure(&state, "unexpected preview-attempt-03 failure");
+    }
+
+    fprintf(stderr, "[preview-attempt-03] failed: %s\n", state.failure_stage);
+    fprintf(stderr, "[preview-attempt-03] bytes saved before failure: %zu\n", state.total_bytes);
+    return 1;
+}
 
 int main(int argc, char **argv)
 {
@@ -2440,6 +3676,7 @@ int main(int argc, char **argv)
     int arg_index;
 
     memset(&target_desc, 0, sizeof(target_desc));
+    sb_usb_log_session_begin();
 
     for (arg_index = 1; arg_index < argc; ++arg_index)
     {

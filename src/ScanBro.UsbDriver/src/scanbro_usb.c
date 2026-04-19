@@ -1,6 +1,213 @@
 #include "scanbro_usb.h"
 
+#include <errno.h>
+#include <stdarg.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+
+#if defined(_WIN32)
+#include <direct.h>
+#define SB_USB_MKDIR(path) _mkdir(path)
+#else
+#include <sys/stat.h>
+#include <sys/types.h>
+#define SB_USB_MKDIR(path) mkdir(path, 0777)
+#endif
+
+static const char kSbUsbLogDirPath[] = "tools/device_test/logs";
+static const char kSbUsbLatestLogPath[] = "tools/device_test/logs/device_test.latest.log";
+static FILE *g_sb_usb_latest_log_file = NULL;
+static FILE *g_sb_usb_history_log_file = NULL;
+static char g_sb_usb_history_log_path[256] = {0};
+static int g_sb_usb_log_session_started = 0;
+static int g_sb_usb_log_atexit_registered = 0;
+
+static void sb_usb_build_history_log_path(char *out_path, size_t out_path_size)
+{
+    time_t now;
+    struct tm local_tm;
+    int have_local_time = 0;
+
+    if (out_path == NULL || out_path_size == 0U)
+    {
+        return;
+    }
+
+    out_path[0] = '\0';
+    now = time(NULL);
+    if (now != (time_t)-1)
+    {
+#if defined(_WIN32)
+        have_local_time = localtime_s(&local_tm, &now) == 0;
+#else
+        have_local_time = localtime_r(&now, &local_tm) != NULL;
+#endif
+    }
+
+    if (have_local_time)
+    {
+        snprintf(
+            out_path,
+            out_path_size,
+            "%s/device_test.%04d%02d%02d-%02d%02d%02d.log",
+            kSbUsbLogDirPath,
+            local_tm.tm_year + 1900,
+            local_tm.tm_mon + 1,
+            local_tm.tm_mday,
+            local_tm.tm_hour,
+            local_tm.tm_min,
+            local_tm.tm_sec);
+        return;
+    }
+
+    if (now == (time_t)-1)
+    {
+        now = 0;
+    }
+
+    snprintf(
+        out_path,
+        out_path_size,
+        "%s/device_test.%lld.log",
+        kSbUsbLogDirPath,
+        (long long)now);
+}
+
+void sb_usb_log_session_end(void)
+{
+    if (g_sb_usb_history_log_file != NULL)
+    {
+        fclose(g_sb_usb_history_log_file);
+        g_sb_usb_history_log_file = NULL;
+    }
+
+    if (g_sb_usb_latest_log_file != NULL)
+    {
+        fclose(g_sb_usb_latest_log_file);
+        g_sb_usb_latest_log_file = NULL;
+    }
+
+    g_sb_usb_history_log_path[0] = '\0';
+    g_sb_usb_log_session_started = 0;
+}
+
+void sb_usb_log_session_begin(void)
+{
+    FILE *latest_file;
+    FILE *history_file;
+    int mkdir_status;
+
+    if (g_sb_usb_log_session_started)
+    {
+        return;
+    }
+    g_sb_usb_log_session_started = 1;
+
+    errno = 0;
+    mkdir_status = SB_USB_MKDIR(kSbUsbLogDirPath);
+    if (mkdir_status != 0 && errno != EEXIST)
+    {
+        return;
+    }
+
+    latest_file = fopen(kSbUsbLatestLogPath, "wb");
+    if (latest_file != NULL)
+    {
+        g_sb_usb_latest_log_file = latest_file;
+    }
+
+    sb_usb_build_history_log_path(g_sb_usb_history_log_path, sizeof(g_sb_usb_history_log_path));
+    if (g_sb_usb_history_log_path[0] != '\0')
+    {
+        history_file = fopen(g_sb_usb_history_log_path, "wb");
+        if (history_file != NULL)
+        {
+            g_sb_usb_history_log_file = history_file;
+        }
+    }
+
+    if (!g_sb_usb_log_atexit_registered)
+    {
+        if (atexit(sb_usb_log_session_end) == 0)
+        {
+            g_sb_usb_log_atexit_registered = 1;
+        }
+    }
+}
+
+const char *sb_usb_log_latest_path(void)
+{
+    return kSbUsbLatestLogPath;
+}
+
+const char *sb_usb_log_history_path(void)
+{
+    if (g_sb_usb_history_log_path[0] == '\0')
+    {
+        return NULL;
+    }
+
+    return g_sb_usb_history_log_path;
+}
+
+int sb_usb_log_printf(FILE *stream, const char *format, ...)
+{
+    va_list console_args;
+    va_list latest_args;
+    va_list history_args;
+    int should_mirror;
+    int wrote_latest = 0;
+    int wrote_history = 0;
+    int result;
+
+    if (format == NULL)
+    {
+        return -1;
+    }
+
+    if (stream == NULL)
+    {
+        stream = stdout;
+    }
+
+    should_mirror = (stream == stdout || stream == stderr);
+
+    va_start(console_args, format);
+    if (should_mirror && g_sb_usb_latest_log_file != NULL)
+    {
+        va_copy(latest_args, console_args);
+        wrote_latest = 1;
+    }
+    if (should_mirror && g_sb_usb_history_log_file != NULL)
+    {
+        va_copy(history_args, console_args);
+        wrote_history = 1;
+    }
+
+    result = vfprintf(stream, format, console_args);
+    va_end(console_args);
+
+    if (wrote_latest)
+    {
+        (void)vfprintf(g_sb_usb_latest_log_file, format, latest_args);
+        fflush(g_sb_usb_latest_log_file);
+        va_end(latest_args);
+    }
+
+    if (wrote_history)
+    {
+        (void)vfprintf(g_sb_usb_history_log_file, format, history_args);
+        fflush(g_sb_usb_history_log_file);
+        va_end(history_args);
+    }
+
+    return result;
+}
+
+#define printf(...) sb_usb_log_printf(stdout, __VA_ARGS__)
+#define fprintf(stream, ...) sb_usb_log_printf((stream), __VA_ARGS__)
 
 void sb_usb_log_libusb_error(const char *operation, int status_code)
 {
