@@ -1,0 +1,43 @@
+#ifndef SCANBRO_DEVICE_TEST_PREVIEW_ATTEMPT_DATA_H
+#define SCANBRO_DEVICE_TEST_PREVIEW_ATTEMPT_DATA_H
+
+#include "preview_attempt_shared.h"
+
+extern const preview_control_step kPreviewInitialControlSteps[];
+extern const size_t kPreviewInitialControlStepCount;
+
+extern const preview_control_step kPreviewTransitionControlSteps[];
+extern const size_t kPreviewTransitionControlStepCount;
+
+extern const preview_bulk_pair kPreviewBulkPairs[];
+extern const size_t kPreviewBulkPairCount;
+
+extern const preview_pointer_step kPreviewPointerSteps[];
+extern const size_t kPreviewPointerStepCount;
+extern const uint16_t kPreviewPointerPollIndices[4];
+
+extern const preview_state_poll_step kPreview03TransitionPollSteps[5];
+extern const preview_state_poll_step kPreview03ReadinessPollSteps[4];
+
+extern const preview_state_write_step kPreview03Write6B87Step;
+extern const preview_state_write_step kPreview03Write0141Step;
+extern const preview_state_write_step kPreview03Write0D01PreStep;
+extern const preview_state_write_step kPreview03Write0D01Step;
+extern const preview_state_write_step kPreview03Write0FFFStep;
+extern const preview_state_write_step kPreview03Write0140Step;
+extern const preview_state_write_step kPreview03Write0C00Step;
+extern const preview_state_write_step kPreview03Write6EFFGpioProfilePrimeStep;
+extern const preview_state_write_step kPreview03Write6C00GpioProfileStep;
+extern const preview_state_write_step kPreview03Write6B02GpioProfileStep;
+extern const preview_state_write_step kPreview03Write6CF9GpioProfileStep;
+extern const preview_state_write_step kPreview03Write6D20GpioProfileStep;
+extern const preview_state_write_step kPreview03Write6EFFGpioProfileFinalStep;
+extern const preview_state_write_step kPreview03Write6F00GpioProfileStep;
+extern const preview_state_write_step kPreview03Write6CF0Step;
+extern const unsigned int kPreview03Write6CGpio10PreArmFrame;
+extern const uint8_t kPreview03Reg6CGpio10Mask;
+extern const preview_state_write_step kPreview03PointerWriteStep;
+extern const unsigned int kPreview03BulkFrameHints[2];
+extern const size_t kPreview03BulkFrameHintCount;
+
+#endif
