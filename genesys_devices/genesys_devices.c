@@ -2140,6 +2140,10 @@ static Genesys_Model canon_lide_220_model = {
  * Invariants expected by the backend:
  * - This descriptor must stay internally coherent: chipset, profile IDs, resolution geometry, and
  *   flags must describe one physical scanner behavior model, not a mixed composite.
+ *
+ * Definition-location note:
+ * - The cmd-set assigned for this model is created in [genesys_gl847.c]
+ *   (`gl847_cmd_set`) and installed by `sanei_gl847_init_cmd_set()`.
  */
 static Genesys_Model canon_5600f_model = {
   "canon-5600f",                /* Name */
@@ -3693,6 +3697,11 @@ static Genesys_Model canon_formula101_model = {
 
 
 static Genesys_USB_Device_Entry genesys_usb_device_list[] = {
+  /*
+   * RE_DOC_NOTE:
+   * This list is effectively the root router for the whole backend. Every
+   * downstream lifecycle assumption starts from this one mapping decision.
+   */
   /* GL646 devices */
   {0x03f0, 0x0901, &hp2300c_model},
   {0x03f0, 0x0a01, &hp2400c_model},

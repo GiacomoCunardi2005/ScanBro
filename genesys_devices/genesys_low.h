@@ -466,6 +466,16 @@ typedef struct Genesys_Calibration_Cache  Genesys_Calibration_Cache;
  * same command set, but may have different optical resolution and other
  * parameters.
  */
+/*
+ * RE_DOC_NOTE:
+ * `Genesys_Command_Set` is the runtime state-machine contract.
+ *
+ * Practical implication:
+ * - During debugging, identify which concrete table instance was assigned to
+ *   `model->cmd_set` before reasoning about any register sequence.
+ * - Same high-level operation (`begin_scan`, `feed`, `offset_calibration`)
+ *   can map to very different causal write orders across ASIC files.
+ */
 typedef struct Genesys_Command_Set
 {
   /** @name Identification */
@@ -621,6 +631,13 @@ typedef struct Genesys_Model
   SANE_String_Const model;
 
   SANE_Int asic_type;		/* ASIC type gl646 or gl841 */
+  /*
+   * Function table chosen during model initialization.
+   * Definition location depends on ASIC:
+   * - GL841 -> [genesys_gl841.c] (`gl841_cmd_set`)
+   * - GL847 -> [genesys_gl847.c] (`gl847_cmd_set`)
+   * - Other ASIC families are declared here but implemented upstream.
+   */
   Genesys_Command_Set *cmd_set;	/* pointers to low level functions */
 
   SANE_Int xdpi_values[MAX_RESOLUTIONS];	/* possible x resolutions */

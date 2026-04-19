@@ -384,6 +384,14 @@ enum
 
 #define INITREG(adr,val) {dev->reg[index].address=adr;dev->reg[index].value=val;index++;}
 
+/*
+ * RE_DOC_NOTE:
+ * `INITREG` is used while building the canonical startup register image in
+ * [genesys_gl841.c] (`gl841_init_registers`). The call order is meaningful
+ * because later code relies on deterministic index-to-address lookup through
+ * the `reg_0x..` enum slots.
+ */
+
 /**
  * prototypes declaration in case of unit testing
  */

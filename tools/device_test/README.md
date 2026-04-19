@@ -127,6 +127,7 @@ Debug workflow for `--preview-attempt-03`:
   - `6cf0` on the `0x6C22=8355` branch was deferred until `0x6B22` is observed as `8755`, so it no longer fires in iter 1 while `0x6B22` is still `0055`.
   - confirmed in latest log: iter 1 summary reports `6cf0:no`; iter 2 shows `0x6B22 response=8755` followed by `iter=2 frame=2645 action=write 6cf0 payload=6cf0`.
   - confirmed remaining blocker: even with corrected sequencing, `0x6C22` remains `8355` (`seen_6c22_f155=no`, `seen_6c22_f055=no`) and phase-1 still fails at iteration cap with `bytes saved before failure: 0`.
+- Latest canonical log check (`tools/device_test/logs/device_test.latest.log`) confirms the same terminal profile with all current phase-1 writes active (`0c00`, `0d01-pre`, `6b87`, `0141`, `0d01`, `0fff`, `0140`, `6cf0`) while `0x6C22` stays `8355` and failure remains `phase-1 transition gate not satisfied before iteration cap` with `bytes saved before failure: 0`.
 - Next-phase direction: continue state-machine reconstruction upstream of kickoff readiness and `0x6C22` transition before revisiting pointer/bulk stages.
 
 ## Driver-State Workflow (Do Not Mix)

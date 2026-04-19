@@ -93,6 +93,12 @@
  */
 enum Genesys_Option
 {
+  /*
+   * RE_DOC_NOTE:
+   * Option ordering is a backend/frontend contract. Some frontends cache
+   * option descriptors by index, so reordering existing members can cause
+   * settings to map to the wrong control path without compile-time errors.
+   */
   OPT_NUM_OPTS = 0,
 
   OPT_MODE_GROUP,

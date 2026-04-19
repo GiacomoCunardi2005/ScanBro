@@ -3898,6 +3898,11 @@ gl841_detect_document_end (Genesys_Device * dev)
  * Ordering dependencies:
  * - Lamp and SCAN bit are asserted together with counter clear and REG0F motor
  *   start decision so first scan lines use consistent timing state.
+ *
+ * RE_DOC_NOTE:
+ * - This function is defined in [genesys_gl841.c] and referenced via
+ *   `gl841_cmd_set.begin_scan` (see end of file); declarations in headers are
+ *   unit-test exposure only.
  */
 #ifndef UNIT_TESTING
 static
@@ -6513,6 +6518,13 @@ static Genesys_Command_Set gl841_cmd_set = {
   NULL,
   NULL
 };
+
+/*
+ * RE_DOC_NOTE:
+ * This table is the authoritative callback map for GL841 runtime behavior.
+ * Any mismatch between expected lifecycle and observed behavior should first
+ * validate this binding before analyzing individual functions.
+ */
 
 SANE_Status
 sanei_gl841_init_cmd_set (Genesys_Device * dev)

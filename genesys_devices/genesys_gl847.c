@@ -1986,6 +1986,11 @@ gl847_stop_action (Genesys_Device * dev)
  * 3. Set REG01_SCAN: mark the register set as scan-active.
  * 4. Write REG0F (1 if start_motor, else 0): commit motor run/idle decision for this start.
  *
+ * RE_DOC_NOTE for current 5600F debugging:
+ * - A run can show `6b87` and `6cf0` writes executed while `0x6C22` remains
+ *   at `8355`. This means write eligibility alone is insufficient; upstream
+ *   state convergence before this edge sequence is still required.
+ *
  * Preconditions:
  * - Motor/sensor/GPIO registers were previously programmed (for example by
  *   gl847_init_scan_regs() and gl847_init_motor_regs_scan()).
@@ -4096,6 +4101,13 @@ static Genesys_Command_Set gl847_cmd_set = {
   gl847_boot,
   NULL
 };
+
+/*
+ * RE_DOC_NOTE:
+ * If a function is declared in `genesys_low.h` but behavior appears missing
+ * here, verify whether it is a shared `sanei_genesys_*` core helper defined
+ * outside this folder rather than a GL847-local callback.
+ */
 
 SANE_Status
 sanei_gl847_init_cmd_set (Genesys_Device * dev)

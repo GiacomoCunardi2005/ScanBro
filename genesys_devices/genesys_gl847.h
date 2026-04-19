@@ -554,6 +554,12 @@ typedef struct
   uint8_t ra9;
 } Gpio_Profile;
 
+/*
+ * RE_DOC_NOTE:
+ * These values are not generic defaults; they model board wiring for each
+ * product family. Applying a wrong row can keep status polling "working" while
+ * lamp/motor side lines are electrically wrong.
+ */
 static Gpio_Profile gpios[]={
     { GPO_CANONLIDE200, 0x02, 0xf9, 0x20, 0xff, 0x00, 0x04, 0x04, 0x00, 0x00},
     { GPO_CANONLIDE700, 0x06, 0xdb, 0xff, 0xff, 0x80, 0x15, 0x07, 0x20, 0x10},
@@ -576,6 +582,11 @@ typedef struct
   uint8_t re7;
 } Memory_layout;
 
+/*
+ * Memory map profile per model.
+ * These constants define shading/data AHB windows consumed later by
+ * `gl847_send_shading_data` and bulk-read path in [genesys_gl847.c].
+ */
 static Memory_layout layouts[]={
 	/* LIDE 100 */
 	{

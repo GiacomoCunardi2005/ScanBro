@@ -1,5 +1,12 @@
 # Genesys GL847 Architecture And Interaction Map (5600F-focused)
 
+Note:
+
+- This file remains the focused GL847/5600F debug map.
+- A full-folder cross-file map is now available at:
+  - `docs/reverse_engineering/genesys_devices_full_architecture_map.md`
+  - it covers all files in `genesys_devices` (including `.h` contracts) and full lifecycle interactions.
+
 ## Scope of this map
 
 This document covers the Genesys files used in the current `0x6C22` transition debugging path:
