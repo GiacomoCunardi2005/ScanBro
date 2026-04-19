@@ -567,13 +567,12 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=3 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=3 6cf0 trigger: gate met (6b22=8755 0122=4055 0d22=0055 6c22=8355 seen_f155=no mode=literal-6cf0)
-[preview-attempt-03][phase-1-transition] iter=3 frame=2645 action=write 6cf0 (capture-literal consume) payload=6cf0 source_6c=0x83
+[preview-attempt-03][phase-1-transition] iter=3 frame=2645 action=write 6c gpio10 consume (rmw clear) payload=6c81 source_6c=0x83
 [preview-attempt] frame 2645 control OUT request=0x04 value=0x0083 index=0x0000 len=2
 [scanbro-usb] vendor control OUT (8 bytes)
   0000: 40 04 83 00 00 00 02 00 
 [scanbro-usb] control OUT payload (2 bytes)
-  0000: 6c f0 
+  0000: 6c 81 
 [scanbro-usb] vendor control OUT transferred 2 bytes
 [preview-attempt-03][phase-1-transition] iter=3 0140 emit reason: pre-kickoff gate met (0d01-pre=yes 6b22=8755 0122=4055 6c22=8355 6cf0=yes 0fff=no attempts=3)
 [preview-attempt-03][phase-1-transition] iter=3 frame=2653 action=write 0140 payload=0140
@@ -728,20 +727,19 @@ Interface claim succeeded.
   0000: 00 55 
 [preview-attempt-03][phase-1-transition] iter=3 frame=2673 post-0140 0x0D22 response=0055
 [preview-attempt-03][phase-1-transition] iter=3 post-0140 snapshot=5/5 6c22=8355 6b22=8755 0122=4055 0d22=0055
-[preview-attempt-03][phase-1-transition] iter=3 post-0140 no REG6C progression after 5 snapshots (last_6c22=8355 last_6b22=8755 last_0122=4055 last_0d22=0055); expected transition toward f155/f055
-[preview-attempt-03][phase-1-transition] iter=3 frame=2751 action=write 0141 payload=0141
-[preview-attempt] frame 2751 control OUT request=0x04 value=0x0083 index=0x0000 len=2
-[scanbro-usb] vendor control OUT (8 bytes)
-  0000: 40 04 83 00 00 00 02 00 
-[scanbro-usb] control OUT payload (2 bytes)
-  0000: 01 41 
-[scanbro-usb] vendor control OUT transferred 2 bytes
 [preview-attempt-03][phase-1-transition] iter=3 frame=2755 action=write 0d01 payload=0d01
 [preview-attempt] frame 2755 control OUT request=0x04 value=0x0083 index=0x0000 len=2
 [scanbro-usb] vendor control OUT (8 bytes)
   0000: 40 04 83 00 00 00 02 00 
 [scanbro-usb] control OUT payload (2 bytes)
   0000: 0d 01 
+[scanbro-usb] vendor control OUT transferred 2 bytes
+[preview-attempt-03][phase-1-transition] iter=3 frame=2751 action=write 0141 payload=0141
+[preview-attempt] frame 2751 control OUT request=0x04 value=0x0083 index=0x0000 len=2
+[scanbro-usb] vendor control OUT (8 bytes)
+  0000: 40 04 83 00 00 00 02 00 
+[scanbro-usb] control OUT payload (2 bytes)
+  0000: 01 41 
 [scanbro-usb] vendor control OUT transferred 2 bytes
 [preview-attempt-03][phase-1-transition] iter=3 frame=2759 action=write 0fff payload=0fff
 [preview-attempt] frame 2759 control OUT request=0x04 value=0x0083 index=0x0000 len=2

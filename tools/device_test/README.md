@@ -132,8 +132,36 @@ Debug workflow for `--preview-attempt-03`:
   - confirmed in latest real run: `iter=2 frame=2645 action=write 6c gpio10 consume (rmw clear) payload=6c81 source_6c=0x83`.
   - confirmed state fact from the same run: `0x6C22=8355` already has GPIO10 (`0x02`) high, so no separate pre-arm write was needed (`6c10-pre:yes` by observed state, not by an extra write).
   - confirmed remaining blocker: first blocker did not move; `0x6C22` stays `8355` for all iterations, `seen_6c22_f155=no`, `seen_6c22_f055=no`, and phase-1 still fails at iteration cap with `bytes saved before failure: 0`.
-- Latest canonical log check (`tools/device_test/logs/device_test.latest.log`) confirms the same terminal profile with all current phase-1 writes active (`0c00`, `0d01-pre`, `6b87`, `0141`, `0d01`, `0fff`, `0140`, `6cf0`) while `0x6C22` stays `8355` and failure remains `phase-1 transition gate not satisfied before iteration cap` with `bytes saved before failure: 0`.
-- Next-phase direction: continue state-machine reconstruction upstream of kickoff readiness and `0x6C22` transition before revisiting pointer/bulk stages.
+- Canonical uploaded baseline log for this pass (`tools/device_test/logs/device_test.latest.log` before patch replay) showed:
+  - USB enumerate/open/claim success with endpoint tree `0x81` bulk IN, `0x02` bulk OUT, `0x83` interrupt IN
+  - phase-1 failure upstream of bulk read (`phase-1 transition gate not satisfied before iteration cap`, `bytes saved before failure: 0`)
+  - stable late state `0x0C22=0055`, `0x6B22=8755`, `0x0122=4155`, `0x0D22=0055`, `0x6C22=8355`
+  - writes `0c00/0d01-pre/gpio-profile/6c10-pre/6b87/0141/0d01/0fff/6cf0=yes`, `0140=no`, `seen_6c22_f155=no`, `seen_6c22_f055=no`
+- Follow-up targeted phase-1 patch outcome (current `main.c`):
+  - removed the hard `0140` dependency on `seen_6c22_f055`; `0140` now follows `0fff` with `0x0122` readiness (`4055` or `4155`) and an explicit `6cf0` prerequisite.
+  - added explicit block logging when `0140` is pending but blocked (`0x0122` not ready or `6cf0` missing).
+  - confirmed in rerun: `iter=4 frame=2653 action=write 0140 payload=0140`, summaries now report `0140:yes`.
+  - remaining blocker unchanged: `0x6C22` still stays `8355`, `seen_6c22_f155=no`, `seen_6c22_f055=no`, phase-1 still fails at iteration cap with `bytes saved before failure: 0`.
+- Follow-up targeted phase-1 patch outcome (post-`0140` neighborhood pass):
+  - grounded ordering fix: `0140` was still tied to `0fff` (later kickoff window), which mismatched frame hints (`6cf0@2645`, `0140@2653`, `0d01/0141/0fff@2755/2751/2759`).
+  - `0140` gate is now anchored to the immediate pre-kickoff context (`0d01-pre + 0x6B22=8755 + 0x0122 ready + 6cf0`), with explicit emit-reason logging and single-shot retry policy logging.
+  - added immediate post-`0140` instrumentation: first 5 snapshots poll `0x6C22/0x6B22/0x0122/0x0D22` with per-snapshot summary.
+  - confirmed in latest rerun: `iter=3 frame=2653 action=write 0140 payload=0140`, then 5 post snapshots all stayed at `6c22=8355`, `6b22=8755`, `0122=4055`, `0d22=0055`; no `f155/f055` observed.
+  - kickoff writes still emit after that window in the same iteration (`0d01`, `0141`, `0fff`), but phase-1 remains blocked (`seen_6c22_f155=no`, `seen_6c22_f055=no`, iteration-cap failure, `bytes saved before failure: 0`).
+- Artifact-consistency pass (2026-04-19):
+  - verified that the workspace `tools/device_test/logs/device_test.latest.log` already contained `0140` emission (`iter=3`) plus 5 immediate post-`0140` snapshots; the conflicting `0140:no` summary was stale relative to the checked artifact.
+  - rebuilt `tools/device_test/build-x64/Debug/device_test.exe` and reran `--preview-attempt-03`, so `device_test.latest.log` now reflects the current local binary from this pass.
+- Follow-up targeted phase-1 patch outcome (kickoff ordering after `0140`):
+  - reordered kickoff writes to match capture frame intent after the pre-kickoff window: `0141` -> `0d01` -> `0fff`.
+  - confirmed in regenerated latest log: `iter=3 frame=2751 action=write 0141`, then `2755 action=write 0d01`, then `2759 action=write 0fff`.
+  - result remained unchanged at the hardware gate: `0x6C22` stayed `8355`, `seen_6c22_f155=no`, `seen_6c22_f055=no`, failure still at iteration cap with `bytes saved before failure: 0`.
+- Follow-up targeted phase-1 patch outcome (REG6C consume payload alignment):
+  - grounded mismatch found: the consume edge was emitted as RMW-derived `6c81`, while the capture window uses literal `6cf0` at frame `2645`.
+  - `main.c` now emits capture-literal `6cf0` on consume, and logs the exact trigger snapshot (`6b22/0122/0d22/6c22`) with `mode=literal-6cf0`.
+  - latest log confirms `iter=3 frame=2645 action=write 6cf0 (capture-literal consume) payload=6cf0`, `0140_attempts=3`, `0140_emitted_iter=3`, `post0140_snapshots=5`.
+  - explicit post-`0140` no-progression log is now emitted when snapshots remain stuck (`6c22=8355` and no `f155`/`f055`).
+  - result is still blocked at the same gate: `0x6C22` does not move beyond `8355`, phase-1 still fails at iteration cap, `bytes saved before failure: 0`.
+- Next-phase direction: continue state-machine reconstruction around the `0x6C22` transition driver path before revisiting pointer/bulk stages.
 
 ## Driver-State Workflow (Do Not Mix)
 
