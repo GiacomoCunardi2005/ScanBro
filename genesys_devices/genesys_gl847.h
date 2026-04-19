@@ -1,6 +1,6 @@
-/* sane - Scanner Access Now Easy.
+﻿/* sane - Scanner Access Now Easy.
 
-   Copyright (C) 2010-2013 St�phane Voltz <stef.dev@free.fr>
+   Copyright (C) 2010-2013 Stéphane Voltz <stef.dev@free.fr>
 
    This file is part of the SANE package.
    
@@ -42,6 +42,20 @@
 */
 
 #include "genesys.h"
+
+/*
+ * GL847 register/profile companion header.
+ *
+ * Why this file exists:
+ * - Defines GL847 register bit fields, indexed register slots, sensor/motor
+ *   profile tables, and unit-test-visible internal entry points.
+ * - Acts as the static hardware contract consumed by `genesys_gl847.c`.
+ *
+ * Where behavior is implemented:
+ * - All `gl847_*` routines declared here are defined in [genesys_gl847.c].
+ * - Cross-ASIC generic helpers remain in backend core files declared via
+ *   [genesys_low.h].
+ */
 
 
 #ifdef UNIT_TESTING
@@ -479,6 +493,9 @@ enum
 /** set up registers for an actual scan
  *
  * this function sets up the scanner to scan in normal or single line mode
+ *
+ * Definition location:
+ * - Implemented in [genesys_gl847.c].
  */
 #ifndef UNIT_TESTING
 static
@@ -693,3 +710,4 @@ static Motor_Profile gl847_motors[]={
 /* *INDENT-ON* */
 
 /* vim: set sw=2 cino=>2se-1sn-1s{s^-1st0(0u0 smarttab expandtab: */
+

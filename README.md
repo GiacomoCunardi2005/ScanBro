@@ -318,6 +318,7 @@ ScanBro/
 
 - [ROADMAP.md](ROADMAP.md) - Complete development roadmap
 - [docs/reverse_engineering/protocol_analysis.md](docs/reverse_engineering/protocol_analysis.md) - USB protocol documentation (WIP)
+- [docs/reverse_engineering/genesys_architecture_interaction_map.md](docs/reverse_engineering/genesys_architecture_interaction_map.md) - GL847 architecture and interaction map used for reverse engineering
 - [docs/api/endpoints.md](docs/api/endpoints.md) - REST API reference (WIP)
 
 ## 🤝 Contributing

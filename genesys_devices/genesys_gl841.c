@@ -1,9 +1,9 @@
-/* sane - Scanner Access Now Easy.
+﻿/* sane - Scanner Access Now Easy.
 
    Copyright (C) 2003 Oliver Rauch
    Copyright (C) 2003, 2004 Henning Meier-Geinitz <henning@meier-geinitz.de>
    Copyright (C) 2004 Gerhard Jaeger <gerhard@gjaeger.de>
-   Copyright (C) 2004-2013 Stéphane Voltz <stef.dev@free.fr>
+   Copyright (C) 2004-2013 StÃ©phane Voltz <stef.dev@free.fr>
    Copyright (C) 2005 Philipp Schmid <philipp8288@web.de>
    Copyright (C) 2005-2009 Pierre Willenbrock <pierre@pirsoft.dnsalias.org>
    Copyright (C) 2006 Laurent Charpentier <laurent_pubs@yahoo.com>
@@ -55,6 +55,21 @@
 
 #include "genesys_gl841.h"
 
+/*
+ * GL841 ASIC backend implementation.
+ *
+ * Lifecycle role:
+ * - Builds per-operation register images (optical + motor).
+ * - Emits start/stop/feed/home transitions.
+ * - Runs warmup, shading, offset, and gain calibration loops.
+ * - Exposes all GL841 callbacks through `gl841_cmd_set`.
+ *
+ * Reverse-engineering guidance:
+ * - This file is primarily a state-driver implementation. Many status reads
+ *   are guard rails around ordered writes; treating observers as causal
+ *   drivers can misidentify blockers during protocol reconstruction.
+ */
+
 /****************************************************************************
  Low level function
  ****************************************************************************/
@@ -63,9 +78,19 @@
 /*                  Read and write RAM, registers and AFE                   */
 /* ------------------------------------------------------------------------ */
 
-/* Write to many registers */
-/* Note: There is no known bulk register write,
-   this function is sending single registers instead */
+/*
+ * Register-set commit helper for GL841.
+ *
+ * Why this function exists:
+ * - Generic code produces an in-memory register array; this helper serializes
+ *   it into USB control writes in hardware-accepted chunk sizes.
+ *
+ * Why chunking/order matters:
+ * - Firmware accepts limited register-pairs per transfer (`<=32`), so the
+ *   function preserves original register order while splitting writes.
+ * - The register array uses address `0x00` sentinel semantics, so we stop at
+ *   the first sentinel to avoid pushing uninitialized tail entries.
+ */
 static SANE_Status
 gl841_bulk_write_register (Genesys_Device * dev,
 			   Genesys_Register_Set * reg, size_t elems)
@@ -204,7 +229,7 @@ printtime(char *p) {
     gettimeofday(&t,NULL);
     dif = t.tv_sec - start_time.tv_sec;
     dif = dif*1000000 + t.tv_usec - start_time.tv_usec;
-    fprintf(stderr,"%s %lluµs\n",p,dif);
+    fprintf(stderr,"%s %lluÂµs\n",p,dif);
 }
 */
 
@@ -1396,7 +1421,17 @@ gl841_set_ad_fe (Genesys_Device * dev, uint8_t set)
   return status;
 }
 
-/* Set values of analog frontend */
+/*
+ * Frontend programming dispatcher for GL841 family.
+ *
+ * Why this function exists:
+ * - Converts logical FE actions (`init/set/powersave`) into concrete register
+ *   sequences for supported AFE variants (Canon LiDE80 path, AD path, etc.).
+ *
+ * Ordering constraint:
+ * - FE reset/programming must complete before scan start registers are armed;
+ *   otherwise first lines can be electrically invalid even if motor starts.
+ */
 static SANE_Status
 gl841_set_fe (Genesys_Device * dev, uint8_t set)
 {
@@ -1873,6 +1908,18 @@ gl841_init_motor_regs_scan(Genesys_Device * dev,
 		      int scan_power_mode,
 		      unsigned int flags)
 {
+/*
+ * Motor/timing synthesis stage for active scans.
+ *
+ * Why this function exists:
+ * - Builds slope tables, feed distances, z-mode timing, and PWM/step settings
+ *   consistent with requested resolution and exposure.
+ *
+ * Why compute-before-write structure matters:
+ * - Acceleration/deceleration and feed strategy are interdependent. Partial or
+ *   out-of-order writes can create physically unsafe or non-deterministic
+ *   motion.
+ */
     SANE_Status status;
     unsigned int fast_exposure;
     int use_fast_fed = 0;
@@ -2246,6 +2293,17 @@ gl841_init_optical_regs_scan(Genesys_Device * dev,
 			     int flags
     )
 {
+/*
+ * Optical pipeline synthesis stage.
+ *
+ * Why this function exists:
+ * - Programs sensor window/exposure/depth/filter/gamma/shading bits and keeps
+ *   software buffer geometry aligned with that hardware configuration.
+ *
+ * Postcondition:
+ * - `dev->bpl/wpl/len/dist` matches register-level stream shape expected by
+ *   read/reorder paths.
+ */
     unsigned int words_per_line;
     unsigned int end;
     unsigned int dpiset;
@@ -2583,9 +2641,20 @@ int scan_step_type=0;
   return scan_step_type;
 }
 
-/* set up registers for an actual scan
+/*
+ * End-to-end GL841 scan register synthesis.
  *
- * this function sets up the scanner to scan in normal or single line mode
+ * Why this function exists:
+ * - Coordinates optical and motor setup into one coherent register image for
+ *   normal scans, calibration scans, and single-line diagnostic reads.
+ *
+ * Preconditions:
+ * - Base register image is valid for the active model.
+ * - Geometric and mode arguments are already normalized by caller.
+ *
+ * Postconditions:
+ * - Read-size accounting, current-setup metadata, and register image remain
+ *   mutually consistent.
  */
 GENESYS_STATIC
 SANE_Status
@@ -3819,8 +3888,17 @@ gl841_detect_document_end (Genesys_Device * dev)
   return SANE_STATUS_GOOD;
 }
 
-/* Send the low-level scan command */
-/* todo : is this that useful ? */
+/*
+ * Ordered scan-start edge emission.
+ *
+ * Why this function exists:
+ * - Converts a prepared register image into the minimal write sequence that
+ *   transitions hardware from command state into scan state.
+ *
+ * Ordering dependencies:
+ * - Lamp and SCAN bit are asserted together with counter clear and REG0F motor
+ *   start decision so first scan lines use consistent timing state.
+ */
 #ifndef UNIT_TESTING
 static
 #endif
@@ -3880,7 +3958,14 @@ gl841_begin_scan (Genesys_Device * dev, Genesys_Register_Set * reg,
 }
 
 
-/* Send the stop scan command */
+/*
+ * Public stop-stage wrapper for GL841 lifecycle.
+ *
+ * Why this wrapper exists:
+ * - Generic orchestration expects a chipset-neutral `end_scan` callback.
+ * - Flatbed and sheetfed modes have different stop semantics; this function
+ *   keeps that policy centralized.
+ */
 #ifndef UNIT_TESTING
 static
 #endif
@@ -3913,7 +3998,16 @@ gl841_end_scan (Genesys_Device * dev, Genesys_Register_Set __sane_unused__ * reg
   return status;
 }
 
-/* Moves the slider to steps */
+/*
+ * Relative feed move helper used by scan setup and calibration flows.
+ *
+ * Why this function exists:
+ * - Performs a bounded move in motor steps while preserving register restore
+ *   behavior on failure.
+ *
+ * Postcondition:
+ * - On success, `scanhead_position_in_steps` is advanced by `steps`.
+ */
 #ifndef UNIT_TESTING
 static
 #endif
@@ -3992,7 +4086,17 @@ gl841_feed (Genesys_Device * dev, int steps)
   return SANE_STATUS_IO_ERROR;
 }
 
-/* Moves the slider to the home (top) position slowly */
+/*
+ * Controlled homing routine for GL841.
+ *
+ * Why this function exists:
+ * - Re-establishes absolute origin after scans/calibration and guards against
+ *   stale position assumptions.
+ *
+ * Reliability behavior:
+ * - Uses explicit timeout loops and fallback stop to avoid indefinite motor
+ *   run if home transition never appears.
+ */
 #ifndef UNIT_TESTING
 static
 #endif
@@ -4402,7 +4506,14 @@ gl841_init_regs_for_shading (Genesys_Device * dev)
   return SANE_STATUS_GOOD;
 }
 
-/* set up registers for the actual scan
+/*
+ * Build final runtime scan registers from user settings.
+ *
+ * Why this wrapper exists:
+ * - Converts user-facing geometry/options into movement and register arguments
+ *   for `gl841_init_scan_regs`.
+ * - Re-homes first to enforce origin assumptions used by downstream movement
+ *   calculations.
  */
 static SANE_Status
 gl841_init_regs_for_scan (Genesys_Device * dev)
@@ -4575,11 +4686,16 @@ gl841_send_gamma_table (Genesys_Device * dev)
 }
 
 
-/* this function does the led calibration by scanning one line of the calibration
-   area below scanner's top on white strip.
-
--needs working coarse/gain
-*/
+/*
+ * LED exposure calibration loop on white reference area.
+ *
+ * Why this function exists:
+ * - Determines per-channel exposure registers so captured white reference falls
+ *   into a usable dynamic range before production scans.
+ *
+ * Preconditions:
+ * - Coarse gain/offset stages must have produced a sane analog range.
+ */
 GENESYS_STATIC SANE_Status
 gl841_led_calibration (Genesys_Device * dev)
 {
@@ -4936,13 +5052,17 @@ ad_fe_offset_calibration (Genesys_Device * dev)
   return status;
 }
 
-/* this function does the offset calibration by scanning one line of the calibration
-   area below scanner's top. There is a black margin and the remaining is white.
-   sanei_genesys_search_start() must have been called so that the offsets and margins
-   are allready known.
-
-this function expects the slider to be where?
-*/
+/*
+ * FE offset calibration for GL841.
+ *
+ * Why this function exists:
+ * - Uses black/white regions in calibration strip to move AFE offsets into a
+ *   range where dark margin is above floor but white area is not clipped.
+ *
+ * Preconditions:
+ * - Start position search and calibration geometry assumptions are already
+ *   valid for the current device/profile.
+ */
 GENESYS_STATIC SANE_Status
 gl841_offset_calibration (Genesys_Device * dev)
 {
@@ -5351,14 +5471,16 @@ gl841_offset_calibration (Genesys_Device * dev)
 }
 
 
-/* alternative coarse gain calibration
-   this on uses the settings from offset_calibration and
-   uses only one scanline
- */
 /*
-  with offset and coarse calibration we only want to get our input range into
-  a reasonable shape. the fine calibration of the upper and lower bounds will
-  be done with shading.
+ * Coarse gain calibration after offset alignment.
+ *
+ * Why this function exists:
+ * - Normalizes channel amplitude using one/few scanlines so shading stage can
+ *   perform fine correction with stable input dynamic range.
+ *
+ * Division of responsibility:
+ * - Offset/gain here provide coarse analog alignment.
+ * - Shading later performs fine per-pixel correction.
  */
 GENESYS_STATIC SANE_Status
 gl841_coarse_gain_calibration (Genesys_Device * dev, int dpi)
@@ -5674,8 +5796,14 @@ gl841_is_compatible_calibration (Genesys_Device * dev,
 }
 
 /*
- * initialize ASIC : registers, motor tables, and gamma tables
- * then ensure scanner's head is at home
+ * Power-up/init entry point for GL841 command set.
+ *
+ * Why this function exists:
+ * - Creates deterministic baseline: ASIC reset, register defaults, FE init,
+ *   homing, gamma upload, and dummy warm read.
+ *
+ * Postcondition:
+ * - Device is in a known idle-but-ready state for calibration/scan setup.
  */
 static SANE_Status
 gl841_init (Genesys_Device * dev)
@@ -6192,9 +6320,16 @@ gl841_search_strip (Genesys_Device * dev, SANE_Bool forward, SANE_Bool black)
   return status;
 }
 
-/**
- * Send shading calibration data. The buffer is considered to always hold values
- * for all the channels.
+/*
+ * Upload shading coefficients to ASIC memory.
+ *
+ * Why this function exists:
+ * - Converts full-line calibration buffer into hardware SHDAREA-aligned
+ *   segments and pushes them to memory banks used by correction engine.
+ *
+ * Ordering constraint:
+ * - Must run after scan registers define active STRPIXEL/ENDPIXEL/DPISET,
+ *   because coefficient cropping/decimation depends on those values.
  */
 GENESYS_STATIC
 SANE_Status
@@ -6313,7 +6448,13 @@ gl841_send_shading_data (Genesys_Device * dev, uint8_t * data, int size)
 }
 
 
-/** the gl841 command set */
+/*
+ * GL841 vtable binding used by generic backend orchestration.
+ *
+ * Why this object matters:
+ * - It is the dispatch contract that maps lifecycle phases (init, calibration,
+ *   scan start/stop, data path, sheetfed hooks) to GL841 implementations.
+ */
 static Genesys_Command_Set gl841_cmd_set = {
   "gl841-generic",		/* the name of this set */
 
@@ -6376,8 +6517,11 @@ static Genesys_Command_Set gl841_cmd_set = {
 SANE_Status
 sanei_gl841_init_cmd_set (Genesys_Device * dev)
 {
+  /* Definition location note for header declarations:
+   * - `sanei_gl841_init_cmd_set` is implemented here in [genesys_gl841.c]. */
   dev->model->cmd_set = &gl841_cmd_set;
   return SANE_STATUS_GOOD;
 }
 
 /* vim: set sw=2 cino=>2se-1sn-1s{s^-1st0(0u0 smarttab expandtab: */
+

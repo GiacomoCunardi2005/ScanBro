@@ -49,6 +49,19 @@
 
 #include "genesys_low.h"
 
+/*
+ * Backend-level public header role:
+ * - Defines frontend/session-facing option IDs and the high-level scanner
+ *   session object (`Genesys_Scanner`) used by the SANE entry points.
+ * - This file intentionally does not carry register-level protocol logic;
+ *   that logic is split across `genesys_low.h` + ASIC-specific sources.
+ *
+ * Lifecycle placement:
+ * - Frontend code prepares option values here.
+ * - Runtime conversion of those options into hardware state happens later
+ *   through command-set functions selected in `genesys_devices.c`.
+ */
+
 #ifndef PATH_MAX
 # define PATH_MAX	1024
 #endif
@@ -157,6 +170,9 @@ typedef struct Genesys_Scanner
 } Genesys_Scanner;
 
 #ifdef UNIT_TESTING
+/* These helpers are declared here for unit tests but are defined in
+ * upstream backend core sources (`genesys.c` in the full SANE tree),
+ * not in this `genesys_devices` folder snapshot. */
 SANE_Status genesys_dark_white_shading_calibration (Genesys_Device * dev);
 char *calibration_filename(Genesys_Device *currdev);
 void add_device(Genesys_Device *dev);

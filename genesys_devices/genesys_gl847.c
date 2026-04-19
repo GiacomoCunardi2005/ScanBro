@@ -1,6 +1,6 @@
-/* sane - Scanner Access Now Easy.
+﻿/* sane - Scanner Access Now Easy.
 
-   Copyright (C) 2010-2013 Stéphane Voltz <stef.dev@free.fr>
+   Copyright (C) 2010-2013 StÃ©phane Voltz <stef.dev@free.fr>
 
 
    This file is part of the SANE package.
@@ -46,6 +46,23 @@
 #define BACKEND_NAME genesys_gl847
 
 #include "genesys_gl847.h"
+
+/*
+ * GL847 ASIC backend implementation.
+ *
+ * Lifecycle role:
+ * 1. Build/maintain register sets for optical + motor + GPIO domains.
+ * 2. Emit ordered control transitions that move ASIC from idle to scan.
+ * 3. Run calibration/shading procedures that establish valid first-read data.
+ * 4. Expose callbacks through `gl847_cmd_set` so generic backend code can
+ *    drive this ASIC without hardcoding register semantics.
+ *
+ * Reverse-engineering note:
+ * - This file contains both state drivers (writes that cause transitions) and
+ *   observers (poll/read helpers). Distinguish them when debugging stalls:
+ *   accepted writes do not guarantee the required upstream preconditions were
+ *   present for the hardware FSM to advance.
+ */
 
 /****************************************************************************
  Low level function
@@ -413,6 +430,16 @@ gl847_bulk_full_size (void)
  * fills register startup values for registers reused across scans.
  * Those that are rarely modified or not modified are written
  * individually.
+ *
+ * Why this function exists:
+ * - Creates a coherent, known baseline so later per-scan functions can safely
+ *   patch only deltas (window, exposure, motion) instead of rebuilding every
+ *   electrical control bit each time.
+ *
+ * Ordering assumptions:
+ * - Must run before GPIO and memory-layout setup (`gl847_init_gpio`,
+ *   `gl847_init_memory_layout`) because those routines assume register slots
+ *   are initialized and writable.
  * @param dev device structure holding register set to initialize
  */
 static void
@@ -728,6 +755,22 @@ gl847_set_ad_fe (Genesys_Device * dev, uint8_t set)
   return status;
 }
 
+/*
+ * Why this helper exists:
+ * - GL847 home-sensor sampling is affected by the GPIO10 line polarity after scan activity.
+ * - Different Canon GPO profiles wire that line with opposite active semantics.
+ *
+ * What state this function enforces:
+ * - It drives REG6C.GPIO10 to the model-specific idle polarity so later HOMSNR reads are stable.
+ *
+ * Why the read-modify-write sequence matters:
+ * - REG6C carries multiple unrelated GPIO bits; we must preserve all non-GPIO10 bits.
+ * - Direct literal writes would risk clobbering lamp/motor side-band lines configured elsewhere.
+ *
+ * Invariants and assumptions:
+ * - Must be called only after the device has been initialized and REG6C is readable.
+ * - Postcondition is polarity-correct GPIO10 for the current gpo_type, not an arbitrary value.
+ */
 static SANE_Status
 gl847_homsnr_gpio(Genesys_Device *dev)
 {
@@ -749,7 +792,20 @@ SANE_Status status=SANE_STATUS_GOOD;
   return status;
 }
 
-/* Set values of analog frontend */
+/*
+ * Frontend abstraction gate.
+ *
+ * Why this function exists:
+ * - Keeps the rest of the scan pipeline independent from concrete AFE vendor
+ *   wiring. Callers ask for logical actions (`AFE_INIT`, `AFE_SET`,
+ *   `AFE_POWER_SAVE`) and this function routes to the correct implementation.
+ *
+ * Invariants:
+ * - FE type is read from REG04 each time so runtime register images and
+ *   model profile remain the source of truth.
+ * - Unsupported FE types fail explicitly instead of silently writing a wrong
+ *   register layout.
+ */
 static SANE_Status
 gl847_set_fe (Genesys_Device * dev, uint8_t set)
 {
@@ -777,7 +833,34 @@ gl847_set_fe (Genesys_Device * dev, uint8_t set)
 }
 
 
-/** @brief set up motor related register for scan
+/*
+ * Purpose in the scan lifecycle:
+ * - This is the motor/timing programming stage executed before scan start.
+ * - It prepares slope tables, feed distances, PWM, step counts, and z-mode timing so that
+ *   the subsequent begin-scan command can transition hardware into a data-producing state.
+ *
+ * Why this function is structured as "compute first, then commit":
+ * - Most values depend on coupled constraints (resolution, exposure, motor step mode, flags).
+ * - Register programming must remain internally consistent; mixing old/new table parameters can
+ *   produce wrong acceleration ramps or unsafe feed distances.
+ *
+ * Hardware/protocol state targeted here:
+ * - REG02, motor counters, slope RAM tables, and REG6C GPIO bits are configured so the ASIC has
+ *   a valid motion plan and effective scan mode before REG01/REG0F are toggled in begin_scan().
+ *
+ * Ordering dependencies relevant to this reverse-engineering task:
+ * - REG6C is read-modify-written for step-mode GPIO13 first, then read again and GPIO10 is set.
+ * - That GPIO10 high state is a precondition for later begin_scan() logic that explicitly clears
+ *   GPIO10 to create a start edge; without this high->low transition, downstream status gates can
+ *   remain stuck.
+ *
+ * Preconditions:
+ * - "reg" already contains a coherent base profile for this model/sensor.
+ * - scan geometry/exposure arguments represent the exact operation to execute.
+ *
+ * Postconditions/invariants:
+ * - Motion and timing registers describe one self-consistent scan trajectory.
+ * - REG6C reflects model-safe GPIO bits plus effective-scan GPIO10 high.
  */
 static SANE_Status
 gl847_init_motor_regs_scan (Genesys_Device * dev,
@@ -1020,6 +1103,21 @@ gl847_init_motor_regs_scan (Genesys_Device * dev,
    0x35,0x36,0x37 MAXWD [25:2] (>>2)
    0x38,0x39      LPERIOD
    0x34           DUMMY
+ *
+ * Why this function is critical:
+ * - It defines the optical data path contract for one scan: pixel window,
+ *   bit depth, channel packing, shading/gamma enables, lamp state, and FE
+ *   exposure values.
+ *
+ * Why ordering matters:
+ * - FE programming is applied before enabling scan/shading bits so analog
+ *   signal chain is valid when scan start edges are emitted later.
+ * - Window registers are set only after sensor profile/segment math is
+ *   resolved; otherwise data-path byte counts and AHB layout diverge.
+ *
+ * Postconditions:
+ * - Register set and software-side buffer geometry (`dev->bpl/wpl/len/dist`)
+ *   describe the same byte stream.
  */
 static SANE_Status
 gl847_init_optical_regs_scan (Genesys_Device * dev,
@@ -1277,9 +1375,27 @@ gl847_init_optical_regs_scan (Genesys_Device * dev,
   return SANE_STATUS_GOOD;
 }
 
-/* set up registers for an actual scan
+/*
+ * End-to-end scan register synthesis.
  *
- * this function sets up the scanner to scan in normal or single line mode
+ * Why this function exists:
+ * - Combines optical-domain setup (`gl847_init_optical_regs_scan`) and motor
+ *   domain setup (`gl847_init_motor_regs_scan`) into one coherent per-scan
+ *   register image.
+ *
+ * Why this ordering is mandatory:
+ * - Optical setup must establish bytes-per-line and exposure timing before
+ *   motor z-mode math is finalized.
+ * - Motor setup pre-arms start-state GPIO edges consumed later by
+ *   `gl847_begin_scan`.
+ *
+ * Preconditions:
+ * - `reg` starts from a valid baseline profile (boot/init already executed).
+ * - geometric arguments reflect desired user scan window and mode.
+ *
+ * Postconditions:
+ * - `dev->read_*` and `dev->current_setup` fields match programmed register
+ *   semantics and can be trusted by read/reorder code.
  */
 #ifndef UNIT_TESTING
 static
@@ -1773,6 +1889,14 @@ gl847_stop_action (Genesys_Device * dev)
 
   DBGSTART;
 
+  /*
+   * Why stop is not a single write:
+   * - GL847 can be in intermediate transport states where command mode is not
+   *   yet restored even if SCAN bit was cleared.
+   * - We therefore clear scan state, then poll REG40 + status until data/motor
+   *   flags are both idle.
+   */
+
   /* post scan gpio : without that HOMSNR is unreliable */
   gl847_homsnr_gpio(dev);
   status = sanei_genesys_get_status (dev, &val);
@@ -1847,7 +1971,29 @@ gl847_stop_action (Genesys_Device * dev)
   return SANE_STATUS_IO_ERROR;
 }
 
-/* Send the low-level scan command */
+/*
+ * Start-scan state transition gate.
+ *
+ * Why this function exists:
+ * - It performs the minimal ordered register sequence that arms scanning and (optionally)
+ *   starts the motor after all setup registers have already been programmed.
+ *
+ * Exact order and why it matters:
+ * 1. Clear REG6C.GPIO10 (model-dependent): consumes the pre-armed GPIO10 high state as a
+ *    deliberate edge transition. This edge is part of the hardware start handshake.
+ * 2. Write REG0D CLRLNCNT then CLRMCNT: reset line/motor counters so stale counts do not leak
+ *    into the new scan attempt.
+ * 3. Set REG01_SCAN: mark the register set as scan-active.
+ * 4. Write REG0F (1 if start_motor, else 0): commit motor run/idle decision for this start.
+ *
+ * Preconditions:
+ * - Motor/sensor/GPIO registers were previously programmed (for example by
+ *   gl847_init_scan_regs() and gl847_init_motor_regs_scan()).
+ * - Device is in an initialized transport state and register IO is functional.
+ *
+ * Postconditions:
+ * - Scan state machine is entered with counters reset and GPIO/start edges emitted in order.
+ */
 #ifndef UNIT_TESTING
 static
 #endif
@@ -1895,7 +2041,14 @@ gl847_begin_scan (Genesys_Device * dev, Genesys_Register_Set * reg,
 }
 
 
-/* Send the stop scan command */
+/*
+ * Public stop-stage wrapper for scan lifecycle.
+ *
+ * Why this wrapper exists:
+ * - Generic backend code calls a chipset-neutral "end scan" callback. Here
+ *   we map that request onto the correct GL847 stop semantics and preserve
+ *   sheetfed vs flatbed differences.
+ */
 #ifndef UNIT_TESTING
 static
 #endif
@@ -1966,12 +2119,23 @@ SANE_Status gl847_rewind(Genesys_Device * dev)
   return SANE_STATUS_GOOD;
 }
 
-/** Park head
- * Moves the slider to the home (top) position slowly
- * @param dev device to park
- * @param wait_until_home true to make the function waiting for head
- * to be home before returning, if fals returne immediately
- * @returns SANE_STATUS_GOO on success */
+/**
+ * Park head by running a controlled reverse move until home sensor re-latches.
+ *
+ * Why this function exists:
+ * - Many calibration/readiness paths assume scanhead origin is known. This
+ *   routine rebuilds that invariant after scans or failed transitions.
+ *
+ * Why sequence/order matters:
+ * - Home sensor is sampled twice due known transient behavior right after GPIO
+ *   changes; acting on first sample alone can produce false-home states.
+ * - A dedicated reverse-motion register image is written before start action,
+ *   then status is polled with timeout to avoid indefinite motor run.
+ *
+ * Postconditions:
+ * - On success, `scanhead_position_in_steps` is reset to zero and scanner is
+ *   in a stable origin-referenced state.
+ */
 GENESYS_STATIC
 SANE_Status
 gl847_slow_back_home (Genesys_Device * dev, SANE_Bool wait_until_home)
@@ -2121,8 +2285,20 @@ gl847_slow_back_home (Genesys_Device * dev, SANE_Bool wait_until_home)
   return SANE_STATUS_GOOD;
 }
 
-/* Automatically set top-left edge of the scan area by scanning a 200x200 pixels
-   area at 600 dpi from very top of scanner */
+/*
+ * Detect scan reference strip and update top-left origin.
+ *
+ * Why this function exists:
+ * - Some models need measured origin alignment rather than static mechanical
+ *   assumptions before normal scans.
+ *
+ * How it works:
+ * - Builds a small no-shading scan, acquires data, then delegates reference
+ *   extraction to generic helper logic.
+ *
+ * Precondition:
+ * - Device is initialized and can execute start/read/stop scan sequence.
+ */
 static SANE_Status
 gl847_search_start_position (Genesys_Device * dev)
 {
@@ -2392,7 +2568,17 @@ gl847_feed (Genesys_Device * dev, unsigned int steps)
 }
 
 
-/* init registers for shading calibration */
+/*
+ * Prepare one-shot register image for shading capture.
+ *
+ * Why this exists:
+ * - Shading calibration requires a dedicated capture geometry and disabled
+ *   correction flags so raw reference coefficients can be computed.
+ *
+ * Invariant created:
+ * - `dev->calib_reg` becomes the canonical calibration register image for
+ *   subsequent shading read and coefficient upload stages.
+ */
 static SANE_Status
 gl847_init_regs_for_shading (Genesys_Device * dev)
 {
@@ -2457,7 +2643,13 @@ gl847_init_regs_for_shading (Genesys_Device * dev)
   return SANE_STATUS_GOOD;
 }
 
-/** @brief set up registers for the actual scan
+/*
+ * Build final runtime scan registers from user settings.
+ *
+ * Why this layer exists on top of `gl847_init_scan_regs`:
+ * - Converts user-space settings (mm, dpi, mode) into mechanical movement,
+ *   optional pre-feed, and final register arguments.
+ * - Preserves scanhead position accounting between consecutive operations.
  */
 static SANE_Status
 gl847_init_regs_for_scan (Genesys_Device * dev)
@@ -2573,9 +2765,17 @@ gl847_init_regs_for_scan (Genesys_Device * dev)
 }
 
 
-/**
- * Send shading calibration data. The buffer is considered to always hold values
- * for all the channels.
+/*
+ * Upload computed shading coefficients to ASIC RAM banks.
+ *
+ * Why this function exists:
+ * - Hardware correction engine expects channel-specific coefficient blocks in
+ *   fixed AHB regions; this stage marshals software calibration output into
+ *   that layout.
+ *
+ * Ordering constraints:
+ * - Uses current STRPIXEL/ENDPIXEL/DPISET to crop and decimate the full-width
+ *   calibration buffer so uploaded coefficients match active SHDAREA window.
  */
 static SANE_Status
 gl847_send_shading_data (Genesys_Device * dev, uint8_t * data, int size)
@@ -2678,10 +2878,17 @@ gl847_send_shading_data (Genesys_Device * dev, uint8_t * data, int size)
   return status;
 }
 
-/** @brief calibrates led exposure
- * Calibrate exposure by scanning a white area until the used exposure gives
- * data white enough.
- * @param dev device to calibrate
+/*
+ * Closed-loop LED exposure calibration.
+ *
+ * Why this function exists:
+ * - Finds per-channel exposure values that place white reference data in a
+ *   target dynamic range before normal scans.
+ *
+ * Why iterative structure matters:
+ * - Each loop writes new exposure registers, scans one line, computes average,
+ *   then adjusts exposure bounds. This converges on hardware-specific lamp and
+ *   sensor drift conditions instead of assuming static constants.
  */
 static SANE_Status
 gl847_led_calibration (Genesys_Device * dev)
@@ -2859,8 +3066,26 @@ gl847_led_calibration (Genesys_Device * dev)
   return status;
 }
 
-/**
- * set up GPIO/GPOE for idle state
+/*
+ * GPIO profile application for model idle baseline.
+ *
+ * Why this exists:
+ * - Different GL847-based products wire lamps, motors, TPU signals, and sensor enables to
+ *   different GPIO/GPOE mappings. A per-model profile must be applied before higher-level
+ *   scan logic can assume stable semantics.
+ *
+ * Why the write ordering matters:
+ * - REG6C is first forced to 0x00 before loading REG6B/6C/6D/6E/6F profile values. This avoids
+ *   transiently asserting stale output levels while direction/output-enable registers change.
+ * - REG6B is programmed before the final REG6C profile value so the output-enable context is in
+ *   place before line-state values are driven.
+ *
+ * Preconditions:
+ * - dev->model->gpo_type resolves to a known entry in the gpios[] table.
+ *
+ * Postconditions:
+ * - GPIO directions and idle levels match the board wiring expected by the rest of the scan
+ *   lifecycle (lamp control, motor mode select, home sensor side channels).
  */
 static SANE_Status
 gl847_init_gpio (Genesys_Device * dev)
@@ -2900,8 +3125,19 @@ gl847_init_gpio (Genesys_Device * dev)
   return status;
 }
 
-/**
- * set memory layout by filling values in dedicated registers
+/*
+ * Program ASIC memory-map windows for shading and scan buffers.
+ *
+ * Why this exists:
+ * - AHB base/end registers define where channel buffers live. All later bulk
+ *   reads and shading uploads assume this map.
+ *
+ * Preconditions:
+ * - Correct model-specific layout entry is selected from `layouts[]`.
+ *
+ * Postcondition:
+ * - Memory bank addresses in D0..F7 match the expected per-model channel
+ *   topology used by data path and shading stages.
  */
 static SANE_Status
 gl847_init_memory_layout (Genesys_Device * dev)
@@ -2989,8 +3225,20 @@ gl847_init_memory_layout (Genesys_Device * dev)
   return status;
 }
 
-/* *
- * initialize ASIC from power on condition
+/*
+ * Power-on ASIC bootstrap sequence.
+ *
+ * Why this function exists:
+ * - Establishes deterministic hardware baseline from a cold/warm start before
+ *   any scan/calibration lifecycle function runs.
+ *
+ * Ordering requirements:
+ * 1. Optional reset edge.
+ * 2. Default register image write.
+ * 3. DRAM enable edge.
+ * 4. End-access and GPIO/memory-layout setup.
+ *
+ * Breaking this order can leave registers writable but data path unusable.
  */
 static SANE_Status
 gl847_boot (Genesys_Device * dev, SANE_Bool cold)
@@ -3048,9 +3296,17 @@ gl847_boot (Genesys_Device * dev, SANE_Bool cold)
   return SANE_STATUS_GOOD;
 }
 
-/**
- * initialize backend and ASIC : registers, motor tables, and gamma tables
- * then ensure scanner's head is at home
+/*
+ * Public GL847 init entry point used by command-set dispatcher.
+ *
+ * Definition note:
+ * - This function is exposed through `gl847_cmd_set` and called from generic
+ *   backend orchestration.
+ *
+ * Why it is intentionally thin:
+ * - Delegates to `sanei_genesys_asic_init` so common init policy remains
+ *   centralized across ASIC families while GL847-specific hooks are provided
+ *   through this file's callbacks.
  */
 #ifndef UNIT_TESTING
 static
@@ -3456,6 +3712,16 @@ gl847_offset_calibration (Genesys_Device * dev)
 
   DBGSTART;
 
+  /*
+   * Calibration strategy:
+   * - Perform a bounded binary search on FE offset code so black reference
+   *   margin average converges to an acceptable range.
+   *
+   * Why this approach:
+   * - Offset response is monotonic enough for midpoint refinement and avoids
+   *   hardcoded per-device constants.
+   */
+
   /* no gain nor offset for AKM AFE */
   RIE (sanei_genesys_read_register (dev, REG04, &reg04));
   if ((reg04 & REG04_FESET) == 0x02)
@@ -3616,6 +3882,16 @@ gl847_coarse_gain_calibration (Genesys_Device * dev, int dpi)
 
   DBG (DBG_proc, "gl847_coarse_gain_calibration: dpi = %d\n", dpi);
 
+  /*
+   * Gain calibration goal:
+   * - Measure channel response on central white area and derive coarse gain
+   *   codes that normalize channels toward target white reference.
+   *
+   * Relationship to offset calibration:
+   * - Offset is expected to be already reasonable; gain then scales each
+   *   channel while preserving dark-level alignment.
+   */
+
   /* no gain nor offset for AKM AFE */
   RIE (sanei_genesys_read_register (dev, REG04, &reg04));
   if ((reg04 & REG04_FESET) == 0x02)
@@ -3754,7 +4030,14 @@ gl847_coarse_gain_calibration (Genesys_Device * dev, int dpi)
 }
 
 
-/** the gl847 command set */
+/*
+ * GL847 vtable binding.
+ *
+ * Why this object matters:
+ * - It is the single dispatch contract consumed by generic backend code.
+ * - Callback ordering reflects full scan lifecycle: init -> calibration setup
+ *   -> scan setup/start/stop -> data path -> shading/power helpers.
+ */
 static Genesys_Command_Set gl847_cmd_set = {
   "gl847-generic",		/* the name of this set */
 
@@ -3817,8 +4100,11 @@ static Genesys_Command_Set gl847_cmd_set = {
 SANE_Status
 sanei_gl847_init_cmd_set (Genesys_Device * dev)
 {
+  /* Definition location note for header declarations:
+   * - `sanei_gl847_init_cmd_set` is implemented here in [genesys_gl847.c]. */
   dev->model->cmd_set = &gl847_cmd_set;
   return SANE_STATUS_GOOD;
 }
 
 /* vim: set sw=2 cino=>2se-1sn-1s{s^-1st0(0u0 smarttab expandtab: */
+

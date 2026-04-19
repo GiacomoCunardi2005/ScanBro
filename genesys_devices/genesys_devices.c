@@ -1,9 +1,9 @@
-/* sane - Scanner Access Now Easy.
+﻿/* sane - Scanner Access Now Easy.
 
    Copyright (C) 2003 Oliver Rauch
    Copyright (C) 2003-2005 Henning Meier-Geinitz <henning@meier-geinitz.de>
    Copyright (C) 2004, 2005 Gerhard Jaeger <gerhard@gjaeger.de>
-   Copyright (C) 2004-2013 Stéphane Voltz <stef.dev@free.fr>
+   Copyright (C) 2004-2013 StÃ©phane Voltz <stef.dev@free.fr>
    Copyright (C) 2005-2009 Pierre Willenbrock <pierre@pirsoft.dnsalias.org>
    Copyright (C) 2007 Luke <iceyfor@gmail.com>
    Copyright (C) 2010 Jack McGill <jmcgill85258@yahoo.com>
@@ -54,6 +54,29 @@
 /* ------------------------------------------------------------------------ */
 /*                     Some setup DAC and CCD tables                        */
 /* ------------------------------------------------------------------------ */
+
+/*
+ * Static model database for the entire backend.
+ *
+ * Why this file exists:
+ * - It is the authoritative mapping from USB VID:PID identity to one
+ *   `Genesys_Model`.
+ * - It binds each physical scanner family to sensor, frontend (DAC), GPIO,
+ *   motor profile IDs, geometry, and feature flags.
+ *
+ * Why ordering/consistency matters:
+ * - Probe code walks `genesys_usb_device_list` and selects exactly one model.
+ * - That model chooses the chipset command set (GL841 vs GL847, etc.), which
+ *   then determines runtime register sequencing in scan start/stop flows.
+ * - If profile IDs or flags are inconsistent, runtime code may execute valid
+ *   writes with invalid electrical assumptions (wrong GPIO polarity, wrong
+ *   motor slope family, wrong calibration requirements).
+ *
+ * Reverse-engineering invariant:
+ * - Before debugging any phase transition in ASIC code, confirm the active
+ *   VID:PID entry and model descriptor here; otherwise all causal analysis can
+ *   target the wrong backend path.
+ */
 
 /** Setup table for various scanners using a Wolfson DAC
  */
@@ -2097,6 +2120,27 @@ static Genesys_Model canon_lide_220_model = {
   400
 };
 
+/*
+ * Canon 5600F model descriptor.
+ *
+ * Why this block matters for reverse-engineering:
+ * - It is the authoritative binding between USB identity (04a9:1906 in the device list below)
+ *   and the GL847 backend command set used at runtime.
+ * - The selected CIS/DAC/GPO/MOTOR profile IDs define which low-level helper tables are used by
+ *   GPIO init, motor slope generation, lamp behavior, and calibration math.
+ *
+ * Why the field choices are important:
+ * - GENESYS_GL847 routes control flow into genesys_gl847.c, including begin_scan() and motor
+ *   register setup paths that drive REG6B/REG6C/REG0D/REG0F transitions.
+ * - GPO_CANONLIDE200 and MOTOR_CANONLIDE200 mean 5600F inherits line wiring and motion presets
+ *   from that profile family; changing these IDs would alter GPIO polarity and motor timing.
+ * - Flags such as GENESYS_FLAG_SIS_SENSOR and calibration flags influence required preconditions
+ *   before first meaningful read data is expected.
+ *
+ * Invariants expected by the backend:
+ * - This descriptor must stay internally coherent: chipset, profile IDs, resolution geometry, and
+ *   flags must describe one physical scanner behavior model, not a mixed composite.
+ */
 static Genesys_Model canon_5600f_model = {
   "canon-5600f",                /* Name */
   "Canon",                        /* Device vendor string */
@@ -3688,7 +3732,17 @@ static Genesys_USB_Device_Entry genesys_usb_device_list[] = {
   {0x07b3, 0x1300, &plustek_3800_model},
   /* GL846 devices */
   {0x1083, 0x162e, &canon_formula101_model},
-  /* GL847 devices */
+  /*
+   * GL847 devices.
+   *
+   * Runtime dependency:
+   * - Probe/open resolves VID:PID to one of these entries, then the scanner inherits the model
+   *   descriptor above. That descriptor selects the command set and lifecycle functions.
+   *
+   * For this project:
+   * - 04a9:1906 must resolve to canon_5600f_model; if this mapping changes, all conclusions about
+   *   GL847 phase ordering and register semantics become invalid for the tested hardware path.
+   */
   {0x04a9, 0x1904, &canon_lide_100_model},
   {0x04a9, 0x1905, &canon_lide_200_model},
   {0x04a9, 0x1906, &canon_5600f_model},
@@ -3704,3 +3758,4 @@ static Genesys_USB_Device_Entry genesys_usb_device_list[] = {
 
 #define MAX_SCANNERS (sizeof(genesys_usb_device_list) / \
         sizeof(genesys_usb_device_list[0]))
+

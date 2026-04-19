@@ -1,6 +1,6 @@
-/* sane - Scanner Access Now Easy.
+﻿/* sane - Scanner Access Now Easy.
 
-   Copyright (C) 2011-2013 St�phane Voltz <stef.dev@free.fr>
+   Copyright (C) 2011-2013 Stéphane Voltz <stef.dev@free.fr>
 
    This file is part of the SANE package.
 
@@ -42,6 +42,21 @@
 */
 
 #include "genesys.h"
+
+/*
+ * GL841 register/profile companion header.
+ *
+ * Why this file exists:
+ * - Encodes the hardware vocabulary (bit masks, register indexes, profile
+ *   tables) used by `genesys_gl841.c`.
+ * - Provides unit-test-visible prototypes for internal GL841 routines.
+ *
+ * Where behavior is implemented:
+ * - All `gl841_*` functions declared in this header are defined in
+ *   [genesys_gl841.c] in this folder.
+ * - Shared helper APIs they call (`sanei_genesys_*`) are declared in
+ *   [genesys_low.h] and implemented in upstream backend core files.
+ */
 
 /* Individual bits */
 #define REG01           0x01
@@ -373,6 +388,8 @@ enum
  * prototypes declaration in case of unit testing
  */
 #ifdef UNIT_TESTING
+/* Unit-test exposure of internal lifecycle functions; implementations are in
+ * [genesys_gl841.c], not in this header. */
 SANE_Status
 gl841_init_scan_regs (Genesys_Device * dev,
 		      Genesys_Register_Set * reg,
@@ -454,3 +471,4 @@ int gl841_exposure_time(Genesys_Device *dev,
                     int start,
                     int used_pixels,
                     int *scan_power_mode);
+

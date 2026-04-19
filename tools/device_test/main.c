@@ -310,10 +310,7 @@ static int preview03_run_transition_phase(
             out_result->seen_6c22_f055 = 1;
         }
 
-        if (!out_result->wrote_6cf0 &&
-            (out_result->seen_6c22_f155 ||
-             (out_result->wrote_0d01_pre &&
-              preview_response_is_two_byte_value(response_6c22, response_6c22_length, 0x83U, 0x55U))))
+        if (out_result->seen_6c22_f155 && !out_result->wrote_6cf0)
         {
             if (!preview_run_state_write_step(
                     target_handle,
@@ -3200,6 +3197,8 @@ static int preview03_run_transition_phase(
         if (!out_result->wrote_6cf0 &&
             (out_result->seen_6c22_f155 ||
              (out_result->wrote_0d01_pre &&
+              /* Keep 6cf0 tied to the latched 6B path; iter=1 writes at 6B22=0055 were accepted but inert. */
+              preview_response_is_two_byte_value(response_6b22, response_6b22_length, 0x87U, 0x55U) &&
               preview_response_is_two_byte_value(response_6c22, response_6c22_length, 0x83U, 0x55U))))
         {
             if (!preview_run_state_write_step(

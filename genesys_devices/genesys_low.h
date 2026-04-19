@@ -1,9 +1,9 @@
-/* sane - Scanner Access Now Easy.
+﻿/* sane - Scanner Access Now Easy.
 
    Copyright (C) 2003 Oliver Rauch
    Copyright (C) 2003, 2004 Henning Meier-Geinitz <henning@meier-geinitz.de>
    Copyright (C) 2004, 2005 Gerhard Jaeger <gerhard@gjaeger.de>
-   Copyright (C) 2004-2013 St�phane Voltz <stef.dev@free.fr>
+   Copyright (C) 2004-2013 Stéphane Voltz <stef.dev@free.fr>
    Copyright (C) 2005-2009 Pierre Willenbrock <pierre@pirsoft.dnsalias.org>
    Copyright (C) 2006 Laurent Charpentier <laurent_pubs@yahoo.com>
    Parts of the structs have been taken from the gt68xx backend by
@@ -50,6 +50,23 @@
 
 #ifndef GENESYS_LOW_H
 #define GENESYS_LOW_H
+
+/*
+ * Core low-level contract header for the Genesys backend.
+ *
+ * Why this file exists:
+ * - Centralizes all shared data structures used by every ASIC family
+ *   implementation (GL84x, GL124, etc.).
+ * - Defines the command-set vtable (`Genesys_Command_Set`) that connects
+ *   generic scan lifecycle code to chipset-specific implementations.
+ *
+ * Why ordering and separation matter:
+ * - `genesys_devices.c` selects one `Genesys_Model` and therefore one
+ *   command-set implementation.
+ * - Generic orchestration code assumes fields and callbacks declared here
+ *   are coherent; mixing incompatible structs/callbacks breaks scan state
+ *   transitions in ways that look like protocol failures.
+ */
 
 
 #include "../include/sane/config.h"
@@ -905,6 +922,19 @@ typedef struct {
 /*       common functions needed by low level specific functions            */
 /*--------------------------------------------------------------------------*/
 
+/*
+ * Definition map for declarations below:
+ * - Most `sanei_genesys_*` declarations are implemented in upstream backend
+ *   core C files (`genesys_low.c` / `genesys.c`) that are not included in
+ *   this trimmed `genesys_devices` snapshot.
+ * - ASIC-specific command-set initializers (`sanei_gl841_init_cmd_set`,
+ *   `sanei_gl847_init_cmd_set`, etc.) are defined in the corresponding
+ *   per-ASIC source files in this folder.
+ *
+ * Keep this distinction explicit during reverse engineering:
+ * - Missing behavior might live in backend core code, not in GL841/GL847
+ *   files, even when those files appear to contain the active scan logic.
+ */
 extern Genesys_Register_Set *sanei_genesys_get_address (Genesys_Register_Set * regs, uint16_t addr);
 
 extern SANE_Byte
@@ -1163,6 +1193,8 @@ sanei_genesys_generate_gamma_buffer(Genesys_Device * dev,
                                     uint8_t *gamma);
 
 #ifdef UNIT_TESTING
+/* Unit-test calibration helpers are declared here but defined in upstream
+ * backend core files (outside this folder snapshot). */
 SANE_Status
 genesys_send_offset_and_shading (Genesys_Device * dev,
           	                 uint8_t * data,
@@ -1232,6 +1264,11 @@ SANE_Status genesys_send_shading_coefficient (Genesys_Device *dev);
 /*---------------------------------------------------------------------------*/
 /*                ASIC specific functions declarations                       */
 /*---------------------------------------------------------------------------*/
+/* These entry points are defined in per-ASIC implementation files:
+ * - `sanei_gl841_init_cmd_set` -> [genesys_gl841.c]
+ * - `sanei_gl847_init_cmd_set` -> [genesys_gl847.c]
+ * - Other declarations map to corresponding upstream ASIC files not present
+ *   in this local subset (GL646/GL843/GL846/GL124). */
 extern SANE_Status sanei_gl646_init_cmd_set (Genesys_Device * dev);
 extern SANE_Status sanei_gl841_init_cmd_set (Genesys_Device * dev);
 extern SANE_Status sanei_gl843_init_cmd_set (Genesys_Device * dev);
@@ -1240,3 +1277,4 @@ extern SANE_Status sanei_gl847_init_cmd_set (Genesys_Device * dev);
 extern SANE_Status sanei_gl124_init_cmd_set (Genesys_Device * dev);
 
 #endif /* not GENESYS_LOW_H */
+

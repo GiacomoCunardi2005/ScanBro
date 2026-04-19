@@ -199,3 +199,9 @@ Runtime instrumentation update (2026-04-19):
 - follow-up targeted phase-1 patch: `6cf0` eligibility was widened from "`0x6C22` already `f155`" to a one-shot driver edge that can also fire when `0d01-pre` is done and `0x6C22` remains `8355`.
 - latest real run after that patch confirms the new edge is active (`iter=1 frame=2645 action=write 6cf0 payload=6cf0`, summaries show `writes=[...,6cf0:yes]`).
 - result: `0x6C22` still remains `8355` with `seen_6c22_f155=no` and `seen_6c22_f055=no`; phase-1 still fails at iteration cap with `bytes saved before failure: 0`, so the next blocker remains upstream of `REG6C` progression.
+- follow-up targeted phase-1 patch: `6cf0` was deferred on the `0x6C22=8355` path until `0x6B22` is actually observed at `8755` (instead of firing in the same iteration where `6b87` is first written while `0x6B22` is still `0055`).
+- latest real run after that patch confirms the sequencing change took effect:
+  - iter 1 summary shows `6b22=0055` and `6cf0:no`
+  - iter 2 shows `6b22=8755` then `iter=2 frame=2645 action=write 6cf0 payload=6cf0`
+- result remains unchanged at the hardware state level: `0x6C22` still stays `8355`, `seen_6c22_f155=no`, `seen_6c22_f055=no`, and failure remains `phase-1 transition gate not satisfied before iteration cap` with `bytes saved before failure: 0`.
+- interpretation update: making `6cf0` wait for the latched `0x6B22=8755` state was necessary for ordering correctness but still not sufficient to drive `0x6C22` progression.
