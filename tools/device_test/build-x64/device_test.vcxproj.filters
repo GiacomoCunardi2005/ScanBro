@@ -1,6 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <ClCompile Include="C:\Users\giaco\Desktop\ScanBro\tools\device_test\cli.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\giaco\Desktop\ScanBro\tools\device_test\probe_modes.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\giaco\Desktop\ScanBro\tools\device_test\preview_attempt03.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\giaco\Desktop\ScanBro\tools\device_test\usb_device.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="C:\Users\giaco\Desktop\ScanBro\tools\device_test\main.c">
       <Filter>Source Files</Filter>
     </ClCompile>

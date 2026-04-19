@@ -119,3 +119,4 @@ Chiudere il gap di stato della Fase 0 (transizione readiness/bulk) e formalizzar
 ## Aggiornamento documentazione
 
 - 2026-04-19: documentazione riallineata al repository e al deep research report; separati stato corrente, target architecture e assunzioni di spike.
+- 2026-04-19: refactor strutturale di `tools/device_test` completato (split di `main.c` in moduli `cli`, `usb_device`, `probe_modes` + entrypoint ridotto); log canonico invariato sul blocker Phase 0 (`0x6C22` resta `8355`, nessun `f155/f055`, `bytes saved before failure: 0`).

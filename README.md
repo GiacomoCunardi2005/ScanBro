@@ -114,7 +114,7 @@ For runtime DLL and mode details, see `tools/device_test/README.md`.
 ## Documentation
 
 - `ROADMAP.md`
-- `deep-research-report.md`
+- `data/deep-research-report.md`
 - `docs/reverse_engineering/protocol_analysis.md`
 - `docs/reverse_engineering/genesys_architecture_interaction_map.md`
 - `docs/reverse_engineering/genesys_devices_full_architecture_map.md`

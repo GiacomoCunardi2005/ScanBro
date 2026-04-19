@@ -10,6 +10,10 @@ add_subdirectory(
 )
 
 add_executable(device_test
+    cli.c
+    probe_modes.c
+    preview_attempt03.c
+    usb_device.c
     main.c
 )
 

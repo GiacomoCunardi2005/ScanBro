@@ -72,6 +72,21 @@ Optional overrides:
 tools/device_test/build-x64/Debug/device_test.exe --vid 04A9 --pid 1906
 ```
 
+## Source layout (current)
+
+- `main.c`: entrypoint and high-level mode dispatch.
+- `cli.[ch]`: argument parsing and mode selection.
+- `usb_device.[ch]`: enumeration/open/claim flow plus descriptor/interface/endpoint reporting.
+- `probe_modes.[ch]`: `--safe-probe`, `--sequence-probe`, and `--sequence-probe-extended`.
+- `preview_modes.h`: exported preview mode entrypoints.
+- `preview_attempt03.c`: preview replay implementations and phase-state logic (`--preview-attempt`, `--preview-attempt-03`).
+- `device_test_logging.h`: shared stdout/stderr tee logging macros.
+
+Notes:
+
+- This split removed orchestration/probe/device setup code from the previous monolithic `main.c`.
+- The largest remaining file is `preview_attempt03.c`; next cleanup should split phase-machine/readiness logic into dedicated modules without changing behavior.
+
 ## Runtime log files (stdout + stderr tee)
 
 `device_test` now keeps normal console output and mirrors the same output to repo-local log files.
@@ -137,7 +152,7 @@ Debug workflow for `--preview-attempt-03`:
   - phase-1 failure upstream of bulk read (`phase-1 transition gate not satisfied before iteration cap`, `bytes saved before failure: 0`)
   - stable late state `0x0C22=0055`, `0x6B22=8755`, `0x0122=4155`, `0x0D22=0055`, `0x6C22=8355`
   - writes `0c00/0d01-pre/gpio-profile/6c10-pre/6b87/0141/0d01/0fff/6cf0=yes`, `0140=no`, `seen_6c22_f155=no`, `seen_6c22_f055=no`
-- Follow-up targeted phase-1 patch outcome (current `main.c`):
+- Follow-up targeted phase-1 patch outcome (phase-machine code, now in `preview_attempt03.c`):
   - removed the hard `0140` dependency on `seen_6c22_f055`; `0140` now follows `0fff` with `0x0122` readiness (`4055` or `4155`) and an explicit `6cf0` prerequisite.
   - added explicit block logging when `0140` is pending but blocked (`0x0122` not ready or `6cf0` missing).
   - confirmed in rerun: `iter=4 frame=2653 action=write 0140 payload=0140`, summaries now report `0140:yes`.
@@ -157,10 +172,17 @@ Debug workflow for `--preview-attempt-03`:
   - result remained unchanged at the hardware gate: `0x6C22` stayed `8355`, `seen_6c22_f155=no`, `seen_6c22_f055=no`, failure still at iteration cap with `bytes saved before failure: 0`.
 - Follow-up targeted phase-1 patch outcome (REG6C consume payload alignment):
   - grounded mismatch found: the consume edge was emitted as RMW-derived `6c81`, while the capture window uses literal `6cf0` at frame `2645`.
-  - `main.c` now emits capture-literal `6cf0` on consume, and logs the exact trigger snapshot (`6b22/0122/0d22/6c22`) with `mode=literal-6cf0`.
+  - `preview_attempt03.c` now emits capture-literal `6cf0` on consume, and logs the exact trigger snapshot (`6b22/0122/0d22/6c22`) with `mode=literal-6cf0`.
   - latest log confirms `iter=3 frame=2645 action=write 6cf0 (capture-literal consume) payload=6cf0`, `0140_attempts=3`, `0140_emitted_iter=3`, `post0140_snapshots=5`.
   - explicit post-`0140` no-progression log is now emitted when snapshots remain stuck (`6c22=8355` and no `f155`/`f055`).
   - result is still blocked at the same gate: `0x6C22` does not move beyond `8355`, phase-1 still fails at iteration cap, `bytes saved before failure: 0`.
+- Refactor pass outcome (2026-04-19):
+  - `tools/device_test` now compiles from split modules (`main`, `cli`, `usb_device`, `probe_modes`, preview entry header) with behavior preserved.
+  - latest canonical artifact (`tools/device_test/logs/device_test.latest.log`) confirms the blocker is unchanged after refactor:
+  - `0140:yes` (`0140_attempts=3`, `0140_emitted_iter=3`, `post0140_snapshots=5`)
+  - `6cf0:yes` (capture-literal consume write)
+  - `0x6C22` still stuck at `8355` (`seen_6c22_f155=no`, `seen_6c22_f055=no`)
+  - terminal failure still `phase-1 transition gate not satisfied before iteration cap` with `bytes saved before failure: 0`
 - Next-phase direction: continue state-machine reconstruction around the `0x6C22` transition driver path before revisiting pointer/bulk stages.
 
 ## Driver-State Workflow (Do Not Mix)

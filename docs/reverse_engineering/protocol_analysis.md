@@ -207,10 +207,10 @@ Runtime instrumentation update (2026-04-19):
 - interpretation update: making `6cf0` wait for the latched `0x6B22=8755` state was necessary for ordering correctness but still not sufficient to drive `0x6C22` progression.
 - latest canonical check from `tools/device_test/logs/device_test.latest.log` confirms the same endpoint with full phase-1 write set active (`writes=[0c00:yes,0d01-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes]`), stable observed state (`0x6B22=8755`, `0x0122=4055`, `0x0D22=0055`, `0x6C22=8355`), and terminal failure unchanged (`phase-1 transition gate not satisfied before iteration cap`, `bytes saved before failure: 0`).
 - uploaded canonical log used as baseline for this pass showed a stricter failure shape before the latest patch (`writes=[0c00:yes,0d01-pre:yes,gpio-profile:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:no,6cf0:yes]`, stable late state `0x0C22=0055`, `0x6B22=8755`, `0x0122=4155`, `0x0D22=0055`, `0x6C22=8355`).
-- targeted phase-1 gate fix (current `main.c`): `0140` no longer requires `seen_6c22_f055`; it now gates on `0fff` completed, `0x0122` readiness (`4055`/`4155`), and `6cf0` written, with explicit block logging when prerequisites are missing.
+- targeted phase-1 gate fix (phase-machine code, now in `preview_attempt03.c`): `0140` no longer requires `seen_6c22_f055`; it now gates on `0fff` completed, `0x0122` readiness (`4055`/`4155`), and `6cf0` written, with explicit block logging when prerequisites are missing.
 - rerun confirmation after patch: `iter=4 frame=2653 action=write 0140 payload=0140`; summaries now keep `0140:yes` while `0x0122` remains `4055`.
 - remaining blocker unchanged after the `0140` fix: `0x6C22` still remains `8355`, `seen_6c22_f155=no`, `seen_6c22_f055=no`, and phase-1 still ends at iteration cap with `bytes saved before failure: 0`.
-- post-`0140` neighborhood pass (latest): grounded ordering mismatch was confirmed and corrected in `main.c`:
+- post-`0140` neighborhood pass (latest): grounded ordering mismatch was confirmed and corrected in phase-machine code (`preview_attempt03.c`):
   - previous gate tied `0140` to `0fff` (later kickoff window), while frame hints place `0140` in the immediate pre-kickoff neighborhood (`6cf0@2645`, `0140@2653` vs `0d01/0141/0fff@2755/2751/2759`).
   - `0140` now emits from `0d01-pre + 0x6B22=8755 + 0x0122 ready + 6cf0`, with explicit emit-reason and single-shot retry-policy logs.
 - latest rerun confirms:
@@ -225,6 +225,10 @@ Runtime instrumentation update (2026-04-19):
   - confirmed in regenerated latest log: order changed as intended, but `0x6C22` still remained `8355` with `seen_6c22_f155=no` and `seen_6c22_f055=no`; phase-1 still fails at iteration cap with `bytes saved before failure: 0`.
 - follow-up REG6C consume payload alignment (latest pass):
   - grounded mismatch fixed in harness: the consume edge previously used RMW-derived payload `6c81`, but the capture-aligned write at frame `2645` is literal `6cf0`.
-  - `main.c` now emits literal `6cf0` on the consume edge and logs the trigger snapshot with `mode=literal-6cf0`.
+  - `preview_attempt03.c` now emits literal `6cf0` on the consume edge and logs the trigger snapshot with `mode=literal-6cf0`.
   - latest run confirms `iter=3 frame=2645 action=write 6cf0 (capture-literal consume) payload=6cf0`, plus `0140_attempts=3`, `0140_emitted_iter=3`, `post0140_snapshots=5`.
   - immediate post-`0140` diagnostics still show no first REG6C progression (`6c22=8355` across 5 snapshots, no `f155`, no `f055`), so phase-1 remains blocked at iteration cap with `bytes saved before failure: 0`.
+- refactor pass update (2026-04-19):
+  - `tools/device_test` was split into smaller modules (`main`, `cli`, `usb_device`, `probe_modes`, preview entry header) to isolate orchestration from scan logic.
+  - grounded behavior from `tools/device_test/logs/device_test.latest.log` remained unchanged after refactor:
+  - `0140:yes`, `6cf0:yes`, `0x6C22` still `8355`, no `f155/f055`, failure still at iteration cap with `bytes saved before failure: 0`.
