@@ -16,7 +16,7 @@ Device bus=2 addr=35 vid:pid=17ef:a394 class=09 subclass=00 proto=02 configs=1
 Device bus=2 addr=46 vid:pid=046d:c24f class=00 subclass=00 proto=00 configs=1
 Device bus=1 addr=17 vid:pid=17ef:a387 class=00 subclass=00 proto=00 configs=2
 Device bus=2 addr=39 vid:pid=17ef:a38f class=00 subclass=00 proto=00 configs=1
-Device bus=1 addr=26 vid:pid=152d:0578 class=00 subclass=00 proto=00 configs=1
+Device bus=1 addr=36 vid:pid=152d:0578 class=00 subclass=00 proto=00 configs=1
 Device bus=2 addr=52 vid:pid=04a9:1906 class=ff subclass=ff proto=ff configs=1
 Device bus=1 addr=0 vid:pid=8086:7ec0 class=09 subclass=00 proto=03 configs=1
 Device bus=2 addr=40 vid:pid=17ef:a396 class=00 subclass=00 proto=00 configs=1
@@ -437,7 +437,14 @@ Interface claim succeeded.
 [scanbro-usb] control OUT payload (2 bytes)
   0000: 0d 01 
 [scanbro-usb] vendor control OUT transferred 2 bytes
-[preview-attempt-03][phase-1-transition] iter=1 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=1 frame=2747 action=write 6b87 payload=6b87
+[preview-attempt] frame 2747 control OUT request=0x04 value=0x0083 index=0x0000 len=2
+[scanbro-usb] vendor control OUT (8 bytes)
+  0000: 40 04 83 00 00 00 02 00 
+[scanbro-usb] control OUT payload (2 bytes)
+  0000: 6b 87 
+[scanbro-usb] vendor control OUT transferred 2 bytes
+[preview-attempt-03][phase-1-transition] iter=1 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:no,6b87:yes,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -450,8 +457,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=2 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=2 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -473,7 +480,14 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=2 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=2 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=2 frame=2645 action=write 6c gpio10 consume (rmw clear) payload=6c81 source_6c=0x83
+[preview-attempt] frame 2645 control OUT request=0x04 value=0x0083 index=0x0000 len=2
+[scanbro-usb] vendor control OUT (8 bytes)
+  0000: 40 04 83 00 00 00 02 00 
+[scanbro-usb] control OUT payload (2 bytes)
+  0000: 6c 81 
+[scanbro-usb] vendor control OUT transferred 2 bytes
+[preview-attempt-03][phase-1-transition] iter=2 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:no,0d01:no,0fff:no,0140:no,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -486,8 +500,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=3 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=3 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -509,7 +523,35 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=3 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=3 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=3 frame=2751 action=write 0141 payload=0141
+[preview-attempt] frame 2751 control OUT request=0x04 value=0x0083 index=0x0000 len=2
+[scanbro-usb] vendor control OUT (8 bytes)
+  0000: 40 04 83 00 00 00 02 00 
+[scanbro-usb] control OUT payload (2 bytes)
+  0000: 01 41 
+[scanbro-usb] vendor control OUT transferred 2 bytes
+[preview-attempt-03][phase-1-transition] iter=3 frame=2755 action=write 0d01 payload=0d01
+[preview-attempt] frame 2755 control OUT request=0x04 value=0x0083 index=0x0000 len=2
+[scanbro-usb] vendor control OUT (8 bytes)
+  0000: 40 04 83 00 00 00 02 00 
+[scanbro-usb] control OUT payload (2 bytes)
+  0000: 0d 01 
+[scanbro-usb] vendor control OUT transferred 2 bytes
+[preview-attempt-03][phase-1-transition] iter=3 frame=2759 action=write 0fff payload=0fff
+[preview-attempt] frame 2759 control OUT request=0x04 value=0x0083 index=0x0000 len=2
+[scanbro-usb] vendor control OUT (8 bytes)
+  0000: 40 04 83 00 00 00 02 00 
+[scanbro-usb] control OUT payload (2 bytes)
+  0000: 0f ff 
+[scanbro-usb] vendor control OUT transferred 2 bytes
+[preview-attempt-03][phase-1-transition] iter=3 frame=2653 action=write 0140 payload=0140
+[preview-attempt] frame 2653 control OUT request=0x04 value=0x0083 index=0x0000 len=2
+[scanbro-usb] vendor control OUT (8 bytes)
+  0000: 40 04 83 00 00 00 02 00 
+[scanbro-usb] control OUT payload (2 bytes)
+  0000: 01 40 
+[scanbro-usb] vendor control OUT transferred 2 bytes
+[preview-attempt-03][phase-1-transition] iter=3 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -522,8 +564,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=4 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=4 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -545,7 +587,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=4 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=4 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=4 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -558,8 +600,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=5 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=5 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -581,7 +623,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=5 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=5 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=5 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -594,8 +636,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=6 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=6 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -617,7 +659,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=6 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=6 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=6 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -630,8 +672,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=7 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=7 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -653,7 +695,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=7 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=7 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=7 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -666,8 +708,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=8 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=8 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -689,7 +731,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=8 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=8 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=8 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -702,8 +744,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=9 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=9 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -725,7 +767,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=9 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=9 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=9 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -738,8 +780,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=10 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=10 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -761,7 +803,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=10 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=10 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=10 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -774,8 +816,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=11 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=11 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -797,7 +839,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=11 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=11 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=11 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -810,8 +852,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=12 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=12 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -833,7 +875,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=12 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=12 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=12 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -846,8 +888,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=13 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=13 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -869,7 +911,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=13 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=13 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=13 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -882,8 +924,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=14 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=14 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -905,7 +947,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=14 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=14 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=14 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -918,8 +960,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=15 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=15 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -941,7 +983,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=15 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=15 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=15 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -954,8 +996,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=16 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=16 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -977,7 +1019,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=16 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=16 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=16 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -990,8 +1032,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=17 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=17 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -1013,7 +1055,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=17 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=17 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=17 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -1026,8 +1068,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=18 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=18 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -1049,7 +1091,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=18 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=18 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=18 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -1062,8 +1104,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=19 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=19 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -1085,7 +1127,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=19 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=19 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=19 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -1098,8 +1140,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=20 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=20 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -1121,7 +1163,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=20 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=20 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=20 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -1134,8 +1176,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=21 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=21 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -1157,7 +1199,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=21 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=21 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=21 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -1170,8 +1212,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=22 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=22 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -1193,7 +1235,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=22 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=22 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=22 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -1206,8 +1248,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=23 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=23 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -1229,7 +1271,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=23 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=23 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=23 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -1242,8 +1284,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=24 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=24 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -1265,7 +1307,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=24 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=24 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=24 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -1278,8 +1320,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=25 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=25 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -1301,7 +1343,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=25 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=25 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=25 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -1314,8 +1356,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=26 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=26 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -1337,7 +1379,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=26 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=26 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=26 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -1350,8 +1392,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=27 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=27 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -1373,7 +1415,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=27 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=27 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=27 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -1386,8 +1428,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=28 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=28 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -1409,7 +1451,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=28 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=28 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=28 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -1422,8 +1464,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=29 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=29 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -1445,7 +1487,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=29 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=29 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=29 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -1458,8 +1500,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=30 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=30 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -1481,7 +1523,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=30 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=30 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=30 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -1494,8 +1536,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=31 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=31 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -1517,7 +1559,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=31 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=31 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=31 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -1530,8 +1572,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=32 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=32 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -1553,7 +1595,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=32 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=32 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=32 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -1566,8 +1608,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=33 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=33 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -1589,7 +1631,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=33 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=33 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=33 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -1602,8 +1644,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=34 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=34 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -1625,7 +1667,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=34 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=34 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=34 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -1638,8 +1680,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=35 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=35 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -1661,7 +1703,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=35 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=35 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=35 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -1674,8 +1716,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=36 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=36 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -1697,7 +1739,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=36 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=36 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=36 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -1710,8 +1752,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=37 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=37 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -1733,7 +1775,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=37 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=37 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=37 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -1746,8 +1788,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=38 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=38 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -1769,7 +1811,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=38 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=38 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=38 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -1782,8 +1824,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=39 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=39 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -1805,7 +1847,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=39 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=39 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=39 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -1818,8 +1860,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=40 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=40 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -1841,7 +1883,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=40 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=40 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=40 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -1854,8 +1896,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=41 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=41 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -1877,7 +1919,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=41 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=41 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=41 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -1890,8 +1932,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=42 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=42 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -1913,7 +1955,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=42 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=42 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=42 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -1926,8 +1968,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=43 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=43 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -1949,7 +1991,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=43 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=43 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=43 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -1962,8 +2004,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=44 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=44 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -1985,7 +2027,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=44 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=44 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=44 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -1998,8 +2040,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=45 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=45 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -2021,7 +2063,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=45 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=45 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=45 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -2034,8 +2076,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=46 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=46 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -2057,7 +2099,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=46 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=46 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=46 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -2070,8 +2112,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=47 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=47 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -2093,7 +2135,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=47 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=47 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=47 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -2106,8 +2148,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=48 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=48 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -2129,7 +2171,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=48 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=48 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=48 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -2142,8 +2184,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=49 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=49 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -2165,7 +2207,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=49 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=49 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=49 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -2178,8 +2220,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=50 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=50 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -2201,7 +2243,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=50 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=50 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=50 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -2214,8 +2256,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=51 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=51 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -2237,7 +2279,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=51 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=51 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=51 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -2250,8 +2292,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=52 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=52 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -2273,7 +2315,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=52 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=52 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=52 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -2286,8 +2328,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=53 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=53 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -2309,7 +2351,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=53 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=53 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=53 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -2322,8 +2364,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=54 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=54 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -2345,7 +2387,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=54 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=54 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=54 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -2358,8 +2400,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=55 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=55 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -2381,7 +2423,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=55 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=55 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=55 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -2394,8 +2436,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=56 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=56 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -2417,7 +2459,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=56 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=56 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=56 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -2430,8 +2472,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=57 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=57 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -2453,7 +2495,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=57 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=57 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=57 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -2466,8 +2508,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=58 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=58 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -2489,7 +2531,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=58 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=58 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=58 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -2502,8 +2544,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=59 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=59 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -2525,7 +2567,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=59 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=59 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=59 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -2538,8 +2580,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=60 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=60 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -2561,7 +2603,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=60 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=60 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=60 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -2574,8 +2616,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=61 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=61 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -2597,7 +2639,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=61 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=61 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=61 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -2610,8 +2652,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=62 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=62 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -2633,7 +2675,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=62 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=62 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=62 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -2646,8 +2688,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=63 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=63 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -2669,7 +2711,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=63 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=63 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=63 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -2682,8 +2724,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=64 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=64 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -2705,7 +2747,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=64 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=64 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=64 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -2718,8 +2760,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=65 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=65 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -2741,7 +2783,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=65 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=65 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=65 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -2754,8 +2796,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=66 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=66 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -2777,7 +2819,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=66 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=66 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=66 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -2790,8 +2832,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=67 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=67 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -2813,7 +2855,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=67 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=67 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=67 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -2826,8 +2868,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=68 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=68 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -2849,7 +2891,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=68 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=68 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=68 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -2862,8 +2904,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=69 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=69 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -2885,7 +2927,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=69 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=69 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=69 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -2898,8 +2940,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=70 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=70 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -2921,7 +2963,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=70 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=70 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=70 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -2934,8 +2976,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=71 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=71 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -2957,7 +2999,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=71 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=71 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=71 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -2970,8 +3012,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=72 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=72 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -2993,7 +3035,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=72 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=72 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=72 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -3006,8 +3048,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=73 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=73 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -3029,7 +3071,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=73 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=73 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=73 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -3042,8 +3084,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=74 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=74 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -3065,7 +3107,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=74 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=74 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=74 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -3078,8 +3120,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=75 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=75 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -3101,7 +3143,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=75 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=75 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=75 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -3114,8 +3156,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=76 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=76 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -3137,7 +3179,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=76 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=76 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=76 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -3150,8 +3192,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=77 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=77 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -3173,7 +3215,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=77 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=77 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=77 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -3186,8 +3228,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=78 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=78 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -3209,7 +3251,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=78 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=78 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=78 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -3222,8 +3264,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=79 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=79 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -3245,7 +3287,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=79 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=79 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=79 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -3258,8 +3300,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=80 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=80 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -3281,7 +3323,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=80 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=80 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=80 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -3294,8 +3336,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=81 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=81 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -3317,7 +3359,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=81 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=81 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=81 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -3330,8 +3372,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=82 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=82 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -3353,7 +3395,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=82 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=82 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=82 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -3366,8 +3408,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=83 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=83 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -3389,7 +3431,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=83 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=83 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=83 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -3402,8 +3444,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=84 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=84 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -3425,7 +3467,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=84 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=84 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=84 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -3438,8 +3480,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=85 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=85 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -3461,7 +3503,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=85 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=85 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=85 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -3474,8 +3516,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=86 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=86 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -3497,7 +3539,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=86 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=86 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=86 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -3510,8 +3552,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=87 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=87 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -3533,7 +3575,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=87 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=87 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=87 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -3546,8 +3588,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=88 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=88 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -3569,7 +3611,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=88 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=88 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=88 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -3582,8 +3624,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=89 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=89 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -3605,7 +3647,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=89 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=89 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=89 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -3618,8 +3660,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=90 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=90 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -3641,7 +3683,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=90 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=90 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=90 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -3654,8 +3696,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=91 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=91 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -3677,7 +3719,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=91 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=91 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=91 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -3690,8 +3732,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=92 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=92 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -3713,7 +3755,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=92 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=92 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=92 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -3726,8 +3768,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=93 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=93 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -3749,7 +3791,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=93 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=93 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=93 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -3762,8 +3804,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=94 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=94 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -3785,7 +3827,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=94 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=94 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=94 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -3798,8 +3840,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=95 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=95 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -3821,7 +3863,7 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=95 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=95 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03][phase-1-transition] iter=95 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -3834,8 +3876,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb] vendor control IN transferred 2 bytes
 [scanbro-usb] control IN response (2 bytes)
-  0000: 00 55 
-[preview-attempt-03][phase-1-transition] iter=96 frame=2742 0x6B22 response=0055
+  0000: 87 55 
+[preview-attempt-03][phase-1-transition] iter=96 frame=2742 0x6B22 response=8755
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] vendor control IN (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -3857,6 +3899,6 @@ Interface claim succeeded.
 [scanbro-usb] control IN response (2 bytes)
   0000: 83 55 
 [preview-attempt-03][phase-1-transition] iter=96 frame=2643 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=96 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no
-[preview-attempt-03] failed: phase-1 transition gate not satisfied before iteration cap (iter_cap=96 last_0c22=0055 last_6b22=0055 last_0122=4055 last_0d22=0055 last_6c22=8355 writes=[0c00:yes,0d01-pre:yes,6b87:no,0141:no,0d01:no,0fff:no,0140:no,6cf0:no])
+[preview-attempt-03][phase-1-transition] iter=96 summary 0c22=0055 6b22=8755 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes] seen_6c22_f155=no seen_6c22_f055=no
+[preview-attempt-03] failed: phase-1 transition gate not satisfied before iteration cap (iter_cap=96 last_0c22=0055 last_6b22=8755 last_0122=4055 last_0d22=0055 last_6c22=8355 writes=[0c00:yes,0d01-pre:yes,6c10-pre:yes,6b87:yes,0141:yes,0d01:yes,0fff:yes,0140:yes,6cf0:yes])
 [preview-attempt-03] bytes saved before failure: 0

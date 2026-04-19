@@ -2,34 +2,51 @@
 
 ## Obiettivo
 
-Costruire un'app locale Windows con GUI via browser per controllare il `Canon CanoScan 5600F`, con focus su negativi 35mm e controllo superiore al software Canon.
+Costruire un'app locale Windows con GUI via browser per controllare Canon CanoScan 5600F, con focus su negativi 35mm e controllo operativo superiore al software Canon.
 
-## Direzione principale (allineata al README)
+## Stato repository verificato (2026-04-19)
 
-La strategia primaria del progetto e`:
+- `ScanBro.slnx` include oggi:
+  - `src/ScanBro.Api` (`net10.0`)
+  - `src/ScanBro.Contracts` (`netstandard2.0`)
+  - `src/ScanBro.Scanner.Worker` (`net48`, `x86`, `NTwain`)
+- Esiste un percorso USB spike separato:
+  - `src/ScanBro.UsbDriver` (C/libusb)
+  - `tools/device_test` (harness replay/probe)
+- `global.json` pinna SDK `.NET` a `10.0.104`.
+- La UI corrente e` statica (`src/ScanBro.Api/wwwroot`), non c'e` un progetto React nel solution attuale.
 
-- backend locale `ASP.NET Core` + UI web
-- controllo scanner tramite `driver USB custom` (native C/C++)
-- comunicazione USB con `libusb-1.0` su filtro `libusb-win32`
-- nessuna dipendenza operativa dalla UI Canon durante la scansione
+## Decisione architetturale principale
 
-Motivazione: pieno controllo hardware, pipeline custom e possibilita` di superare i limiti delle capability TWAIN standard.
+Direzione confermata:
 
-## Vincoli e fallback
+- backend locale + UI browser
+- separazione tra API/UI e backend scanner
+- percorso primario verso controllo scanner custom via core USB user-space
+- fallback operativo TWAIN mantenuto finche' il gate USB non e' chiuso positivamente
 
-- Il browser non puo` dialogare direttamente con lo scanner: serve sempre backend locale.
-- I driver scanner sono intrinsecamente fragili: va previsto isolamento processo + watchdog.
-- Se lo spike USB non raggiunge i criteri minimi, si abilita percorso fallback:
-  - acquisizione via `TWAIN` con driver Canon
-  - mantenendo pipeline, API e UI ScanBro
+Chiarezza importante:
 
-## Architettura target
+- `libusb-win32` e` una opzione di spike gia` usata nel repo, ma non e` una decisione definitiva di prodotto.
+- decisione aperta da chiudere a gate: `WinUSB` vs `libusb-win32` (o altra opzione libusb-compatibile) su Windows.
 
-1. `web-ui` (frontend locale servito dal backend)
-2. `scan-api` (`ASP.NET Core`, REST + websocket locali)
-3. `usb-driver` (DLL nativa C/C++)
-4. `usb-transport` (`libusb-1.0` + `libusb-win32`)
-5. `image-pipeline` (raw TIFF, inversione negativo, correzioni, export)
+## Distinzione esplicita
+
+### Stato corrente (repo)
+
+- App locale funzionante tramite worker TWAIN (`/api/probe`, `/api/scan`).
+- Spike USB separato in Phase 0 con test harness e capture analysis.
+
+### Architettura target
+
+- UI browser + API locale + worker isolato con backend scanner sostituibile.
+- Core protocollo USB del 5600F in user-space, con fallback TWAIN mantenuto.
+
+### Assunzioni da spike (non ancora decisioni)
+
+- binding/driver strategy Windows del percorso USB custom
+- timing/state machine completa necessaria per preview custom stabile
+- integrazione del percorso USB nel worker di produzione
 
 ## Roadmap a fasi
 
@@ -37,138 +54,68 @@ Motivazione: pieno controllo hardware, pipeline custom e possibilita` di superar
 
 Obiettivo:
 
-dimostrare una preview acquisita senza driver Canon in controllo attivo.
+dimostrare preview low-res ripetibile con stack USB custom.
 
 Deliverable:
 
-- cattura traffico USB Canon (`USBPcap`/`Wireshark`) e documentazione protocollo
-- sequenza minima implementata nel driver custom:
-  - enumerate/open device
-  - init sessione
-  - controllo lampada/carrello
-  - acquisizione riga/blocco
-- dump tecnico dei comandi noti e risultati
+- catture USB Canon + documentazione protocollo
+- sequenza minima affidabile (init, transizioni stato, read trigger, bulk read)
+- evidenza ripetibile di preview acquisita senza pipeline Canon attiva
+
+Fatti gia` confermati:
+
+- endpoint map e vendor transfer base sono documentati
+- test harness `device_test` e` operativo
+- ultimo profilo `--preview-attempt-03` resta bloccato su gate di transizione (`bytes saved before failure: 0`)
 
 Exit criteria:
 
-- preview low-res salvata su disco con stack custom USB
-- stabilita` minima su piu` run consecutivi
+- preview low-res salvata con successo su run consecutivi
+- errore e recovery osservabili e documentati
 
 Decision gate:
 
-- se lo spike e` positivo: proseguire su stack USB custom
-- se negativo: fallback operativo su TWAIN mantenendo stessa API/UI
+- gate positivo -> integrazione progressiva USB custom nel path applicativo
+- gate negativo -> percorso operativo TWAIN come fallback ufficiale (stessa API/UI)
 
 ## Fase 1 - Core Scanner Engine
 
-Obiettivo:
-
-costruire un motore locale stabile per preview/scan.
-
-Deliverable:
-
-- session management robusto
-- endpoint minimi:
-  - `GET /api/health`
-  - `GET /api/probe`
-  - `POST /api/scan`
-- timeout, watchdog e recovery
-- salvataggio output e diagnostica
-
-Accettazione:
-
-- preview e scan base ripetibili
-- errore gestito senza blocco definitivo UI
+- consolidare session management e watchdog
+- mantenere endpoint minimi (`/api/health`, `/api/probe`, `/api/scan`)
+- introdurre backend scanner pluggable (TWAIN e USB custom)
 
 ## Fase 2 - Web GUI MVP
 
-Obiettivo:
-
-interfaccia usabile per workflow base da browser locale.
-
-Deliverable:
-
-- dashboard stato scanner
-- settaggi principali (`source`, `dpi`, `bit depth`, `color mode`, `format`, `transfer`)
-- vista risultato scan e pannello errori
-- reset sessione e rilancio probe
-
-Accettazione:
-
-- utente esegue probe + dry run + scan base senza software Canon
+- consolidare dashboard locale per stato scanner e scan request
+- esecuzione probe/dry-run/scan da browser locale senza tool esterni
 
 ## Fase 3 - Workflow Negativi
 
-Obiettivo:
-
-workflow pratico per strisce negative 35mm.
-
-Deliverable:
-
-- modalita` negative strip
-- crop per frame
-- naming automatico fotogrammi
-- batch scan
-- preset (raw TIFF, colore, B/N, export web)
-
-Accettazione:
-
-- scansione batch completa di una striscia da 6 frame
+- strip mode, crop per frame, batch naming, preset base
 
 ## Fase 4 - Controlli Avanzati
 
-Obiettivo:
+- 48-bit/16-bit, exposure lock, inversione e correzioni avanzate
 
-controlli avanzati e qualita` archivio.
+## Fase 5 - Stabilita' e Recovery
 
-Deliverable:
-
-- 48-bit color / 16-bit grayscale
-- exposure lock tra frame
-- inversione negativo custom
-- curve/livelli/white balance
-- profili pellicola base
-
-## Fase 5 - Stabilita` e Recovery
-
-Obiettivo:
-
-resilienza contro freeze/crash driver.
-
-Deliverable:
-
-- isolamento processo scanner
-- heartbeat
-- retry controllati
-- diagnostica avanzata (ultimi comandi, ultimo errore, stato sessione)
+- isolamento processo scanner, heartbeat, retry controllati, diagnostica estesa
 
 ## Fase 6 - Packaging
 
-Obiettivo:
-
-installazione semplice su macchina Windows reale.
-
-Deliverable:
-
-- installer Windows
-- configurazione cartelle output/log/preset
-- apertura UI locale su `http://localhost:<porta>`
-- avvio/stop servizi locali gestito
-
-## Milestone indicative
-
-- Q2: spike USB + primo preview
-- Q3: engine stabile + GUI MVP
-- Q4: workflow negativi + preset
-- Q1 successivo: hardening, packaging, release candidate
+- installer Windows e setup locale standardizzato
 
 ## Rischi principali
 
-1. Reverse engineering USB piu` complesso del previsto.
-2. Qualita`/stabilita` non allineata al driver Canon in tempi brevi.
-3. Recovery insufficiente in caso di stati hardware bloccati.
-4. Gap di performance su scan ad alta risoluzione.
+1. reverse engineering USB piu` complesso del previsto
+2. stato hardware non convergente nella finestra pre-preview
+3. fragilita` driver stack durante switch tra path Canon e path custom
+4. costo integrazione superiore al previsto per percorso USB production-grade
 
 ## Prossimo passo immediato
 
-Completare il pacchetto di prove della Fase 0 (catture + comandi + preview ripetibile) e chiudere formalmente il decision gate USB vs fallback TWAIN.
+Chiudere il gap di stato della Fase 0 (transizione readiness/bulk) e formalizzare la decisione transport Windows con evidenza tecnica ripetibile.
+
+## Aggiornamento documentazione
+
+- 2026-04-19: documentazione riallineata al repository e al deep research report; separati stato corrente, target architecture e assunzioni di spike.

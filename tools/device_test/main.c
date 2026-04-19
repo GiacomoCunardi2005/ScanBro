@@ -286,6 +286,7 @@ static int preview03_run_transition_phase(
 
         if (out_result->wrote_0fff &&
             !out_result->wrote_0140 &&
+            out_result->seen_6c22_f055 &&
             (preview_response_is_two_byte_value(response_0122, response_0122_length, 0x41U, 0x55U) ||
              preview_response_is_two_byte_value(response_0122, response_0122_length, 0x40U, 0x55U)))
         {
@@ -767,8 +768,25 @@ static const preview_state_write_step kPreview03Write0140Step =
     {2653U, 0x04U, 0x0083U, 0x0000U, 2U, "0140", "write 0140"};
 static const preview_state_write_step kPreview03Write0C00Step =
     {2631U, 0x04U, 0x0083U, 0x0000U, 2U, "0c00", "write 0c00"};
+static const preview_state_write_step kPreview03Write6EFFGpioProfilePrimeStep =
+    {2636U, 0x04U, 0x0083U, 0x0000U, 2U, "6eff", "write 6eff (gl847 gpio profile prime)"};
+static const preview_state_write_step kPreview03Write6C00GpioProfileStep =
+    {2637U, 0x04U, 0x0083U, 0x0000U, 2U, "6c00", "write 6c00 (gl847 gpio profile neutral)"};
+static const preview_state_write_step kPreview03Write6B02GpioProfileStep =
+    {2638U, 0x04U, 0x0083U, 0x0000U, 2U, "6b02", "write 6b02 (gl847 gpio profile)"};
+static const preview_state_write_step kPreview03Write6CF9GpioProfileStep =
+    {2639U, 0x04U, 0x0083U, 0x0000U, 2U, "6cf9", "write 6cf9 (gl847 gpio profile)"};
+static const preview_state_write_step kPreview03Write6D20GpioProfileStep =
+    {2640U, 0x04U, 0x0083U, 0x0000U, 2U, "6d20", "write 6d20 (gl847 gpio profile)"};
+static const preview_state_write_step kPreview03Write6EFFGpioProfileFinalStep =
+    {2641U, 0x04U, 0x0083U, 0x0000U, 2U, "6eff", "write 6eff (gl847 gpio profile final)"};
+static const preview_state_write_step kPreview03Write6F00GpioProfileStep =
+    {2642U, 0x04U, 0x0083U, 0x0000U, 2U, "6f00", "write 6f00 (gl847 gpio profile)"};
 static const preview_state_write_step kPreview03Write6CF0Step =
     {2645U, 0x04U, 0x0083U, 0x0000U, 2U, "6cf0", "write 6cf0"};
+static const unsigned int kPreview03Write6CGpio10PreArmFrame = 2644U;
+/* Mirrors REG6C_GPIO10 in genesys_gl847.h: we only toggle this bit and preserve others. */
+static const uint8_t kPreview03Reg6CGpio10Mask = 0x02U;
 static const preview_state_write_step kPreview03PointerWriteStep =
     {3139U, 0x04U, 0x0082U, 0x0000U, 8U, "00000010f01c0000", "pointer write"};
 
@@ -1532,6 +1550,61 @@ static int preview_run_state_write_step(
         write_spec->payload_hex);
 
     return preview_run_control_step(target_handle, state, &write_step);
+}
+
+static int preview_run_phase1_reg6c_gpio10_write(
+    libusb_device_handle *target_handle,
+    preview_runtime_state *state,
+    unsigned int iteration,
+    unsigned int frame_number,
+    uint8_t source_reg6c,
+    int set_gpio10,
+    uint8_t *out_written_reg6c)
+{
+    preview_control_step write_step;
+    char payload_hex[5];
+    const char *action_label = set_gpio10
+                                   ? "write 6c gpio10 pre-arm (rmw set)"
+                                   : "write 6c gpio10 consume (rmw clear)";
+    uint8_t next_reg6c = set_gpio10
+                             ? (uint8_t)(source_reg6c | kPreview03Reg6CGpio10Mask)
+                             : (uint8_t)(source_reg6c & (uint8_t)~kPreview03Reg6CGpio10Mask);
+
+    if (target_handle == NULL || state == NULL)
+    {
+        return 0;
+    }
+
+    snprintf(payload_hex, sizeof(payload_hex), "6c%02x", (unsigned int)next_reg6c);
+
+    memset(&write_step, 0, sizeof(write_step));
+    write_step.frame_number = frame_number;
+    write_step.is_in = 0;
+    write_step.request = 0x04U;
+    write_step.value = 0x0083U;
+    write_step.index = 0x0000U;
+    write_step.length = 2U;
+    write_step.payload_hex = payload_hex;
+
+    printf(
+        "[preview-attempt-03][phase-1-transition] iter=%u frame=%u action=%s payload=%s source_6c=0x%02x\n",
+        iteration,
+        frame_number,
+        action_label,
+        payload_hex,
+        source_reg6c);
+
+    if (!preview_run_control_step(target_handle, state, &write_step))
+    {
+        return 0;
+    }
+
+    if (out_written_reg6c != NULL)
+    {
+        *out_written_reg6c = next_reg6c;
+    }
+
+    return 1;
 }
 
 static int preview_run_preamble_sequence(
@@ -2882,6 +2955,8 @@ typedef struct preview03_transition_result
 {
     int wrote_0c00;
     int wrote_0d01_pre;
+    int applied_gl847_gpio_profile;
+    int prepared_6c_gpio10_high;
     int wrote_6b87;
     int wrote_0141;
     int wrote_0d01;
@@ -2956,7 +3031,7 @@ static int preview03_run_transition_phase(
             snprintf(
                 failure_message,
                 sizeof(failure_message),
-                "phase-1 transition gate not satisfied before iteration cap (iter_cap=%u last_0c22=%s last_6b22=%s last_0122=%s last_0d22=%s last_6c22=%s writes=[0c00:%s,0d01-pre:%s,6b87:%s,0141:%s,0d01:%s,0fff:%s,0140:%s,6cf0:%s])",
+                "phase-1 transition gate not satisfied before iteration cap (iter_cap=%u last_0c22=%s last_6b22=%s last_0122=%s last_0d22=%s last_6c22=%s writes=[0c00:%s,0d01-pre:%s,gpio-profile:%s,6c10-pre:%s,6b87:%s,0141:%s,0d01:%s,0fff:%s,0140:%s,6cf0:%s])",
                 iteration_cap,
                 out_result->last_0c22,
                 out_result->last_6b22,
@@ -2965,6 +3040,8 @@ static int preview03_run_transition_phase(
                 out_result->last_6c22,
                 out_result->wrote_0c00 ? "yes" : "no",
                 out_result->wrote_0d01_pre ? "yes" : "no",
+                out_result->applied_gl847_gpio_profile ? "yes" : "no",
+                out_result->prepared_6c_gpio10_high ? "yes" : "no",
                 out_result->wrote_6b87 ? "yes" : "no",
                 out_result->wrote_0141 ? "yes" : "no",
                 out_result->wrote_0d01 ? "yes" : "no",
@@ -2980,7 +3057,7 @@ static int preview03_run_transition_phase(
             snprintf(
                 failure_message,
                 sizeof(failure_message),
-                "phase-1 transition gate timed out (limit=%llu ms last_0c22=%s last_6b22=%s last_0122=%s last_0d22=%s last_6c22=%s writes=[0c00:%s,0d01-pre:%s,6b87:%s,0141:%s,0d01:%s,0fff:%s,0140:%s,6cf0:%s])",
+                "phase-1 transition gate timed out (limit=%llu ms last_0c22=%s last_6b22=%s last_0122=%s last_0d22=%s last_6c22=%s writes=[0c00:%s,0d01-pre:%s,gpio-profile:%s,6c10-pre:%s,6b87:%s,0141:%s,0d01:%s,0fff:%s,0140:%s,6cf0:%s])",
                 (unsigned long long)phase_timeout_ms,
                 out_result->last_0c22,
                 out_result->last_6b22,
@@ -2989,6 +3066,8 @@ static int preview03_run_transition_phase(
                 out_result->last_6c22,
                 out_result->wrote_0c00 ? "yes" : "no",
                 out_result->wrote_0d01_pre ? "yes" : "no",
+                out_result->applied_gl847_gpio_profile ? "yes" : "no",
+                out_result->prepared_6c_gpio10_high ? "yes" : "no",
                 out_result->wrote_6b87 ? "yes" : "no",
                 out_result->wrote_0141 ? "yes" : "no",
                 out_result->wrote_0d01 ? "yes" : "no",
@@ -2997,6 +3076,59 @@ static int preview03_run_transition_phase(
                 out_result->wrote_6cf0 ? "yes" : "no");
             preview_set_failure(state, failure_message);
             return 0;
+        }
+
+        if (!out_result->applied_gl847_gpio_profile &&
+            out_result->wrote_0d01_pre)
+        {
+            /* Mirror gl847_init_gpio() for GPO_CANONLIDE200: stabilize REG6B/6C/6D/6E/6F before start edges. */
+            if (!preview_run_state_write_step(
+                    target_handle,
+                    state,
+                    "phase-1-transition",
+                    iteration,
+                    &kPreview03Write6EFFGpioProfilePrimeStep) ||
+                !preview_run_state_write_step(
+                    target_handle,
+                    state,
+                    "phase-1-transition",
+                    iteration,
+                    &kPreview03Write6C00GpioProfileStep) ||
+                !preview_run_state_write_step(
+                    target_handle,
+                    state,
+                    "phase-1-transition",
+                    iteration,
+                    &kPreview03Write6B02GpioProfileStep) ||
+                !preview_run_state_write_step(
+                    target_handle,
+                    state,
+                    "phase-1-transition",
+                    iteration,
+                    &kPreview03Write6CF9GpioProfileStep) ||
+                !preview_run_state_write_step(
+                    target_handle,
+                    state,
+                    "phase-1-transition",
+                    iteration,
+                    &kPreview03Write6D20GpioProfileStep) ||
+                !preview_run_state_write_step(
+                    target_handle,
+                    state,
+                    "phase-1-transition",
+                    iteration,
+                    &kPreview03Write6EFFGpioProfileFinalStep) ||
+                !preview_run_state_write_step(
+                    target_handle,
+                    state,
+                    "phase-1-transition",
+                    iteration,
+                    &kPreview03Write6F00GpioProfileStep))
+            {
+                return 0;
+            }
+            out_result->applied_gl847_gpio_profile = 1;
+            out_result->prepared_6c_gpio10_high = 0;
         }
 
         if (!preview_poll_state_register(
@@ -3107,7 +3239,9 @@ static int preview03_run_transition_phase(
 
         if (!out_result->wrote_6b87 &&
             out_result->wrote_0d01_pre &&
+            out_result->applied_gl847_gpio_profile &&
             (preview_response_is_two_byte_value(response_6b22, response_6b22_length, 0x00U, 0x55U) ||
+             preview_response_is_two_byte_value(response_6b22, response_6b22_length, 0x02U, 0x55U) ||
              preview_response_is_two_byte_value(response_6b22, response_6b22_length, 0x87U, 0x55U)))
         {
             if (!preview_run_state_write_step(
@@ -3123,6 +3257,25 @@ static int preview03_run_transition_phase(
         }
 
         if (out_result->wrote_0d01_pre &&
+            out_result->wrote_6cf0 &&
+            !out_result->wrote_0d01 &&
+            /* Mirror gl847_begin_scan kickoff ordering: REG6C edge then REG0D before REG01. */
+            preview_response_is_two_byte_value(response_6b22, response_6b22_length, 0x87U, 0x55U) &&
+            preview_response_is_two_byte_value(response_0d22, response_0d22_length, 0x00U, 0x55U))
+        {
+            if (!preview_run_state_write_step(
+                    target_handle,
+                    state,
+                    "phase-1-transition",
+                    iteration,
+                    &kPreview03Write0D01Step))
+            {
+                return 0;
+            }
+            out_result->wrote_0d01 = 1;
+        }
+
+        if (out_result->wrote_0d01 &&
             !out_result->wrote_0141 &&
             preview_response_is_two_byte_value(response_0122, response_0122_length, 0x40U, 0x55U))
         {
@@ -3136,22 +3289,6 @@ static int preview03_run_transition_phase(
                 return 0;
             }
             out_result->wrote_0141 = 1;
-        }
-
-        if (out_result->wrote_0141 &&
-            !out_result->wrote_0d01 &&
-            preview_response_is_two_byte_value(response_0d22, response_0d22_length, 0x00U, 0x55U))
-        {
-            if (!preview_run_state_write_step(
-                    target_handle,
-                    state,
-                    "phase-1-transition",
-                    iteration,
-                    &kPreview03Write0D01Step))
-            {
-                return 0;
-            }
-            out_result->wrote_0d01 = 1;
         }
 
         if (out_result->wrote_0d01 && !out_result->wrote_0fff)
@@ -3170,6 +3307,7 @@ static int preview03_run_transition_phase(
 
         if (out_result->wrote_0fff &&
             !out_result->wrote_0140 &&
+            out_result->seen_6c22_f055 &&
             (preview_response_is_two_byte_value(response_0122, response_0122_length, 0x41U, 0x55U) ||
              preview_response_is_two_byte_value(response_0122, response_0122_length, 0x40U, 0x55U)))
         {
@@ -3194,19 +3332,55 @@ static int preview03_run_transition_phase(
             out_result->seen_6c22_f055 = 1;
         }
 
+        if (!out_result->prepared_6c_gpio10_high &&
+            out_result->wrote_0d01_pre &&
+            preview_response_is_two_byte_value(response_6b22, response_6b22_length, 0x87U, 0x55U) &&
+            response_6c22_length == 2U &&
+            response_6c22[1] == 0x55U)
+        {
+            if ((response_6c22[0] & kPreview03Reg6CGpio10Mask) != 0U)
+            {
+                out_result->prepared_6c_gpio10_high = 1;
+            }
+            else
+            {
+                uint8_t written_reg6c = response_6c22[0];
+                if (!preview_run_phase1_reg6c_gpio10_write(
+                        target_handle,
+                        state,
+                        iteration,
+                        kPreview03Write6CGpio10PreArmFrame,
+                        response_6c22[0],
+                        1,
+                        &written_reg6c))
+                {
+                    return 0;
+                }
+                out_result->prepared_6c_gpio10_high =
+                    (written_reg6c & kPreview03Reg6CGpio10Mask) != 0U;
+            }
+        }
+
         if (!out_result->wrote_6cf0 &&
+            out_result->prepared_6c_gpio10_high &&
+            response_6c22_length == 2U &&
+            response_6c22[1] == 0x55U &&
+            (response_6c22[0] & kPreview03Reg6CGpio10Mask) != 0U &&
             (out_result->seen_6c22_f155 ||
              (out_result->wrote_0d01_pre &&
-              /* Keep 6cf0 tied to the latched 6B path; iter=1 writes at 6B22=0055 were accepted but inert. */
+              /* Keep 6C consume edge tied to the latched 6B path; iter=1 writes at 6B22=0055 were accepted but inert. */
               preview_response_is_two_byte_value(response_6b22, response_6b22_length, 0x87U, 0x55U) &&
-              preview_response_is_two_byte_value(response_6c22, response_6c22_length, 0x83U, 0x55U))))
+              /* Consume once 6B has latched and GPIO10 is high; do not hard-code one REG6C image. */
+              response_6c22[1] == 0x55U)))
         {
-            if (!preview_run_state_write_step(
+            if (!preview_run_phase1_reg6c_gpio10_write(
                     target_handle,
                     state,
-                    "phase-1-transition",
                     iteration,
-                    &kPreview03Write6CF0Step))
+                    kPreview03Write6CF0Step.frame_number,
+                    response_6c22[0],
+                    0,
+                    NULL))
             {
                 return 0;
             }
@@ -3214,7 +3388,7 @@ static int preview03_run_transition_phase(
         }
 
         printf(
-            "[preview-attempt-03][phase-1-transition] iter=%u summary 0c22=%s 6b22=%s 0122=%s 0d22=%s 6c22=%s writes=[0c00:%s,0d01-pre:%s,6b87:%s,0141:%s,0d01:%s,0fff:%s,0140:%s,6cf0:%s] seen_6c22_f155=%s seen_6c22_f055=%s\n",
+            "[preview-attempt-03][phase-1-transition] iter=%u summary 0c22=%s 6b22=%s 0122=%s 0d22=%s 6c22=%s writes=[0c00:%s,0d01-pre:%s,gpio-profile:%s,6c10-pre:%s,6b87:%s,0141:%s,0d01:%s,0fff:%s,0140:%s,6cf0:%s] seen_6c22_f155=%s seen_6c22_f055=%s\n",
             iteration,
             out_result->last_0c22,
             out_result->last_6b22,
@@ -3223,6 +3397,8 @@ static int preview03_run_transition_phase(
             out_result->last_6c22,
             out_result->wrote_0c00 ? "yes" : "no",
             out_result->wrote_0d01_pre ? "yes" : "no",
+            out_result->applied_gl847_gpio_profile ? "yes" : "no",
+            out_result->prepared_6c_gpio10_high ? "yes" : "no",
             out_result->wrote_6b87 ? "yes" : "no",
             out_result->wrote_0141 ? "yes" : "no",
             out_result->wrote_0d01 ? "yes" : "no",
