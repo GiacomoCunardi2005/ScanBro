@@ -66,6 +66,24 @@ $env:PATH = "C:\path\to\libusb-x64\bin;$env:PATH"
 tools/device_test/build-x64/Debug/device_test.exe
 ```
 
+Preflight binding check (recommended before any active-control run):
+
+```powershell
+powershell -ExecutionPolicy Bypass -File tools/device_test/check-active-binding.ps1
+```
+
+Optional force-rebind attempt to staged libwdi INF (`oem206.inf`):
+
+```powershell
+powershell -ExecutionPolicy Bypass -File tools/device_test/check-active-binding.ps1 -ForceLibwdi
+```
+
+Notes:
+
+- `check-active-binding.ps1` exits `0` only when scanner service is one of `WinUSB/libusbK/libusb0`.
+- If the scanner is on Canon `usbscan` (`Image` class), `libusb_open` will fail with `LIBUSB_ERROR_NOT_SUPPORTED`.
+- Force-rebind requires an elevated shell (Administrator).
+
 Optional overrides:
 
 ```powershell
@@ -183,6 +201,36 @@ Debug workflow for `--preview-attempt-03`:
   - `6cf0:yes` (capture-literal consume write)
   - `0x6C22` still stuck at `8355` (`seen_6c22_f155=no`, `seen_6c22_f055=no`)
   - terminal failure still `phase-1 transition gate not satisfied before iteration cap` with `bytes saved before failure: 0`
+- Post-`6cf0` micro-window hard-gate pass (2026-04-19, latest):
+  - `0140` is now held until the capture-window checks succeed (`2647=00`, `0x4122=c455`, `0x0122=4055/4155`).
+  - latest run shows the same hard mismatch every iteration after `6cf0`: `2647` returns `LIBUSB_ERROR_PIPE (-9)`, `0x4122` stays `4855`, `0x0122` stays `4055`.
+  - resulting phase-1 summary is now explicit: `0140:no`, `0141:no`, `0d01:no`, `0fff:no`, `0x6C22=8355`, no `f155/f055`, iteration-cap failure, `bytes saved before failure: 0`.
+  - current narrowed blocker: the first post-`6cf0` handshake/progression window (`2647` success and `0x4122` transition to `c455`).
+- Follow-up trigger legality pass (2026-04-19, latest):
+  - capture re-check around frames `2645..2653` confirmed no missing companion write between `6cf0` and `2647`; sequence remains `6cf0 -> 2647 -> 4122 -> 0122 -> 0140`.
+  - grounded root cause in harness: `6cf0` was still allowed from `0x6C22=8355` (off-capture state), which explains why the post-`6cf0` window was entered in an illegal state (`2647=PIPE`, `4122=4855`).
+  - fix in `preview_attempt_phase1.c`: `6cf0` now requires current `0x6C22=f155/f055` (capture-grounded consume precondition) before emission.
+  - log quality fix in same file: `0140` block reason now reports `waiting for 6cf0` before post-window blockers.
+  - latest run facts (`tools/device_test/logs/device_test.latest.log`): no `6cf0` write, no `2647/2649/2651` poll activity, `0140` remains not eligible, phase-1 still fails at iteration cap with `bytes saved before failure: 0`.
+  - current exact blocker is now explicit and upstream: missing `0x6C22` transition `8355 -> f155/f055` before the post-`6cf0` handshake can be attempted.
+- Direction + upstream micro-window pass (2026-04-20, latest):
+  - verbose USB logs now include explicit transfer direction labels: `[OUT][PC->scanner]` and `[IN][scanner->PC]`, plus summary tags `[scanbro-usb][OUT]` / `[scanbro-usb][IN]`.
+  - pre-`6cf0` capture-window replay `2515/2517/2519/2521` was executed once in phase-1 (`pre-6cf0 prime attempt`) and stayed flat (`2515=8355`, `2519=8355`, `seen_f155=no`, `seen_f055=no`).
+  - additional preamble-aligned transition steps were injected in `preview_attempt_data.c` (`1093..1173` and `1639..1647`), but `0x6C22` still remained `8355` across early ladder polls and all phase-1 iterations.
+  - latest terminal state is unchanged: `0c22=0055`, `6b22=8755`, `0122=4055`, `0d22=0055`, `6c22=8355`, `6cf0:no`, `0140:no`, failure at iteration cap, `bytes saved before failure: 0`.
+  - earliest grounded divergence in this pass remains at `frame 1099`: `0x0B22=0155` (capture reference in notes expects `6b55`), so the next missing transition is still upstream of first legal REG6C consume readiness.
+- Upstream GPIO-profile execution pass (2026-04-20, latest):
+  - grounded code divergence found in `preview_attempt_phase1.c`: the GL847 GPIO-profile write ladder (`6eff/6c00/6b02/6cf9/6d20/6eff/6f00`) was defined in `preview_attempt_data.c` but never emitted; `gpio-profile:yes` previously came only from pre-`6c` polls.
+  - patch applied: phase-1 now emits that full write ladder once after the pre-`6c` polls and logs an immediate post-profile snapshot for `0x0B22/0x6B22/0x6C22`.
+  - current latest run artifact (`tools/device_test/logs/device_test.latest.log`) could not validate phase-1 because device open failed before preamble (`libusb_open failed: LIBUSB_ERROR_NOT_SUPPORTED (-12)`), consistent with non-libusb binding in active-control mode.
+  - grounded status for this pass: the patch is compiled and in place, but hardware effect on `0x6C22:8355 -> f155/f055` is still unverified until libusb-compatible binding is restored.
+- Open-path recovery pass (2026-04-20, latest):
+  - grounded root cause for current `LIBUSB_ERROR_NOT_SUPPORTED`: scanner is presently bound to Canon stack (`Class=Image`, `Service=usbscan`, `oem14.inf`), not an active-control libusb-compatible service.
+  - open path regression check: current source diff does not modify `usb_device_session_open()`/claim flow in `usb_device.c`; recent core C diff in `scanbro_usb.c` is verbose direction logging only.
+  - grounded host-state evidence: `pnputil /enum-devices /instanceid ... /drivers` shows staged libwdi match (`oem206.inf`) but not installed (non-best-ranked while Canon package is active).
+  - non-destructive re-install of staged libwdi package (`pnputil /add-driver oem206.inf /install`) does not switch binding when Canon package remains best-ranked.
+  - admin boundary confirmed on this host: `UpdateDriverForPlugAndPlayDevices(..., INSTALLFLAG_FORCE)` and `pnputil /restart-device` both fail without elevation (`Access denied`/SetupAPI failure), so this shell cannot restore active binding directly.
+  - current next blocker is therefore explicit and upstream of phase-1: run elevated rebind to WinUSB/libusbK/libusb0 first, then rerun `--preview-attempt-03` to re-measure `0x6C22` progression.
 - Next-phase direction: continue state-machine reconstruction around the `0x6C22` transition driver path before revisiting pointer/bulk stages.
 
 ## Driver-State Workflow (Do Not Mix)

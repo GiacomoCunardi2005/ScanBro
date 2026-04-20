@@ -1,0 +1,26 @@
+Enumerating USB devices...
+Device bus=2 addr=6 vid:pid=1a40:0101 class=09 subclass=00 proto=01 configs=1
+Device bus=2 addr=13 vid:pid=03f0:2341 class=00 subclass=00 proto=00 configs=1
+Device bus=2 addr=0 vid:pid=8086:7e7d class=09 subclass=00 proto=03 configs=1
+Device bus=2 addr=4 vid:pid=8087:0033 class=e0 subclass=01 proto=01 configs=1
+Device bus=2 addr=56 vid:pid=17ef:a392 class=09 subclass=00 proto=02 configs=1
+Device bus=2 addr=59 vid:pid=17ef:a395 class=09 subclass=00 proto=01 configs=1
+Device bus=2 addr=9 vid:pid=1bcf:2701 class=ef subclass=02 proto=01 configs=1
+Device bus=2 addr=3 vid:pid=5986:2169 class=ef subclass=02 proto=01 configs=1
+Device bus=2 addr=2 vid:pid=04f3:0c8c class=00 subclass=00 proto=00 configs=1
+Device bus=1 addr=49 vid:pid=17ef:a391 class=09 subclass=00 proto=03 configs=1
+Device bus=2 addr=11 vid:pid=04a9:1906 class=ff subclass=ff proto=ff configs=1
+Device bus=2 addr=14 vid:pid=1038:12ad class=00 subclass=00 proto=00 configs=1
+Device bus=1 addr=50 vid:pid=17ef:a387 class=00 subclass=00 proto=00 configs=2
+Device bus=2 addr=16 vid:pid=17ef:a38f class=00 subclass=00 proto=00 configs=1
+Device bus=1 addr=51 vid:pid=152d:0578 class=00 subclass=00 proto=00 configs=1
+Device bus=1 addr=52 vid:pid=17ef:a393 class=09 subclass=00 proto=03 configs=1
+Device bus=2 addr=17 vid:pid=046d:c260 class=00 subclass=00 proto=00 configs=1
+Device bus=2 addr=15 vid:pid=05ac:0250 class=00 subclass=00 proto=00 configs=1
+Device bus=1 addr=0 vid:pid=8086:7ec0 class=09 subclass=00 proto=03 configs=1
+Device bus=2 addr=18 vid:pid=17ef:a396 class=00 subclass=00 proto=00 configs=1
+Device bus=2 addr=57 vid:pid=17ef:a394 class=09 subclass=00 proto=02 configs=1
+
+Opening scanner 04a9:1906 on bus=2 addr=11...
+[scanbro-usb] libusb_open failed: LIBUSB_ERROR_NOT_SUPPORTED (-12)
+Open failed. If Canon driver is still active, switch to WinUSB/libusb with Zadig for active-control tests.

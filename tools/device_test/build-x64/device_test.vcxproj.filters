@@ -7,6 +7,21 @@
     <ClCompile Include="C:\Users\giaco\Desktop\ScanBro\tools\device_test\probe_modes.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="C:\Users\giaco\Desktop\ScanBro\tools\device_test\preview_attempt_data.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\giaco\Desktop\ScanBro\tools\device_test\preview_attempt_io.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\giaco\Desktop\ScanBro\tools\device_test\preview_attempt_preamble.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\giaco\Desktop\ScanBro\tools\device_test\preview_attempt_phase1.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\giaco\Desktop\ScanBro\tools\device_test\preview_attempt_readiness.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="C:\Users\giaco\Desktop\ScanBro\tools\device_test\preview_attempt03.c">
       <Filter>Source Files</Filter>
     </ClCompile>

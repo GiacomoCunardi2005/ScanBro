@@ -351,6 +351,9 @@ static int sb_usb_control_transfer(
     int status;
     uint8_t setup[8];
     int direction_is_in;
+    char setup_label[128];
+    char out_payload_label[128];
+    char in_response_label[128];
 
     if (handle == NULL)
     {
@@ -371,12 +374,22 @@ static int sb_usb_control_transfer(
     setup[6] = (uint8_t)(buffer_size & 0xFFU);
     setup[7] = (uint8_t)((buffer_size >> 8U) & 0xFFU);
 
-    sb_usb_hex_dump(operation, setup, sizeof(setup));
     direction_is_in = (bm_request_type & LIBUSB_ENDPOINT_DIR_MASK) == LIBUSB_ENDPOINT_IN;
+    snprintf(
+        setup_label,
+        sizeof(setup_label),
+        "[OUT][PC->scanner] %s setup",
+        operation);
+    sb_usb_hex_dump(setup_label, setup, sizeof(setup));
 
     if (!direction_is_in && buffer_size > 0U && buffer != NULL)
     {
-        sb_usb_hex_dump("control OUT payload", buffer, buffer_size);
+        snprintf(
+            out_payload_label,
+            sizeof(out_payload_label),
+            "[OUT][PC->scanner] %s payload",
+            operation);
+        sb_usb_hex_dump(out_payload_label, buffer, buffer_size);
     }
 
     status = libusb_control_transfer(
@@ -395,10 +408,19 @@ static int sb_usb_control_transfer(
         return status;
     }
 
-    printf("[scanbro-usb] %s transferred %d bytes\n", operation, status);
+    printf(
+        "[scanbro-usb][%s] %s transferred %d bytes\n",
+        direction_is_in ? "IN" : "OUT",
+        operation,
+        status);
     if (direction_is_in && status > 0)
     {
-        sb_usb_hex_dump("control IN response", buffer, (size_t)status);
+        snprintf(
+            in_response_label,
+            sizeof(in_response_label),
+            "[IN][scanner->PC] %s response",
+            operation);
+        sb_usb_hex_dump(in_response_label, buffer, (size_t)status);
     }
 
     return status;
@@ -509,7 +531,7 @@ int sb_usb_bulk_out(
 
     if (payload != NULL && payload_size > 0)
     {
-        sb_usb_hex_dump("bulk OUT payload", payload, (size_t)payload_size);
+        sb_usb_hex_dump("[OUT][PC->scanner] bulk payload", payload, (size_t)payload_size);
     }
 
     status = libusb_bulk_transfer(
@@ -527,7 +549,7 @@ int sb_usb_bulk_out(
     else
     {
         printf(
-            "[scanbro-usb] bulk OUT endpoint 0x%02x transferred %d bytes\n",
+            "[scanbro-usb][OUT] bulk endpoint 0x%02x transferred %d bytes\n",
             endpoint,
             transferred != NULL ? *transferred : payload_size);
     }
@@ -572,13 +594,13 @@ int sb_usb_bulk_in(
     }
 
     printf(
-        "[scanbro-usb] bulk IN endpoint 0x%02x transferred %d bytes\n",
+        "[scanbro-usb][IN] bulk endpoint 0x%02x transferred %d bytes\n",
         endpoint,
         bytes_transferred);
 
     if (bytes_transferred > 0)
     {
-        sb_usb_hex_dump("bulk IN payload", buffer, (size_t)bytes_transferred);
+        sb_usb_hex_dump("[IN][scanner->PC] bulk payload", buffer, (size_t)bytes_transferred);
     }
 
     return status;

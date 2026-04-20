@@ -2,8 +2,23 @@
 
 #include <string.h>
 
+#if defined(_WIN32)
+#include <windows.h>
+#else
+#include <unistd.h>
+#endif
+
 #include "preview_attempt_data.h"
 #include "preview_attempt_io.h"
+
+static void preview03_sleep_ms(unsigned int milliseconds)
+{
+#if defined(_WIN32)
+    Sleep(milliseconds);
+#else
+    usleep((useconds_t)(milliseconds * 1000U));
+#endif
+}
 
 static int preview03_log_post_0140_status_snapshots(
     libusb_device_handle *target_handle,
@@ -170,6 +185,9 @@ int preview03_run_transition_phase(
     unsigned int iteration = 0U;
     uint64_t started_ms;
     uint64_t deadline_ms;
+    int post_6cf0_window_complete = 0;
+    unsigned int post_6cf0_window_attempts = 0U;
+    int pre_6c22_prime_attempted = 0;
 
     if (target_handle == NULL || state == NULL || out_result == NULL)
     {
@@ -257,52 +275,188 @@ int preview03_run_transition_phase(
         if (!out_result->applied_gl847_gpio_profile &&
             out_result->wrote_0d01_pre)
         {
-            /* Mirror gl847_init_gpio() for GPO_CANONLIDE200: stabilize REG6B/6C/6D/6E/6F before start edges. */
-            if (!preview_run_state_write_step(
+            const preview_state_write_step *gpio_profile_steps[] = {
+                &kPreview03Write6EFFGpioProfilePrimeStep,
+                &kPreview03Write6C00GpioProfileStep,
+                &kPreview03Write6B02GpioProfileStep,
+                &kPreview03Write6CF9GpioProfileStep,
+                &kPreview03Write6D20GpioProfileStep,
+                &kPreview03Write6EFFGpioProfileFinalStep,
+                &kPreview03Write6F00GpioProfileStep};
+            const size_t gpio_profile_step_count =
+                sizeof(gpio_profile_steps) / sizeof(gpio_profile_steps[0]);
+            size_t gpio_profile_step_index;
+            preview_state_poll_step pre_6c_poll_4b22;
+            preview_state_poll_step pre_6c_poll_4c22;
+            preview_state_poll_step pre_6c_poll_4d22;
+            preview_state_poll_step post_gpio_poll_0b22;
+            preview_state_poll_step post_gpio_poll_6b22;
+            preview_state_poll_step post_gpio_poll_6c22;
+            uint8_t response_4b22[8];
+            uint8_t response_4c22[8];
+            uint8_t response_4d22[8];
+            uint8_t response_post_0b22[8];
+            uint8_t response_post_6b22[8];
+            uint8_t response_post_6c22[8];
+            size_t response_4b22_length = 0U;
+            size_t response_4c22_length = 0U;
+            size_t response_4d22_length = 0U;
+            size_t response_post_0b22_length = 0U;
+            size_t response_post_6b22_length = 0U;
+            size_t response_post_6c22_length = 0U;
+            char response_4b22_hex[32];
+            char response_4c22_hex[32];
+            char response_4d22_hex[32];
+            char response_post_0b22_hex[32];
+            char response_post_6b22_hex[32];
+            char response_post_6c22_hex[32];
+
+            memset(&pre_6c_poll_4b22, 0, sizeof(pre_6c_poll_4b22));
+            pre_6c_poll_4b22.frame_number = 2637U;
+            pre_6c_poll_4b22.index = 0x4B22U;
+            pre_6c_poll_4b22.label = "pre-6c 0x4B22";
+            if (!preview_poll_state_register(
                     target_handle,
                     state,
                     "phase-1-transition",
                     iteration,
-                    &kPreview03Write6EFFGpioProfilePrimeStep) ||
-                !preview_run_state_write_step(
-                    target_handle,
-                    state,
-                    "phase-1-transition",
-                    iteration,
-                    &kPreview03Write6C00GpioProfileStep) ||
-                !preview_run_state_write_step(
-                    target_handle,
-                    state,
-                    "phase-1-transition",
-                    iteration,
-                    &kPreview03Write6B02GpioProfileStep) ||
-                !preview_run_state_write_step(
-                    target_handle,
-                    state,
-                    "phase-1-transition",
-                    iteration,
-                    &kPreview03Write6CF9GpioProfileStep) ||
-                !preview_run_state_write_step(
-                    target_handle,
-                    state,
-                    "phase-1-transition",
-                    iteration,
-                    &kPreview03Write6D20GpioProfileStep) ||
-                !preview_run_state_write_step(
-                    target_handle,
-                    state,
-                    "phase-1-transition",
-                    iteration,
-                    &kPreview03Write6EFFGpioProfileFinalStep) ||
-                !preview_run_state_write_step(
-                    target_handle,
-                    state,
-                    "phase-1-transition",
-                    iteration,
-                    &kPreview03Write6F00GpioProfileStep))
+                    &pre_6c_poll_4b22,
+                    response_4b22,
+                    sizeof(response_4b22),
+                    &response_4b22_length,
+                    response_4b22_hex,
+                    sizeof(response_4b22_hex)))
             {
                 return 0;
             }
+
+            memset(&pre_6c_poll_4c22, 0, sizeof(pre_6c_poll_4c22));
+            pre_6c_poll_4c22.frame_number = 2639U;
+            pre_6c_poll_4c22.index = 0x4C22U;
+            pre_6c_poll_4c22.label = "pre-6c 0x4C22";
+            if (!preview_poll_state_register(
+                    target_handle,
+                    state,
+                    "phase-1-transition",
+                    iteration,
+                    &pre_6c_poll_4c22,
+                    response_4c22,
+                    sizeof(response_4c22),
+                    &response_4c22_length,
+                    response_4c22_hex,
+                    sizeof(response_4c22_hex)))
+            {
+                return 0;
+            }
+
+            memset(&pre_6c_poll_4d22, 0, sizeof(pre_6c_poll_4d22));
+            pre_6c_poll_4d22.frame_number = 2641U;
+            pre_6c_poll_4d22.index = 0x4D22U;
+            pre_6c_poll_4d22.label = "pre-6c 0x4D22";
+            if (!preview_poll_state_register(
+                    target_handle,
+                    state,
+                    "phase-1-transition",
+                    iteration,
+                    &pre_6c_poll_4d22,
+                    response_4d22,
+                    sizeof(response_4d22),
+                    &response_4d22_length,
+                    response_4d22_hex,
+                    sizeof(response_4d22_hex)))
+            {
+                return 0;
+            }
+
+            printf(
+                "[preview-attempt-03][phase-1-transition] iter=%u pre-6c poll summary 4b22=%s 4c22=%s 4d22=%s\n",
+                iteration,
+                response_4b22_hex,
+                response_4c22_hex,
+                response_4d22_hex);
+
+            printf(
+                "[preview-attempt-03][phase-1-transition] iter=%u applying GL847 gpio-profile writes before first legal 6cf0 window\n",
+                iteration);
+            for (gpio_profile_step_index = 0U;
+                 gpio_profile_step_index < gpio_profile_step_count;
+                 ++gpio_profile_step_index)
+            {
+                if (!preview_run_state_write_step(
+                        target_handle,
+                        state,
+                        "phase-1-transition",
+                        iteration,
+                        gpio_profile_steps[gpio_profile_step_index]))
+                {
+                    return 0;
+                }
+            }
+
+            memset(&post_gpio_poll_0b22, 0, sizeof(post_gpio_poll_0b22));
+            post_gpio_poll_0b22.frame_number = 2642U;
+            post_gpio_poll_0b22.index = 0x0B22U;
+            post_gpio_poll_0b22.label = "post-gpio-profile 0x0B22";
+            if (!preview_poll_state_register(
+                    target_handle,
+                    state,
+                    "phase-1-transition",
+                    iteration,
+                    &post_gpio_poll_0b22,
+                    response_post_0b22,
+                    sizeof(response_post_0b22),
+                    &response_post_0b22_length,
+                    response_post_0b22_hex,
+                    sizeof(response_post_0b22_hex)))
+            {
+                return 0;
+            }
+
+            memset(&post_gpio_poll_6b22, 0, sizeof(post_gpio_poll_6b22));
+            post_gpio_poll_6b22.frame_number = 2643U;
+            post_gpio_poll_6b22.index = 0x6B22U;
+            post_gpio_poll_6b22.label = "post-gpio-profile 0x6B22";
+            if (!preview_poll_state_register(
+                    target_handle,
+                    state,
+                    "phase-1-transition",
+                    iteration,
+                    &post_gpio_poll_6b22,
+                    response_post_6b22,
+                    sizeof(response_post_6b22),
+                    &response_post_6b22_length,
+                    response_post_6b22_hex,
+                    sizeof(response_post_6b22_hex)))
+            {
+                return 0;
+            }
+
+            memset(&post_gpio_poll_6c22, 0, sizeof(post_gpio_poll_6c22));
+            post_gpio_poll_6c22.frame_number = 2644U;
+            post_gpio_poll_6c22.index = 0x6C22U;
+            post_gpio_poll_6c22.label = "post-gpio-profile 0x6C22";
+            if (!preview_poll_state_register(
+                    target_handle,
+                    state,
+                    "phase-1-transition",
+                    iteration,
+                    &post_gpio_poll_6c22,
+                    response_post_6c22,
+                    sizeof(response_post_6c22),
+                    &response_post_6c22_length,
+                    response_post_6c22_hex,
+                    sizeof(response_post_6c22_hex)))
+            {
+                return 0;
+            }
+
+            printf(
+                "[preview-attempt-03][phase-1-transition] iter=%u post-gpio-profile snapshot 0b22=%s 6b22=%s 6c22=%s\n",
+                iteration,
+                response_post_0b22_hex,
+                response_post_6b22_hex,
+                response_post_6c22_hex);
+
             out_result->applied_gl847_gpio_profile = 1;
             out_result->prepared_6c_gpio10_high = 0;
         }
@@ -441,6 +595,139 @@ int preview03_run_transition_phase(
             out_result->seen_6c22_f055 = 1;
         }
 
+        if (!pre_6c22_prime_attempted &&
+            out_result->wrote_0d01_pre &&
+            out_result->wrote_6b87 &&
+            response_6c22_length == 2U &&
+            response_6c22[1] == 0x55U)
+        {
+            preview_state_poll_step pre_prime_poll_a;
+            preview_state_poll_step pre_prime_poll_b;
+            uint8_t response_pre_prime_a[8];
+            uint8_t response_pre_prime_b[8];
+            size_t response_pre_prime_a_length = 0U;
+            size_t response_pre_prime_b_length = 0U;
+            char response_pre_prime_a_hex[32];
+            char response_pre_prime_b_hex[32];
+
+            pre_6c22_prime_attempted = 1;
+            printf(
+                "[preview-attempt-03][phase-1-transition] iter=%u pre-6cf0 prime attempt: replaying capture window 2515/2517/2519/2521 from current_6c22=%s\n",
+                iteration,
+                out_result->last_6c22);
+
+            memset(&pre_prime_poll_a, 0, sizeof(pre_prime_poll_a));
+            pre_prime_poll_a.frame_number = 2515U;
+            pre_prime_poll_a.index = 0x6C22U;
+            pre_prime_poll_a.label = "pre-6cf0 0x6C22 (2515)";
+            if (!preview_poll_state_register(
+                    target_handle,
+                    state,
+                    "phase-1-transition",
+                    iteration,
+                    &pre_prime_poll_a,
+                    response_pre_prime_a,
+                    sizeof(response_pre_prime_a),
+                    &response_pre_prime_a_length,
+                    response_pre_prime_a_hex,
+                    sizeof(response_pre_prime_a_hex)))
+            {
+                return 0;
+            }
+
+            if (preview_response_is_two_byte_value(
+                    response_pre_prime_a,
+                    response_pre_prime_a_length,
+                    0xF1U,
+                    0x55U))
+            {
+                out_result->seen_6c22_f155 = 1;
+            }
+            if (preview_response_is_two_byte_value(
+                    response_pre_prime_a,
+                    response_pre_prime_a_length,
+                    0xF0U,
+                    0x55U))
+            {
+                out_result->seen_6c22_f055 = 1;
+            }
+
+            if (response_pre_prime_a_length == 2U && response_pre_prime_a[1] == 0x55U)
+            {
+                if (!preview_run_phase1_reg6c_gpio10_write(
+                        target_handle,
+                        state,
+                        iteration,
+                        2517U,
+                        response_pre_prime_a[0],
+                        0,
+                        NULL))
+                {
+                    return 0;
+                }
+            }
+
+            memset(&pre_prime_poll_b, 0, sizeof(pre_prime_poll_b));
+            pre_prime_poll_b.frame_number = 2519U;
+            pre_prime_poll_b.index = 0x6C22U;
+            pre_prime_poll_b.label = "pre-6cf0 0x6C22 (2519)";
+            if (!preview_poll_state_register(
+                    target_handle,
+                    state,
+                    "phase-1-transition",
+                    iteration,
+                    &pre_prime_poll_b,
+                    response_pre_prime_b,
+                    sizeof(response_pre_prime_b),
+                    &response_pre_prime_b_length,
+                    response_pre_prime_b_hex,
+                    sizeof(response_pre_prime_b_hex)))
+            {
+                return 0;
+            }
+
+            if (preview_response_is_two_byte_value(
+                    response_pre_prime_b,
+                    response_pre_prime_b_length,
+                    0xF1U,
+                    0x55U))
+            {
+                out_result->seen_6c22_f155 = 1;
+            }
+            if (preview_response_is_two_byte_value(
+                    response_pre_prime_b,
+                    response_pre_prime_b_length,
+                    0xF0U,
+                    0x55U))
+            {
+                out_result->seen_6c22_f055 = 1;
+            }
+
+            if (response_pre_prime_b_length == 2U && response_pre_prime_b[1] == 0x55U)
+            {
+                if (!preview_run_phase1_reg6c_gpio10_write(
+                        target_handle,
+                        state,
+                        iteration,
+                        2521U,
+                        response_pre_prime_b[0],
+                        0,
+                        NULL))
+                {
+                    return 0;
+                }
+            }
+
+            snprintf(out_result->last_6c22, sizeof(out_result->last_6c22), "%s", response_pre_prime_b_hex);
+            printf(
+                "[preview-attempt-03][phase-1-transition] iter=%u pre-6cf0 prime summary 2515=%s 2519=%s seen_f155=%s seen_f055=%s\n",
+                iteration,
+                response_pre_prime_a_hex,
+                response_pre_prime_b_hex,
+                out_result->seen_6c22_f155 ? "yes" : "no",
+                out_result->seen_6c22_f055 ? "yes" : "no");
+        }
+
         if (!out_result->prepared_6c_gpio10_high &&
             out_result->wrote_0d01_pre &&
             preview_response_is_two_byte_value(response_6b22, response_6b22_length, 0x87U, 0x55U) &&
@@ -470,38 +757,199 @@ int preview03_run_transition_phase(
             }
         }
 
-        if (!out_result->wrote_6cf0 &&
-            out_result->prepared_6c_gpio10_high &&
-            response_6c22_length == 2U &&
-            response_6c22[1] == 0x55U &&
-            (response_6c22[0] & kPreview03Reg6CGpio10Mask) != 0U &&
-            (out_result->seen_6c22_f155 ||
-             (out_result->wrote_0d01_pre &&
-              /* Keep 6C consume edge tied to the latched 6B path; iter=1 writes at 6B22=0055 were accepted but inert. */
-              preview_response_is_two_byte_value(response_6b22, response_6b22_length, 0x87U, 0x55U) &&
-              /* Consume once 6B has latched and GPIO10 is high; do not hard-code one REG6C image. */
-              response_6c22[1] == 0x55U)))
         {
-            printf(
-                "[preview-attempt-03][phase-1-transition] iter=%u 6cf0 trigger: gate met (6b22=%s 0122=%s 0d22=%s 6c22=%s seen_f155=%s mode=literal-6cf0)\n",
-                iteration,
-                out_result->last_6b22,
-                out_result->last_0122,
-                out_result->last_0d22,
-                out_result->last_6c22,
-                out_result->seen_6c22_f155 ? "yes" : "no");
-            if (!preview_run_phase1_reg6c_gpio10_write(
-                    target_handle,
-                    state,
-                    iteration,
-                    kPreview03Write6CF0Step.frame_number,
-                    response_6c22[0],
-                    0,
-                    NULL))
+            const int reg6c_consume_ready =
+                preview_response_is_two_byte_value(response_6c22, response_6c22_length, 0xF1U, 0x55U) ||
+                preview_response_is_two_byte_value(response_6c22, response_6c22_length, 0xF0U, 0x55U);
+            const int response_6b22_latched =
+                preview_response_is_two_byte_value(response_6b22, response_6b22_length, 0x87U, 0x55U);
+
+            if (!out_result->wrote_6cf0 &&
+                out_result->prepared_6c_gpio10_high &&
+                response_6b22_latched &&
+                reg6c_consume_ready)
             {
-                return 0;
+                printf(
+                    "[preview-attempt-03][phase-1-transition] iter=%u 6cf0 trigger: gate met (6b22=%s 0122=%s 0d22=%s 6c22=%s seen_f155=%s mode=literal-6cf0)\n",
+                    iteration,
+                    out_result->last_6b22,
+                    out_result->last_0122,
+                    out_result->last_0d22,
+                    out_result->last_6c22,
+                    out_result->seen_6c22_f155 ? "yes" : "no");
+                if (!preview_run_phase1_reg6c_gpio10_write(
+                        target_handle,
+                        state,
+                        iteration,
+                        kPreview03Write6CF0Step.frame_number,
+                        response_6c22[0],
+                        0,
+                        NULL))
+                {
+                    return 0;
+                }
+                out_result->wrote_6cf0 = 1;
             }
-            out_result->wrote_6cf0 = 1;
+            else if (!out_result->wrote_6cf0 &&
+                     out_result->prepared_6c_gpio10_high &&
+                     response_6b22_latched &&
+                     response_6c22_length == 2U &&
+                     response_6c22[1] == 0x55U)
+            {
+                printf(
+                    "[preview-attempt-03][phase-1-transition] iter=%u 6cf0 pending: waiting for capture-grounded REG6C consume state (need 6c22=f155/f055, current=%s)\n",
+                    iteration,
+                    out_result->last_6c22);
+            }
+        }
+
+        if (out_result->wrote_6cf0 && !post_6cf0_window_complete)
+        {
+            const unsigned int max_attempts_per_iteration = 3U;
+            unsigned int post_attempt;
+
+            for (post_attempt = 0U;
+                 post_attempt < max_attempts_per_iteration && !post_6cf0_window_complete;
+                 ++post_attempt)
+            {
+                preview_state_poll_step post_6cf0_poll_4122;
+                preview_state_poll_step post_6cf0_poll_0122;
+                uint8_t response_0100[8];
+                uint8_t response_4122[8];
+                uint8_t response_0122_post[8];
+                size_t response_4122_length = 0U;
+                size_t response_0122_post_length = 0U;
+                char response_0100_text[32];
+                char response_4122_hex[32];
+                char response_0122_post_hex[32];
+                int status_0100;
+                int response_2647_ok;
+                int response_4122_ready;
+                int response_0122_ready;
+
+                post_6cf0_window_attempts++;
+
+                if (post_attempt > 0U)
+                {
+                    preview03_sleep_ms(1U);
+                }
+
+                printf(
+                    "[preview-attempt-03][phase-1-transition] iter=%u frame=2647 post-6cf0 capture-window poll attempt=%u\n",
+                    iteration,
+                    post_6cf0_window_attempts);
+                memset(response_0100, 0, sizeof(response_0100));
+                status_0100 = sb_usb_vendor_control_in(
+                    target_handle,
+                    0x01U,
+                    0x0000U,
+                    0x0000U,
+                    response_0100,
+                    1U,
+                    kTransferTimeoutMs);
+                if (status_0100 < 0)
+                {
+                    sb_usb_log_libusb_error("post-6cf0 vendor control IN", status_0100);
+                    snprintf(response_0100_text, sizeof(response_0100_text), "<error:%d>", status_0100);
+                    printf(
+                        "[preview-attempt-03][phase-1-transition] iter=%u frame=2647 vendor-control response=%s\n",
+                        iteration,
+                        response_0100_text);
+                }
+                else if (status_0100 != 1)
+                {
+                    snprintf(response_0100_text, sizeof(response_0100_text), "<len:%d>", status_0100);
+                    printf(
+                        "[preview-attempt-03][phase-1-transition] iter=%u frame=2647 vendor-control response=%s\n",
+                        iteration,
+                        response_0100_text);
+                }
+                else
+                {
+                    snprintf(response_0100_text, sizeof(response_0100_text), "%02X", response_0100[0]);
+                    printf(
+                        "[preview-attempt-03][phase-1-transition] iter=%u frame=2647 vendor-control response=%s\n",
+                        iteration,
+                        response_0100_text);
+                }
+
+                memset(&post_6cf0_poll_4122, 0, sizeof(post_6cf0_poll_4122));
+                post_6cf0_poll_4122.frame_number = 2649U;
+                post_6cf0_poll_4122.index = 0x4122U;
+                post_6cf0_poll_4122.label = "post-6cf0 0x4122";
+                if (!preview_poll_state_register(
+                        target_handle,
+                        state,
+                        "phase-1-transition",
+                        iteration,
+                        &post_6cf0_poll_4122,
+                        response_4122,
+                        sizeof(response_4122),
+                        &response_4122_length,
+                        response_4122_hex,
+                        sizeof(response_4122_hex)))
+                {
+                    return 0;
+                }
+
+                memset(&post_6cf0_poll_0122, 0, sizeof(post_6cf0_poll_0122));
+                post_6cf0_poll_0122.frame_number = 2651U;
+                post_6cf0_poll_0122.index = 0x0122U;
+                post_6cf0_poll_0122.label = "post-6cf0 0x0122";
+                if (!preview_poll_state_register(
+                        target_handle,
+                        state,
+                        "phase-1-transition",
+                        iteration,
+                        &post_6cf0_poll_0122,
+                        response_0122_post,
+                        sizeof(response_0122_post),
+                        &response_0122_post_length,
+                        response_0122_post_hex,
+                        sizeof(response_0122_post_hex)))
+                {
+                    return 0;
+                }
+
+                memset(response_0122, 0, sizeof(response_0122));
+                if (response_0122_post_length > sizeof(response_0122))
+                {
+                    preview_set_failure(state, "post-6cf0 0x0122 poll returned oversized response");
+                    return 0;
+                }
+                memcpy(response_0122, response_0122_post, response_0122_post_length);
+                response_0122_length = response_0122_post_length;
+                snprintf(out_result->last_0122, sizeof(out_result->last_0122), "%s", response_0122_post_hex);
+
+                response_2647_ok = (status_0100 == 1);
+                response_4122_ready =
+                    preview_response_is_two_byte_value(response_4122, response_4122_length, 0xC4U, 0x55U);
+                response_0122_ready =
+                    preview_response_is_two_byte_value(response_0122_post, response_0122_post_length, 0x40U, 0x55U) ||
+                    preview_response_is_two_byte_value(response_0122_post, response_0122_post_length, 0x41U, 0x55U);
+
+                if (response_2647_ok && response_4122_ready && response_0122_ready)
+                {
+                    printf(
+                        "[preview-attempt-03][phase-1-transition] iter=%u post-6cf0 capture-window ready attempt=%u 2647=%s 4122=%s 0122=%s\n",
+                        iteration,
+                        post_6cf0_window_attempts,
+                        response_0100_text,
+                        response_4122_hex,
+                        response_0122_post_hex);
+                    post_6cf0_window_complete = 1;
+                }
+                else
+                {
+                    printf(
+                        "[preview-attempt-03][phase-1-transition] iter=%u post-6cf0 capture-window pending attempt=%u 2647=%s 4122=%s 0122=%s (need 2647=00, 4122=c455, 0122=4055/4155 before 0140)\n",
+                        iteration,
+                        post_6cf0_window_attempts,
+                        response_0100_text,
+                        response_4122_hex,
+                        response_0122_post_hex);
+                }
+            }
         }
 
         if (!out_result->wrote_0140)
@@ -538,6 +986,13 @@ int preview03_run_transition_phase(
             {
                 printf(
                     "[preview-attempt-03][phase-1-transition] iter=%u 0140 pending but blocked: waiting for 6cf0 (0x6C22=%s)\n",
+                    iteration,
+                    out_result->last_6c22);
+            }
+            else if (!post_6cf0_window_complete)
+            {
+                printf(
+                    "[preview-attempt-03][phase-1-transition] iter=%u 0140 pending but blocked: waiting for post-6cf0 capture-window polls (0x6C22=%s)\n",
                     iteration,
                     out_result->last_6c22);
             }

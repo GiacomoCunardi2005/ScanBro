@@ -370,6 +370,11 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
   <ItemGroup>
     <ClCompile Include="C:\Users\giaco\Desktop\ScanBro\tools\device_test\cli.c" />
     <ClCompile Include="C:\Users\giaco\Desktop\ScanBro\tools\device_test\probe_modes.c" />
+    <ClCompile Include="C:\Users\giaco\Desktop\ScanBro\tools\device_test\preview_attempt_data.c" />
+    <ClCompile Include="C:\Users\giaco\Desktop\ScanBro\tools\device_test\preview_attempt_io.c" />
+    <ClCompile Include="C:\Users\giaco\Desktop\ScanBro\tools\device_test\preview_attempt_preamble.c" />
+    <ClCompile Include="C:\Users\giaco\Desktop\ScanBro\tools\device_test\preview_attempt_phase1.c" />
+    <ClCompile Include="C:\Users\giaco\Desktop\ScanBro\tools\device_test\preview_attempt_readiness.c" />
     <ClCompile Include="C:\Users\giaco\Desktop\ScanBro\tools\device_test\preview_attempt03.c" />
     <ClCompile Include="C:\Users\giaco\Desktop\ScanBro\tools\device_test\usb_device.c" />
     <ClCompile Include="C:\Users\giaco\Desktop\ScanBro\tools\device_test\main.c" />

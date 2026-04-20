@@ -1,27 +1,26 @@
 Enumerating USB devices...
-Device bus=2 addr=6 vid:pid=1a40:0101 class=09 subclass=00 proto=01 configs=1
-Device bus=2 addr=13 vid:pid=03f0:2341 class=00 subclass=00 proto=00 configs=1
 Device bus=2 addr=0 vid:pid=8086:7e7d class=09 subclass=00 proto=03 configs=1
 Device bus=2 addr=4 vid:pid=8087:0033 class=e0 subclass=01 proto=01 configs=1
-Device bus=2 addr=56 vid:pid=17ef:a392 class=09 subclass=00 proto=02 configs=1
-Device bus=2 addr=59 vid:pid=17ef:a395 class=09 subclass=00 proto=01 configs=1
-Device bus=2 addr=9 vid:pid=1bcf:2701 class=ef subclass=02 proto=01 configs=1
+Device bus=2 addr=34 vid:pid=17ef:a392 class=09 subclass=00 proto=02 configs=1
+Device bus=2 addr=38 vid:pid=1bcf:2701 class=ef subclass=02 proto=01 configs=1
+Device bus=2 addr=44 vid:pid=03f0:2341 class=00 subclass=00 proto=00 configs=1
+Device bus=2 addr=45 vid:pid=05ac:0250 class=00 subclass=00 proto=00 configs=1
+Device bus=1 addr=19 vid:pid=17ef:a393 class=09 subclass=00 proto=03 configs=1
 Device bus=2 addr=3 vid:pid=5986:2169 class=ef subclass=02 proto=01 configs=1
 Device bus=2 addr=2 vid:pid=04f3:0c8c class=00 subclass=00 proto=00 configs=1
-Device bus=1 addr=49 vid:pid=17ef:a391 class=09 subclass=00 proto=03 configs=1
-Device bus=2 addr=8 vid:pid=04a9:1906 class=ff subclass=ff proto=ff configs=1
-Device bus=2 addr=14 vid:pid=1038:12ad class=00 subclass=00 proto=00 configs=1
-Device bus=1 addr=50 vid:pid=17ef:a387 class=00 subclass=00 proto=00 configs=2
-Device bus=2 addr=16 vid:pid=17ef:a38f class=00 subclass=00 proto=00 configs=1
-Device bus=1 addr=51 vid:pid=152d:0578 class=00 subclass=00 proto=00 configs=1
-Device bus=1 addr=52 vid:pid=17ef:a393 class=09 subclass=00 proto=03 configs=1
-Device bus=2 addr=17 vid:pid=046d:c260 class=00 subclass=00 proto=00 configs=1
-Device bus=2 addr=15 vid:pid=05ac:0250 class=00 subclass=00 proto=00 configs=1
+Device bus=2 addr=42 vid:pid=1a40:0101 class=09 subclass=00 proto=01 configs=1
+Device bus=2 addr=37 vid:pid=17ef:a395 class=09 subclass=00 proto=01 configs=1
+Device bus=2 addr=43 vid:pid=1038:12ad class=00 subclass=00 proto=00 configs=1
+Device bus=1 addr=16 vid:pid=17ef:a391 class=09 subclass=00 proto=03 configs=1
+Device bus=2 addr=35 vid:pid=17ef:a394 class=09 subclass=00 proto=02 configs=1
+Device bus=2 addr=46 vid:pid=046d:c24f class=00 subclass=00 proto=00 configs=1
+Device bus=1 addr=17 vid:pid=17ef:a387 class=00 subclass=00 proto=00 configs=2
+Device bus=2 addr=39 vid:pid=17ef:a38f class=00 subclass=00 proto=00 configs=1
+Device bus=2 addr=55 vid:pid=04a9:1906 class=ff subclass=ff proto=ff configs=1
 Device bus=1 addr=0 vid:pid=8086:7ec0 class=09 subclass=00 proto=03 configs=1
-Device bus=2 addr=18 vid:pid=17ef:a396 class=00 subclass=00 proto=00 configs=1
-Device bus=2 addr=57 vid:pid=17ef:a394 class=09 subclass=00 proto=02 configs=1
+Device bus=2 addr=40 vid:pid=17ef:a396 class=00 subclass=00 proto=00 configs=1
 
-Opening scanner 04a9:1906 on bus=2 addr=8...
+Opening scanner 04a9:1906 on bus=2 addr=55...
 Opened device descriptor: usb=0200 class=ff/ff/ff configs=1
 Manufacturer: Canon
 Product: CanoScan
@@ -91,78 +90,6 @@ Interface claim succeeded.
 [scanbro-usb] [OUT][PC->scanner] vendor control OUT payload (2 bytes)
   0000: 01 40 
 [scanbro-usb][OUT] vendor control OUT transferred 2 bytes
-[preview-attempt] frame 1093 control OUT request=0x04 value=0x0083 index=0x0000 len=2
-[scanbro-usb] [OUT][PC->scanner] vendor control OUT setup (8 bytes)
-  0000: 40 04 83 00 00 00 02 00 
-[scanbro-usb] [OUT][PC->scanner] vendor control OUT payload (2 bytes)
-  0000: 74 00 
-[scanbro-usb][OUT] vendor control OUT transferred 2 bytes
-[preview-attempt] frame 1095 control OUT request=0x04 value=0x0083 index=0x0000 len=2
-[scanbro-usb] [OUT][PC->scanner] vendor control OUT setup (8 bytes)
-  0000: 40 04 83 00 00 00 02 00 
-[scanbro-usb] [OUT][PC->scanner] vendor control OUT payload (2 bytes)
-  0000: 75 33 
-[scanbro-usb][OUT] vendor control OUT transferred 2 bytes
-[preview-attempt] frame 1097 control OUT request=0x04 value=0x0083 index=0x0000 len=2
-[scanbro-usb] [OUT][PC->scanner] vendor control OUT setup (8 bytes)
-  0000: 40 04 83 00 00 00 02 00 
-[scanbro-usb] [OUT][PC->scanner] vendor control OUT payload (2 bytes)
-  0000: 76 33 
-[scanbro-usb][OUT] vendor control OUT transferred 2 bytes
-[preview-attempt] frame 1099 control IN request=0x04 value=0x008e index=0x0b22 len=2
-[scanbro-usb] [OUT][PC->scanner] vendor control IN setup (8 bytes)
-  0000: c0 04 8e 00 22 0b 02 00 
-[scanbro-usb][IN] vendor control IN transferred 2 bytes
-[scanbro-usb] [IN][scanner->PC] vendor control IN response (2 bytes)
-  0000: 01 55 
-[preview-attempt] frame 1101 control OUT request=0x04 value=0x0083 index=0x0000 len=2
-[scanbro-usb] [OUT][PC->scanner] vendor control OUT setup (8 bytes)
-  0000: 40 04 83 00 00 00 02 00 
-[scanbro-usb] [OUT][PC->scanner] vendor control OUT payload (2 bytes)
-  0000: 0b 6b 
-[scanbro-usb][OUT] vendor control OUT transferred 2 bytes
-[preview-attempt] frame 1103 control OUT request=0x0c value=0x008c index=0x0010 len=1
-[scanbro-usb] [OUT][PC->scanner] vendor control OUT setup (8 bytes)
-  0000: 40 0c 8c 00 10 00 01 00 
-[scanbro-usb] [OUT][PC->scanner] vendor control OUT payload (1 bytes)
-  0000: 0d 
-[scanbro-usb][OUT] vendor control OUT transferred 1 bytes
-[preview-attempt] frame 1105 control OUT request=0x0c value=0x008c index=0x0013 len=1
-[scanbro-usb] [OUT][PC->scanner] vendor control OUT setup (8 bytes)
-  0000: 40 0c 8c 00 13 00 01 00 
-[scanbro-usb] [OUT][PC->scanner] vendor control OUT payload (1 bytes)
-  0000: 0e 
-[scanbro-usb][OUT] vendor control OUT transferred 1 bytes
-[preview-attempt] frame 1107 control OUT request=0x04 value=0x0083 index=0x0000 len=2
-[scanbro-usb] [OUT][PC->scanner] vendor control OUT setup (8 bytes)
-  0000: 40 04 83 00 00 00 02 00 
-[scanbro-usb] [OUT][PC->scanner] vendor control OUT payload (2 bytes)
-  0000: 6f a0 
-[scanbro-usb][OUT] vendor control OUT transferred 2 bytes
-[preview-attempt] frame 1109 control OUT request=0x04 value=0x0083 index=0x0000 len=2
-[scanbro-usb] [OUT][PC->scanner] vendor control OUT setup (8 bytes)
-  0000: 40 04 83 00 00 00 02 00 
-[scanbro-usb] [OUT][PC->scanner] vendor control OUT payload (2 bytes)
-  0000: 6e 7f 
-[scanbro-usb][OUT] vendor control OUT transferred 2 bytes
-[preview-attempt] frame 1111 control OUT request=0x04 value=0x0083 index=0x0000 len=2
-[scanbro-usb] [OUT][PC->scanner] vendor control OUT setup (8 bytes)
-  0000: 40 04 83 00 00 00 02 00 
-[scanbro-usb] [OUT][PC->scanner] vendor control OUT payload (2 bytes)
-  0000: a7 1c 
-[scanbro-usb][OUT] vendor control OUT transferred 2 bytes
-[preview-attempt] frame 1113 control IN request=0x04 value=0x008e index=0x6d22 len=2
-[scanbro-usb] [OUT][PC->scanner] vendor control IN setup (8 bytes)
-  0000: c0 04 8e 00 22 6d 02 00 
-[scanbro-usb][IN] vendor control IN transferred 2 bytes
-[scanbro-usb] [IN][scanner->PC] vendor control IN response (2 bytes)
-  0000: 5f 55 
-[preview-attempt] frame 1115 control OUT request=0x04 value=0x0083 index=0x0000 len=2
-[scanbro-usb] [OUT][PC->scanner] vendor control OUT setup (8 bytes)
-  0000: 40 04 83 00 00 00 02 00 
-[scanbro-usb] [OUT][PC->scanner] vendor control OUT payload (2 bytes)
-  0000: 6d 5f 
-[scanbro-usb][OUT] vendor control OUT transferred 2 bytes
 [preview-attempt] frame 1117 control IN request=0x04 value=0x008e index=0x6c22 len=2
 [scanbro-usb] [OUT][PC->scanner] vendor control IN setup (8 bytes)
   0000: c0 04 8e 00 22 6c 02 00 
@@ -222,54 +149,6 @@ Interface claim succeeded.
   0000: 40 04 83 00 00 00 02 00 
 [scanbro-usb] [OUT][PC->scanner] vendor control OUT payload (2 bytes)
   0000: 6c d1 
-[scanbro-usb][OUT] vendor control OUT transferred 2 bytes
-[preview-attempt] frame 1145 control IN request=0x04 value=0x008e index=0xa622 len=2
-[scanbro-usb] [OUT][PC->scanner] vendor control IN setup (8 bytes)
-  0000: c0 04 8e 00 22 a6 02 00 
-[scanbro-usb][IN] vendor control IN transferred 2 bytes
-[scanbro-usb] [IN][scanner->PC] vendor control IN response (2 bytes)
-  0000: 03 55 
-[preview-attempt] frame 1147 control OUT request=0x04 value=0x0083 index=0x0000 len=2
-[scanbro-usb] [OUT][PC->scanner] vendor control OUT setup (8 bytes)
-  0000: 40 04 83 00 00 00 02 00 
-[scanbro-usb] [OUT][PC->scanner] vendor control OUT payload (2 bytes)
-  0000: a6 07 
-[scanbro-usb][OUT] vendor control OUT transferred 2 bytes
-[preview-attempt] frame 1149 control IN request=0x04 value=0x008e index=0xa622 len=2
-[scanbro-usb] [OUT][PC->scanner] vendor control IN setup (8 bytes)
-  0000: c0 04 8e 00 22 a6 02 00 
-[scanbro-usb][IN] vendor control IN transferred 2 bytes
-[scanbro-usb] [IN][scanner->PC] vendor control IN response (2 bytes)
-  0000: 07 55 
-[preview-attempt] frame 1151 control OUT request=0x04 value=0x0083 index=0x0000 len=2
-[scanbro-usb] [OUT][PC->scanner] vendor control OUT setup (8 bytes)
-  0000: 40 04 83 00 00 00 02 00 
-[scanbro-usb] [OUT][PC->scanner] vendor control OUT payload (2 bytes)
-  0000: a6 0f 
-[scanbro-usb][OUT] vendor control OUT transferred 2 bytes
-[preview-attempt] frame 1153 control IN request=0x04 value=0x008e index=0xa622 len=2
-[scanbro-usb] [OUT][PC->scanner] vendor control IN setup (8 bytes)
-  0000: c0 04 8e 00 22 a6 02 00 
-[scanbro-usb][IN] vendor control IN transferred 2 bytes
-[scanbro-usb] [IN][scanner->PC] vendor control IN response (2 bytes)
-  0000: 0f 55 
-[preview-attempt] frame 1155 control OUT request=0x04 value=0x0083 index=0x0000 len=2
-[scanbro-usb] [OUT][PC->scanner] vendor control OUT setup (8 bytes)
-  0000: 40 04 83 00 00 00 02 00 
-[scanbro-usb] [OUT][PC->scanner] vendor control OUT payload (2 bytes)
-  0000: a6 1f 
-[scanbro-usb][OUT] vendor control OUT transferred 2 bytes
-[preview-attempt] frame 1157 control IN request=0x04 value=0x008e index=0x6d22 len=2
-[scanbro-usb] [OUT][PC->scanner] vendor control IN setup (8 bytes)
-  0000: c0 04 8e 00 22 6d 02 00 
-[scanbro-usb][IN] vendor control IN transferred 2 bytes
-[scanbro-usb] [IN][scanner->PC] vendor control IN response (2 bytes)
-  0000: 5f 55 
-[preview-attempt] frame 1159 control OUT request=0x04 value=0x0083 index=0x0000 len=2
-[scanbro-usb] [OUT][PC->scanner] vendor control OUT setup (8 bytes)
-  0000: 40 04 83 00 00 00 02 00 
-[scanbro-usb] [OUT][PC->scanner] vendor control OUT payload (2 bytes)
-  0000: 6d 5f 
 [scanbro-usb][OUT] vendor control OUT transferred 2 bytes
 [preview-attempt] frame 1161 control IN request=0x04 value=0x008e index=0x6c22 len=2
 [scanbro-usb] [OUT][PC->scanner] vendor control IN setup (8 bytes)
@@ -725,78 +604,6 @@ Interface claim succeeded.
   0000: 00 55 
 [preview-attempt-03][phase-1-transition] iter=2 frame=2641 pre-6c 0x4D22 response=0055
 [preview-attempt-03][phase-1-transition] iter=2 pre-6c poll summary 4b22=0055 4c22=0055 4d22=0055
-[preview-attempt-03][phase-1-transition] iter=2 applying GL847 gpio-profile writes before first legal 6cf0 window
-[preview-attempt-03][phase-1-transition] iter=2 frame=2636 action=write 6eff (gl847 gpio profile prime) payload=6eff
-[preview-attempt] frame 2636 control OUT request=0x04 value=0x0083 index=0x0000 len=2
-[scanbro-usb] [OUT][PC->scanner] vendor control OUT setup (8 bytes)
-  0000: 40 04 83 00 00 00 02 00 
-[scanbro-usb] [OUT][PC->scanner] vendor control OUT payload (2 bytes)
-  0000: 6e ff 
-[scanbro-usb][OUT] vendor control OUT transferred 2 bytes
-[preview-attempt-03][phase-1-transition] iter=2 frame=2637 action=write 6c00 (gl847 gpio profile neutral) payload=6c00
-[preview-attempt] frame 2637 control OUT request=0x04 value=0x0083 index=0x0000 len=2
-[scanbro-usb] [OUT][PC->scanner] vendor control OUT setup (8 bytes)
-  0000: 40 04 83 00 00 00 02 00 
-[scanbro-usb] [OUT][PC->scanner] vendor control OUT payload (2 bytes)
-  0000: 6c 00 
-[scanbro-usb][OUT] vendor control OUT transferred 2 bytes
-[preview-attempt-03][phase-1-transition] iter=2 frame=2638 action=write 6b02 (gl847 gpio profile) payload=6b02
-[preview-attempt] frame 2638 control OUT request=0x04 value=0x0083 index=0x0000 len=2
-[scanbro-usb] [OUT][PC->scanner] vendor control OUT setup (8 bytes)
-  0000: 40 04 83 00 00 00 02 00 
-[scanbro-usb] [OUT][PC->scanner] vendor control OUT payload (2 bytes)
-  0000: 6b 02 
-[scanbro-usb][OUT] vendor control OUT transferred 2 bytes
-[preview-attempt-03][phase-1-transition] iter=2 frame=2639 action=write 6cf9 (gl847 gpio profile) payload=6cf9
-[preview-attempt] frame 2639 control OUT request=0x04 value=0x0083 index=0x0000 len=2
-[scanbro-usb] [OUT][PC->scanner] vendor control OUT setup (8 bytes)
-  0000: 40 04 83 00 00 00 02 00 
-[scanbro-usb] [OUT][PC->scanner] vendor control OUT payload (2 bytes)
-  0000: 6c f9 
-[scanbro-usb][OUT] vendor control OUT transferred 2 bytes
-[preview-attempt-03][phase-1-transition] iter=2 frame=2640 action=write 6d20 (gl847 gpio profile) payload=6d20
-[preview-attempt] frame 2640 control OUT request=0x04 value=0x0083 index=0x0000 len=2
-[scanbro-usb] [OUT][PC->scanner] vendor control OUT setup (8 bytes)
-  0000: 40 04 83 00 00 00 02 00 
-[scanbro-usb] [OUT][PC->scanner] vendor control OUT payload (2 bytes)
-  0000: 6d 20 
-[scanbro-usb][OUT] vendor control OUT transferred 2 bytes
-[preview-attempt-03][phase-1-transition] iter=2 frame=2641 action=write 6eff (gl847 gpio profile final) payload=6eff
-[preview-attempt] frame 2641 control OUT request=0x04 value=0x0083 index=0x0000 len=2
-[scanbro-usb] [OUT][PC->scanner] vendor control OUT setup (8 bytes)
-  0000: 40 04 83 00 00 00 02 00 
-[scanbro-usb] [OUT][PC->scanner] vendor control OUT payload (2 bytes)
-  0000: 6e ff 
-[scanbro-usb][OUT] vendor control OUT transferred 2 bytes
-[preview-attempt-03][phase-1-transition] iter=2 frame=2642 action=write 6f00 (gl847 gpio profile) payload=6f00
-[preview-attempt] frame 2642 control OUT request=0x04 value=0x0083 index=0x0000 len=2
-[scanbro-usb] [OUT][PC->scanner] vendor control OUT setup (8 bytes)
-  0000: 40 04 83 00 00 00 02 00 
-[scanbro-usb] [OUT][PC->scanner] vendor control OUT payload (2 bytes)
-  0000: 6f 00 
-[scanbro-usb][OUT] vendor control OUT transferred 2 bytes
-[preview-attempt] frame 2642 control IN request=0x04 value=0x008e index=0x0b22 len=2
-[scanbro-usb] [OUT][PC->scanner] vendor control IN setup (8 bytes)
-  0000: c0 04 8e 00 22 0b 02 00 
-[scanbro-usb][IN] vendor control IN transferred 2 bytes
-[scanbro-usb] [IN][scanner->PC] vendor control IN response (2 bytes)
-  0000: 6b 55 
-[preview-attempt-03][phase-1-transition] iter=2 frame=2642 post-gpio-profile 0x0B22 response=6B55
-[preview-attempt] frame 2643 control IN request=0x04 value=0x008e index=0x6b22 len=2
-[scanbro-usb] [OUT][PC->scanner] vendor control IN setup (8 bytes)
-  0000: c0 04 8e 00 22 6b 02 00 
-[scanbro-usb][IN] vendor control IN transferred 2 bytes
-[scanbro-usb] [IN][scanner->PC] vendor control IN response (2 bytes)
-  0000: 02 55 
-[preview-attempt-03][phase-1-transition] iter=2 frame=2643 post-gpio-profile 0x6B22 response=0255
-[preview-attempt] frame 2644 control IN request=0x04 value=0x008e index=0x6c22 len=2
-[scanbro-usb] [OUT][PC->scanner] vendor control IN setup (8 bytes)
-  0000: c0 04 8e 00 22 6c 02 00 
-[scanbro-usb][IN] vendor control IN transferred 2 bytes
-[scanbro-usb] [IN][scanner->PC] vendor control IN response (2 bytes)
-  0000: 83 55 
-[preview-attempt-03][phase-1-transition] iter=2 frame=2644 post-gpio-profile 0x6C22 response=8355
-[preview-attempt-03][phase-1-transition] iter=2 post-gpio-profile snapshot 0b22=6B55 6b22=0255 6c22=8355
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] [OUT][PC->scanner] vendor control IN setup (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 
@@ -809,8 +616,8 @@ Interface claim succeeded.
   0000: c0 04 8e 00 22 6b 02 00 
 [scanbro-usb][IN] vendor control IN transferred 2 bytes
 [scanbro-usb] [IN][scanner->PC] vendor control IN response (2 bytes)
-  0000: 02 55 
-[preview-attempt-03][phase-1-transition] iter=2 frame=2742 0x6B22 response=0255
+  0000: 00 55 
+[preview-attempt-03][phase-1-transition] iter=2 frame=2742 0x6B22 response=0055
 [preview-attempt] frame 2749 control IN request=0x04 value=0x008e index=0x0122 len=2
 [scanbro-usb] [OUT][PC->scanner] vendor control IN setup (8 bytes)
   0000: c0 04 8e 00 22 01 02 00 
@@ -869,8 +676,8 @@ Interface claim succeeded.
   0000: 6c f0 
 [scanbro-usb][OUT] vendor control OUT transferred 2 bytes
 [preview-attempt-03][phase-1-transition] iter=2 pre-6cf0 prime summary 2515=8355 2519=8355 seen_f155=no seen_f055=no
-[preview-attempt-03][phase-1-transition] iter=2 0140 pending but blocked: 0x6B22 not latched (0x6B22=0255)
-[preview-attempt-03][phase-1-transition] iter=2 summary 0c22=0055 6b22=0255 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,gpio-profile:yes,6c10-pre:no,6b87:yes,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no 0140_attempts=2 0140_emitted_iter=0 post0140_snapshots=0
+[preview-attempt-03][phase-1-transition] iter=2 0140 pending but blocked: 0x6B22 not latched (0x6B22=0055)
+[preview-attempt-03][phase-1-transition] iter=2 summary 0c22=0055 6b22=0055 0122=4055 0d22=0055 6c22=8355 writes=[0c00:yes,0d01-pre:yes,gpio-profile:yes,6c10-pre:no,6b87:yes,0141:no,0d01:no,0fff:no,0140:no,6cf0:no] seen_6c22_f155=no seen_6c22_f055=no 0140_attempts=2 0140_emitted_iter=0 post0140_snapshots=0
 [preview-attempt] frame 2629 control IN request=0x04 value=0x008e index=0x0c22 len=2
 [scanbro-usb] [OUT][PC->scanner] vendor control IN setup (8 bytes)
   0000: c0 04 8e 00 22 0c 02 00 

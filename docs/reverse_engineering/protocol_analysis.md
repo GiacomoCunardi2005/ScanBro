@@ -232,3 +232,35 @@ Runtime instrumentation update (2026-04-19):
   - `tools/device_test` was split into smaller modules (`main`, `cli`, `usb_device`, `probe_modes`, preview entry header) to isolate orchestration from scan logic.
   - grounded behavior from `tools/device_test/logs/device_test.latest.log` remained unchanged after refactor:
   - `0140:yes`, `6cf0:yes`, `0x6C22` still `8355`, no `f155/f055`, failure still at iteration cap with `bytes saved before failure: 0`.
+- post-`6cf0` micro-window hard-gate pass (2026-04-19, latest):
+  - phase-1 now requires capture-grounded post-`6cf0` readiness before `0140` (`2647=00`, `2649 0x4122=c455`, `2651 0x0122=4055/4155`).
+  - latest real run facts (`tools/device_test/logs/device_test.latest.log`):
+    - `6cf0` still emits (`iter=3 frame=2645 action=write 6cf0 payload=6cf0`).
+    - `2647` (`C0 01 00 00 00 00 01 00`) consistently fails with `LIBUSB_ERROR_PIPE (-9)` at every phase-1 iteration after `6cf0`.
+    - `2649 0x4122` remains `4855` (never reaches expected `c455`).
+    - `2651 0x0122` remains `4055`.
+  - consequence: `0140` is intentionally withheld (`0140:no`), kickoff writes do not arm (`0141/0d01/0fff:no`), `0x6C22` remains `8355`, `seen_6c22_f155=no`, `seen_6c22_f055=no`, and phase-1 still fails at iteration cap with `bytes saved before failure: 0`.
+  - narrowed next missing transition in this path: post-`6cf0` handshake success (`2647`) plus `0x4122` progression `4855 -> c455`.
+- follow-up micro-window legality pass (2026-04-19, latest):
+  - frame-level decode re-check around `2638..2656` in `pcapng/03_scan_1200dpi_mpnavigator_ex.pcapng` confirmed no extra companion write between `2645` (`6cf0`) and `2647` (`C0 01 ...`): capture ordering remains `6c22=f055 -> 6cf0 -> 2647 -> 4122=c455 -> 0122=4055 -> 0140`.
+  - grounded code root cause found: phase-1 still allowed `6cf0` from the permissive `6c22=8355` branch (latched `6b22` + GPIO10 high), which enters the post-`6cf0` window from an off-capture state and produced the observed `2647=PIPE`, `4122=4855`.
+  - fix applied in `preview_attempt_phase1.c`: `6cf0` consume edge now requires current capture-grounded `0x6C22` state (`f155` or `f055`), with explicit pending log when current value is not eligible.
+  - instrumentation correction: `0140` block reason order was fixed so logs report `waiting for 6cf0` before `waiting for post-6cf0 capture-window polls`.
+  - latest run facts after fix (`tools/device_test/logs/device_test.latest.log`): `6cf0` not emitted (`6cf0_write=0`), no `2647/2649/2651` post-window polls executed, `0x4122=c455` not observed, `0140` remains blocked, phase-1 still fails at iteration cap, `bytes saved before failure: 0`.
+  - exact next missing transition remains upstream of the post-`6cf0` handshake: `0x6C22` must first progress from `8355` to `f155/f055` to make `6cf0` (and then `2647`) legally eligible.
+- direction-tag + upstream replay pass (2026-04-20, latest):
+  - USB verbose instrumentation now marks direction on each transaction (`[OUT][PC->scanner]`, `[IN][scanner->PC]`, and summary tags `[scanbro-usb][OUT]/[scanbro-usb][IN]`), making host/device flow explicit in one log line.
+  - pre-`6cf0` one-shot replay window (`2515/2517/2519/2521`) was executed while phase-1 was still in `6c22=8355`; both polls remained `8355` and no `f155/f055` edge appeared.
+  - additional capture-aligned preamble steps were restored in the transition list (`1093..1173`, `1639..1647`) to test missing companions before legal `6cf0`.
+  - grounded result did not change: `6c22` stayed `8355` in the early ladder and phase-1 loop, `6cf0` remained not eligible by gate, `0140` remained blocked, and run still ended at iteration cap with `bytes saved before failure: 0`.
+  - earliest local divergence in this pass was observed at `frame 1099` (`0x0B22=0155`), so the next missing condition is still upstream of the first REG6C progression (`8355 -> f155/f055`).
+- upstream GPIO-profile execution audit (2026-04-20, latest):
+  - grounded code-path gap found in `preview_attempt_phase1.c`: the GL847 GPIO-profile sequence around frame hints `2636..2642` (`6eff/6c00/6b02/6cf9/6d20/6eff/6f00`) was declared but not emitted; phase-1 only polled `0x4B22/0x4C22/0x4D22` before marking profile state as applied.
+  - patch now emits that write ladder once at the pre-`6cf0` transition point and records an immediate snapshot of `0x0B22/0x6B22/0x6C22` to localize whether the first REG6C progression is driven.
+  - validation status from current `tools/device_test/logs/device_test.latest.log`: run failed before phase-1 at open (`libusb_open failed: LIBUSB_ERROR_NOT_SUPPORTED (-12)`), so this pass could not yet verify impact on `0x6C22:8355 -> f155/f055`.
+- open-path recovery grounding (2026-04-20, latest):
+  - current `LIBUSB_ERROR_NOT_SUPPORTED` is grounded as a Windows binding state mismatch, not a phase-1 logic regression: scanner is bound to Canon `usbscan` (`Class=Image`, installed driver `oem14.inf`) in present host state.
+  - same host reports staged libwdi candidate (`oem206.inf`) for `USB\\VID_04A9&PID_1906`, but it is not installed while Canon package is selected as best-ranked match.
+  - non-destructive package install (`pnputil /add-driver oem206.inf /install`) did not change active binding; this is consistent with rank-based no-op when package already exists.
+  - forced rebind path was also tested: `UpdateDriverForPlugAndPlayDevices(..., INSTALLFLAG_FORCE)` and `pnputil /restart-device` both failed in non-elevated shell (`Access denied` / SetupAPI error), so active-control rebinding is currently blocked by admin privilege, not by protocol code.
+  - immediate next gate before any new phase-1 evidence: run elevated driver rebind to a libusb-compatible service (`WinUSB`, `libusbK`, or `libusb0`), then rerun `--preview-attempt-03` to validate whether the emitted GL847 GPIO profile ladder advances `0x6C22` beyond `8355`.

@@ -12,6 +12,11 @@ add_subdirectory(
 add_executable(device_test
     cli.c
     probe_modes.c
+    preview_attempt_data.c
+    preview_attempt_io.c
+    preview_attempt_preamble.c
+    preview_attempt_phase1.c
+    preview_attempt_readiness.c
     preview_attempt03.c
     usb_device.c
     main.c

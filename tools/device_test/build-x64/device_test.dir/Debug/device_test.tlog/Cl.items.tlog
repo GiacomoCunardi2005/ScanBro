@@ -1,5 +1,10 @@
 C:\Users\giaco\Desktop\ScanBro\tools\device_test\cli.c;C:\Users\giaco\Desktop\ScanBro\tools\device_test\build-x64\device_test.dir\Debug\cli.obj
 C:\Users\giaco\Desktop\ScanBro\tools\device_test\probe_modes.c;C:\Users\giaco\Desktop\ScanBro\tools\device_test\build-x64\device_test.dir\Debug\probe_modes.obj
+C:\Users\giaco\Desktop\ScanBro\tools\device_test\preview_attempt_data.c;C:\Users\giaco\Desktop\ScanBro\tools\device_test\build-x64\device_test.dir\Debug\preview_attempt_data.obj
+C:\Users\giaco\Desktop\ScanBro\tools\device_test\preview_attempt_io.c;C:\Users\giaco\Desktop\ScanBro\tools\device_test\build-x64\device_test.dir\Debug\preview_attempt_io.obj
+C:\Users\giaco\Desktop\ScanBro\tools\device_test\preview_attempt_preamble.c;C:\Users\giaco\Desktop\ScanBro\tools\device_test\build-x64\device_test.dir\Debug\preview_attempt_preamble.obj
+C:\Users\giaco\Desktop\ScanBro\tools\device_test\preview_attempt_phase1.c;C:\Users\giaco\Desktop\ScanBro\tools\device_test\build-x64\device_test.dir\Debug\preview_attempt_phase1.obj
+C:\Users\giaco\Desktop\ScanBro\tools\device_test\preview_attempt_readiness.c;C:\Users\giaco\Desktop\ScanBro\tools\device_test\build-x64\device_test.dir\Debug\preview_attempt_readiness.obj
 C:\Users\giaco\Desktop\ScanBro\tools\device_test\preview_attempt03.c;C:\Users\giaco\Desktop\ScanBro\tools\device_test\build-x64\device_test.dir\Debug\preview_attempt03.obj
 C:\Users\giaco\Desktop\ScanBro\tools\device_test\usb_device.c;C:\Users\giaco\Desktop\ScanBro\tools\device_test\build-x64\device_test.dir\Debug\usb_device.obj
 C:\Users\giaco\Desktop\ScanBro\tools\device_test\main.c;C:\Users\giaco\Desktop\ScanBro\tools\device_test\build-x64\device_test.dir\Debug\main.obj
