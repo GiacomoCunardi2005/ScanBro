@@ -1,0 +1,6 @@
+Program: cnq4808o.dll
+Language: x86:LE:32:default
+CompilerSpec: windows
+ImageBase: 10000000
+MinAddress: 10000000
+MaxAddress: ffdfffff

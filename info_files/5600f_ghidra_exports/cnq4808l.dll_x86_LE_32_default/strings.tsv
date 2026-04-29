@@ -1,0 +1,1426 @@
+address	value
+10083210	CANON
+10083218	IX-48085H
+10083224	1.0.3.0
+1008322c	CCD4800
+10083240	_MUTEX_MPATTR_
+10083250	_Scanner_Status_File_Mapping_SFS
+10083274	Global\
+1008327c	_Scanner_Status_File_Mapping_SFS
+100832a0	DebugDLL_MUTEX
+100832b0	debug.dll
+100832bc	Debug_CreateFile
+100832d0	Debug_MessageOut
+100832e4	Debug_ReleaseFile
+100832fc	DebugDLL_MUTEX
+1008330c	DebugDLL_MUTEX
+1008331c	DebugDLL_MUTEX
+1008332c	debug.dll
+10083338	Debug_DebugString
+1008334c	DebugDLL_MUTEX
+1008335c	DebugDLL_MUTEX
+1008336c	DebugDLL_MUTEX
+1008337c	debug.dll
+10083388	Debug_ImageOut
+10083398	DebugDLL_MUTEX
+100833a8	debug.dll
+100833b4	Debug_ImageAdd
+100833c4	reg00h = 0x00
+100833d4	Reg%02Xh = 0x%02x
+100833e8	%d\t%d\t%d
+10083400	%1.3f\t%1.3f\t%1.3f
+10083418	Offset-R \t= %d
+10083428	Offset-G \t= %d
+10083438	Offset-B \t= %d
+10083448	Gain-R \t\t= %d
+10083458	Gain-G \t\t= %d
+10083468	Gain-B \t\t= %d
+10083478	Exp-R \t\t= %d
+10083488	Exp-R \t\t= %d
+10083498	Exp-R \t\t= %d
+100834a8	judgeArea%d:value = %03d  BOOK\n
+100834c8	judgeArea%d:value = %03d  FAU\n
+100834ec	SOFTWARE\Canon\ScanGear\Devices\CNQ4808
+10083514	CNQ4808W
+1008352c	CNQ4808L.DLL
+10083540	CNQ4808W
+10083550	Global\%s
+10083570	InstallDirectory
+10083584	InstallDirectory
+10083598	CNQ4808L.DLL
+100835a8	CNQ4808N
+100835b4	SOFTWARE\Canon\ScanGear\Devices\CNQ4808
+100835dc	CNQ4808L.DLL
+100835ec	CNQ4808N
+100835f8	SOFTWARE\Canon\ScanGear\Devices\CNQ4808
+10083620	CNQ4808L.DLL
+10083630	CNQ4808N
+1008363c	SOFTWARE\Canon\ScanGear\Devices\CNQ4808
+10083750	FAU.txt
+1008375c	 ,=\t\r\n
+10083764	 ,=\t\r\n
+1008376c	FAUScanPosition
+1008377c	* End Of File *
+10083808	CNQ4808N.SHD
+10083827	@bad allocation
+10083838	CNQ4808C.SHD
+10083848	CNQ4808B.SHD
+10083858	CNQ4808C.SHD
+10083868	CNQ4808D.SHD
+10083878	CNQ4808E.SHD
+10083888	CNQ4808F.SHD
+10083898	CNQ4808G.SHD
+100838a8	Unknown.shd
+100838b4	CNQ4808I.SHD
+100838c4	CNQ4808J.SHD
+100838d4	CNQ4808K.SHD
+100838e4	CNQ4808L.SHD
+100838f4	CNQ4808M.SHD
+10083904	Unknown.shd
+10083910	CNQ4808H.SHD
+10083934	CNQ4808N.SHD
+10083980	CNQ4802I.dat
+1008399c	\n%d %d\n
+100839a8	Open error.\n
+100839c8	SHORT
+100839d8	RATIONAL
+100839e4	SBYTE
+100839ec	UNDEFINED
+100839f8	SSHORT
+10083a00	SLONG
+10083a08	SRATIONAL
+10083a14	FLOAT
+10083a1c	DOUBLE
+10083a28	Open error.\n
+10083a38	memory error[%d].\n
+10083a4c	memory error[%d].\n
+10083a68	VendorName  %s\n
+10083a78	ModelName   %s\n
+10083a88	FirmVersion %s\n
+10083a98	SensorName  %s\n
+10083aa8	PortType    %d\n
+10083ac4	CCD_WLED1
+10083ad0	CCD_WLED2
+10083adc	Error
+10083ae4	SensorType      %d [%s]\n
+10083b00	SupportPortType %02x\n
+10083b18	SupportMethod   %02x\n
+10083b34	Support MultiTG           %ld\n
+10083b54	Support SilentMode        %ld\n
+10083b74	Support PowerSavingMode   %ld\n
+10083b94	Support ContinuasScan     %ld\n
+10083bb4	Support ManualCalibration %ld\n
+10083bd4	Support Diagonastic       %ld\n
+10083bf4	Support FrameSelect       %ld\n
+10083c14	Support CalibrationArea       %ld\n
+10083c38	Support CarriageLock       %ld\n
+10083c5c	MaxWaitTime_Calibration %d\n
+10083c78	MaxWaitTime_Warmup      %d\n
+10083c98	MaximumResolution %d\n
+10083cb0	OpticalResolution %d\n
+10083cc8	ConversionResolution %d\n
+10083ce4	Flatbed\n
+10083cf0	Preview area %ld %ld %ld %ld\n
+10083d10	Preview Res %d %d \n
+10083d24	res %d %d \n
+10083d30	ColorToGray %d \n
+10083d44	Rotation %d \n
+10083d54	Reserved[0] %d \n
+10083d68	pFlatbed_Ex\n
+10083d78	Preview area %d %d %d %d\n
+10083d94	Preview Res %d %d \n
+10083da8	res %d %d \n
+10083db4	ColorToGray %d \n
+10083dc8	Rotation %d \n
+10083dd8	Reserved[0] %d \n
+10083dec	pTPU_RGB\n
+10083df8	Preview area %ld %ld %ld %ld\n
+10083e18	Preview Res %d %d \n
+10083e2c	res %d %d \n
+10083e38	ColorToGray %d \n
+10083e4c	Rotation %d \n
+10083e5c	Reserved[0] %d \n
+10083e70	pTPU_IR\n
+10083e7c	Preview area %ld %ld %ld %ld\n
+10083e9c	Preview Res %d %d \n
+10083eb0	res %d %d \n
+10083ebc	ColorToGray %d \n
+10083ed0	Rotation %d \n
+10083ee0	Reserved[0] %d \n
+10083ef4	pADF\n
+10083efc	Preview area %ld %ld %ld %ld\n
+10083f1c	Preview Res %d %d \n
+10083f30	res %d %d \n
+10083f3c	ColorToGray %d \n
+10083f50	Rotation %d \n
+10083f60	Reserved[0] %d \n
+10083f74	pADF_W\n
+10083f7c	Preview area %ld %ld %ld %ld\n
+10083f9c	Preview Res %d %d \n
+10083fb0	res %d %d \n
+10083fbc	ColorToGray %d \n
+10083fd0	Rotation %d \n
+10083fe0	Reserved[0] %d \n
+10083ff4	Sleeve135\n
+10084000	[%d] %ld %ld %ld %ld\n
+10084018	SizeNumber %d \n
+10084028	Rotation %d \n
+10084038	Mount\n
+10084040	[%d] %ld %ld %ld %ld\n
+10084058	SizeNumber %d \n
+10084068	Rotation %d \n
+10084078	Sleeve120\n
+10084084	[%d] %ld %ld %ld %ld\n
+1008409c	SizeNumber %d \n
+100840ac	Rotation %d \n
+100840bc	Large\n
+100840c4	[%d] %ld %ld %ld %ld\n
+100840dc	SizeNumber %d \n
+100840ec	Rotation %d \n
+100840fc	# %Y/%m/%d\n
+1008410c	scannerabilityxp.dat
+10084128	#######################################################################\n
+10084174	#CanoScan \n
+10084180	#ScannerAbilityXp\n
+10084198	#######################################################################\n
+100841e8	ScannerAbilityXp.VendorName                   =\t%s\n
+1008421c	ScannerAbilityXp.ModelName                    =\t%s\n
+10084250	ScannerAbilityXp.FirmwareVersion              =\t%s\n
+10084284	ScannerAbilityXp.SensorName                   =\t%s\n
+100842b8	#ScannerAbilityXp.PortType\n
+100842d8	ScannerAbilityXp.SensorType                   =\t%d\n
+1008430c	ScannerAbilityXp.SupportPortType              =\t0x%02X\n
+10084344	ScannerAbilityXp.SupportMethod                =\t0x%02X\n
+10084380	ScannerAbilityXp.pSupport->MultiTG\t\t      =\t%ld\n
+100843b4	ScannerAbilityXp.pSupport->SilentMode         =\t%ld\n
+100843ec	ScannerAbilityXp.pSupport->PowerSavingMode    =\t%ld\n
+10084424	ScannerAbilityXp.pSupport->ContinuasScan      =\t%ld\n
+1008445c	ScannerAbilityXp.pSupport->ManualCalibration  =\t%ld\n
+10084494	ScannerAbilityXp.pSupport->Diagonastic        =\t%ld\n
+100844cc	ScannerAbilityXp.pSupport->FrameSelect        =\t%ld\n
+10084504	ScannerAbilityXp.pSupport->CalibrationArea    =\t%ld\n
+1008453c	ScannerAbilityXp.pSupport->CarriageLock    =\t%ld\n
+10084574	ScannerAbilityXp.MaxWaitTime_Calibration      =\t0x%04X\n
+100845ac	ScannerAbilityXp.MaxWaitTime_Warmup           =\t0x%04X\n
+100845e8	ScannerAbilityXp.MaximumResNumber             =\t%d\n
+1008461c	ScannerAbilityXp.pResolutionList[%d].xRes       =\t%d\n
+10084654	ScannerAbilityXp.pResolutionList[%d].yRes       =\t%d\n
+10084690	ScannerAbilityXp.OpticalResolution             =\t%d\n
+100846c8	ScannerAbilityXp.MaximumResolution             =\t%d\n
+10084700	ScannerAbilityXp.ConversionResolution          =\t%d\n
+1008473c	ScannerAbilityXp.pFlatbed                =\tNULL\n
+10084770	ScannerAbilityXp.pFlatbed->ScanningArea.x       =\t%ld\n
+100847a8	ScannerAbilityXp.pFlatbed->ScanningArea.y       =\t%ld\n
+100847e0	ScannerAbilityXp.pFlatbed->ScanningArea.width   =\t%ld\n
+10084818	ScannerAbilityXp.pFlatbed->ScanningArea.length  =\t%ld\n
+10084850	ScannerAbilityXp.pFlatbed->PreviewRes           =\t%d\n
+10084888	ScannerAbilityXp.pFlatbed->MaximumRes           =\t%d\n
+100848c0	ScannerAbilityXp.pFlatbed->MinimumRes           =\t%d\n
+100848f8	ScannerAbilityXp.pFlatbed->ReadingReference     =\t%d\n
+10084930	ScannerAbilityXp.pFlatbed->BitsPerChannel       =\t0x%02X\n
+1008496c	ScannerAbilityXp.pFlatbed->ColorToGray\t\t\t=\t%d\n
+1008499c	ScannerAbilityXp.pFlatbed->Rotation\t\t\t=\t%d\n
+100849c8	ScannerAbilityXp.pFlatbed->Reserved[0]\t\t\t=\t%d\n
+100849fc	ScannerAbilityXp.pFlatbed_Ex                =\tNULL\n
+10084a30	ScannerAbilityXp.pFlatbed_Ex->ScanningArea.x       =\t%d\n
+10084a6c	ScannerAbilityXp.pFlatbed_Ex->ScanningArea.y       =\t%d\n
+10084aa8	ScannerAbilityXp.pFlatbed_Ex->ScanningArea.width   =\t%d\n
+10084ae4	ScannerAbilityXp.pFlatbed_Ex->ScanningArea.length  =\t%d\n
+10084b20	ScannerAbilityXp.pFlatbed_Ex->PreviewRes           =\t%d\n
+10084b5c	ScannerAbilityXp.pFlatbed_Ex->MaximumRes           =\t%d\n
+10084b98	ScannerAbilityXp.pFlatbed_Ex->MinimumRes           =\t%d\n
+10084bd4	ScannerAbilityXp.pFlatbed_Ex->ReadingReference     =\t%d\n
+10084c10	ScannerAbilityXp.pFlatbed_Ex->BitsPerChannel       =\t0x%02X\n
+10084c50	ScannerAbilityXp.pFlatbed_Ex->ColorToGray\t\t\t=\t%d\n
+10084c84	ScannerAbilityXp.pFlatbed_Ex->Rotation\t\t\t=\t%d\n
+10084cb4	ScannerAbilityXp.pFlatbed_Ex->Reserved[0]\t\t\t=\t%d\n
+10084cec	ScannerAbilityXp.pTPU_RGB                       =\tNULL\n
+10084d24	ScannerAbilityXp.pTPU_RGB->ScanningArea.x       =\t%ld\n
+10084d5c	ScannerAbilityXp.pTPU_RGB->ScanningArea.y       =\t%ld\n
+10084d94	ScannerAbilityXp.pTPU_RGB->ScanningArea.width   =\t%ld\n
+10084dcc	ScannerAbilityXp.pTPU_RGB->ScanningArea.length  =\t%ld\n
+10084e04	ScannerAbilityXp.pTPU_RGB->PreviewRes           =\t%d\n
+10084e3c	ScannerAbilityXp.pTPU_RGB->MaximumRes           =\t%d\n
+10084e74	ScannerAbilityXp.pTPU_RGB->MinimumRes           =\t%d\n
+10084eac	ScannerAbilityXp.pTPU_RGB->ReadingReference     =\t%d\n
+10084ee4	ScannerAbilityXp.pTPU_RGB->BitsPerChannel       =\t0x%02X\n
+10084f20	ScannerAbilityXp.pTPU_RGB->ColorToGray\t\t\t=\t%d\n
+10084f50	ScannerAbilityXp.pTPU_RGB->Rotation\t\t\t=\t%d\n
+10084f7c	ScannerAbilityXp.pTPU_RGB->Reserved[0]\t\t\t=\t%d\n
+10084fb0	ScannerAbilityXp.pTPU_IR\t\t\t\t\t\t=\tNULL\n
+10084fd8	ScannerAbilityXp.pTPU_IR->ScanningArea.x        =\t%ld\n
+10085010	ScannerAbilityXp.pTPU_IR->ScanningArea.y        =\t%ld\n
+10085048	ScannerAbilityXp.pTPU_IR->ScanningArea.width    =\t%ld\n
+10085080	ScannerAbilityXp.pTPU_IR->ScanningArea.length   =\t%ld\n
+100850b8	ScannerAbilityXp.pTPU_IR->PreviewRes            =\t%d\n
+100850f0	ScannerAbilityXp.pTPU_IR->MaximumRes            =\t%d\n
+10085128	ScannerAbilityXp.pTPU_IR->MinimumRes            =\t%d\n
+10085160	ScannerAbilityXp.pTPU_IR->ReadingReference      =\t%d\n
+10085198	ScannerAbilityXp.pTPU_IR->BitsPerChannel        =\t0x%02X\n
+100851d4	ScannerAbilityXp.pTPU_IR->ColorToGray\t\t\t=\t%d\n
+10085204	ScannerAbilityXp.pTPU_IR->Rotation\t\t\t=\t%d\n
+10085230	ScannerAbilityXp.pTPU_IR->Reserved[0]\t\t\t=\t%d\n
+10085264	ScannerAbilityXp.pADF                           =\tNULL\n
+1008529c	ScannerAbilityXp.pADF->ScanningArea.x           =\t%ld\n
+100852d4	ScannerAbilityXp.pADF->ScanningArea.y           =\t%ld\n
+1008530c	ScannerAbilityXp.pADF->ScanningArea.width       =\t%ld\n
+10085344	ScannerAbilityXp.pADF->ScanningArea.length      =\t%ld\n
+1008537c	ScannerAbilityXp.pADF->PreviewRes               =\t%d\n
+100853b4	ScannerAbilityXp.pADF->MaximumRes               =\t%d\n
+100853ec	ScannerAbilityXp.pADF->MinimumRes               =\t%d\n
+10085424	ScannerAbilityXp.pADF->ReadingReference         =\t%d\n
+1008545c	ScannerAbilityXp.pADF->BitsPerChannel           =\t0x%02X\n
+10085498	ScannerAbilityXp.pADF->ColorToGray\t\t\t=\t%d\n
+100854c4	ScannerAbilityXp.pADF->Rotation\t\t\t=\t%d\n
+100854ec	ScannerAbilityXp.pADF->Reserved[0]\t\t\t=\t%d\n
+1008551c	ScannerAbilityXp.pADF_W                           =\tNULL\n
+10085558	ScannerAbilityXp.pADF_W->ScanningArea.x           =\t%ld\n
+10085594	ScannerAbilityXp.pADF_W->ScanningArea.y           =\t%ld\n
+100855d0	ScannerAbilityXp.pADF_W->ScanningArea.width       =\t%ld\n
+1008560c	ScannerAbilityXp.pADF_W->ScanningArea.length      =\t%ld\n
+10085648	ScannerAbilityXp.pADF_W->PreviewRes               =\t%d\n
+10085680	ScannerAbilityXp.pADF_W->MaximumRes               =\t%d\n
+100856b8	ScannerAbilityXp.pADF_W->MinimumRes               =\t%d\n
+100856f0	ScannerAbilityXp.pADF_W->ReadingReference         =\t%d\n
+10085728	ScannerAbilityXp.pADF_W->BitsPerChannel           =\t0x%02X\n
+10085764	ScannerAbilityXp.pADF_W->ColorToGray\t\t\t=\t%d\n
+10085794	ScannerAbilityXp.pADF_W->Rotation\t\t\t=\t%d\n
+100857c0	ScannerAbilityXp.pADF_W->Reserved[0]\t\t\t=\t%d\n
+100857f4	ScannerAbilityXp.Sleeve135.FrameNumber          =\t%d\n
+1008582c	ScannerAbilityXp.Sleeve135.pFrameList           =\tNULL\n
+10085864	ScannerAbilityXp.Sleeve135.pFrameList[%d].x      =\t%ld\n
+1008589c	ScannerAbilityXp.Sleeve135.pFrameList[%d].y      =\t%ld\n
+100858d4	ScannerAbilityXp.Sleeve135.pFrameList[%d].width  =\t%ld\n
+1008590c	ScannerAbilityXp.Sleeve135.pFrameList[%d].length =\t%ld\n
+10085944	ScannerAbilityXp.Sleeve135.SizeNumber\t\t   =\t%d\n
+10085974	ScannerAbilityXp.Sleeve135.Rotation\t\t\t\t=\t%d\n
+100859a8	ScannerAbilityXp.Mount.FrameNumber              =\t%d\n
+100859e0	ScannerAbilityXp.Mount.pFrameList                =\tNULL\n
+10085a1c	ScannerAbilityXp.Mount.pFrameList[%d].x          =\t%ld\n
+10085a54	ScannerAbilityXp.Mount.pFrameList[%d].y          =\t%ld\n
+10085a8c	ScannerAbilityXp.Mount.pFrameList[%d].width      =\t%ld\n
+10085ac4	ScannerAbilityXp.Mount.pFrameList[%d].length     =\t%ld\n
+10085afc	ScannerAbilityXp.Mount.SizeNumber\t\t   =\t%d\n
+10085b28	ScannerAbilityXp.Mount.Rotation\t\t\t\t=\t%d\n
+10085b58	ScannerAbilityXp.Sleeve120.FrameNumber           =\t%d\n
+10085b90	ScannerAbilityXp.Sleeve120.pFrameList            =\tNULL\n
+10085bcc	ScannerAbilityXp.Sleeve120.pFrameList[%d].x      =\t%ld\n
+10085c04	ScannerAbilityXp.Sleeve120.pFrameList[%d].y      =\t%ld\n
+10085c3c	ScannerAbilityXp.Sleeve120.pFrameList[%d].width  =\t%ld\n
+10085c74	ScannerAbilityXp.Sleeve120.pFrameList[%d].length =\t%ld\n
+10085cac	ScannerAbilityXp.Sleeve120.SizeNumber\t\t   =\t%d\n
+10085cdc	ScannerAbilityXp.Sleeve120.Rotation\t\t\t\t=\t%d\n
+10085d10	ScannerAbilityXp.Large.FrameNumber               =\t%d\n
+10085d48	ScannerAbilityXp.Large.pFrameList                =\tNULL\n
+10085d84	ScannerAbilityXp.Large.pFrameList[%d].x          =\t%ld\n
+10085dbc	ScannerAbilityXp.Large.pFrameList[%d].y          =\t%ld\n
+10085df4	ScannerAbilityXp.Large.pFrameList[%d].width\t\t =\t%ld\n
+10085e2c	ScannerAbilityXp.Large.pFrameList[%d].length     =\t%ld\n
+10085e64	ScannerAbilityXp.Large.SizeNumber\t\t   =\t%d\n
+10085e90	ScannerAbilityXp.Large.Rotation\t\t\t\t=\t%d\n
+10085f20	CNQ4808L.DLL
+10085f30	PhuketLLD.txt
+10085f44	IniReadScannerSetting()
+10085f5c	Failed to open Ini-file.
+10085f78	IniReadScannerSetting()
+10085f90	SHADING_LINENUM_FOR_DARKSHADING section is none.
+10085fc4	SHADING_LINENUM_FOR_DARKSHADING
+10085fe4	IniReadScannerSetting()
+10085ffc	SHADING_LINENUM_FOR_DARKSHADING section is none.
+10086030	IniReadScannerSetting()
+10086048	SHADING_LINENUM_FOR_WHITESHADING section is none.
+1008607c	SHADING_LINENUM_FOR_WHITESHADING
+100860a0	IniReadScannerSetting()
+100860b8	SHADING_LINENUM_FOR_WHITESHADING section is none.
+100860ec	IniReadScannerSetting()
+10086104	SHADING_LINENUM_FOR_GRAYSHADING section is none.
+10086138	SHADING_LINENUM_FOR_GRAYSHADING
+10086158	IniReadScannerSetting()
+10086170	SHADING_LINENUM_FOR_GRAYSHADING section is none.
+100861a4	IniReadScannerSetting()
+100861bc	DARK_UPPERLINE_CUT section is none.
+100861e0	DARK_UPPERLINE_CUT
+100861f4	IniReadScannerSetting()
+1008620c	DARK_UPPERLINE_CUT section is none.
+10086230	IniReadScannerSetting()
+10086248	DARK_LOWERLINE_CUT section is none.
+1008626c	DARK_LOWERLINE_CUT
+10086280	IniReadScannerSetting()
+10086298	DARK_LOWERLINE_CUT section is none.
+100862bc	IniReadScannerSetting()
+100862d4	WHITE_UPPERLINE_CUT section is none.
+100862fc	WHITE_UPPERLINE_CUT
+10086310	IniReadScannerSetting()
+10086328	WHITE_UPPERLINE_CUT section is none.
+10086350	IniReadScannerSetting()
+10086368	WHITE_LOWERLINE_CUT section is none.
+10086390	WHITE_LOWERLINE_CUT
+100863a4	IniReadScannerSetting()
+100863bc	WHITE_LOWERLINE_CUT section is none.
+100863e4	IniReadScannerSetting()
+100863fc	GRAY_UPPERLINE_CUT section is none.
+10086420	GRAY_UPPERLINE_CUT
+10086434	IniReadScannerSetting()
+1008644c	GRAY_UPPERLINE_CUT section is none.
+10086470	IniReadScannerSetting()
+10086488	GRAY_LOWERLINE_CUT section is none.
+100864ac	GRAY_LOWERLINE_CUT
+100864c0	IniReadScannerSetting()
+100864d8	GRAY_LOWERLINE_CUT section is none.
+100864fc	IniReadScannerSetting()
+10086514	GRAY_DENSITY_RATE section is none.
+10086538	GRAY_DENSITY_RATE
+1008654c	IniReadScannerSetting()
+10086564	GRAY_DENSITY_RATE section is none.
+10086588	IniReadScannerSetting()
+100865a0	DENSITY_CORRECT_ALPHA section is none.
+100865c8	DENSITY_CORRECT_ALPHA
+100865e0	IniReadScannerSetting()
+100865f8	DENSITY_CORRECT_ALPHA section is none.
+10086620	IniReadScannerSetting()
+10086638	DENSITY_CORRECT_MAX_X section is none.
+10086660	DENSITY_CORRECT_MAX_X
+10086678	IniReadScannerSetting()
+10086690	DENSITY_CORRECT_MAX_X section is none.
+100866b8	IniReadScannerSetting()
+100866d0	DENSITY_CORRECT_MAX_Y section is none.
+100866f8	DENSITY_CORRECT_MAX_Y
+10086710	IniReadScannerSetting()
+10086728	DENSITY_CORRECT_MAX_Y section is none.
+10086750	IniReadScannerSetting()
+10086768	DENSITY_CORRECT_MIN_X section is none.
+10086790	DENSITY_CORRECT_MIN_X
+100867a8	IniReadScannerSetting()
+100867c0	DENSITY_CORRECT_MIN_X section is none.
+100867e8	IniReadScannerSetting()
+10086800	DENSITY_CORRECT_MIN_Y section is none.
+10086828	DENSITY_CORRECT_MIN_Y
+10086840	IniReadScannerSetting()
+10086858	DENSITY_CORRECT_MIN_Y section is none.
+10086880	IniReadScannerSetting()
+10086898	RATCH_TABLE section is none.
+100868b8	RATCH_TABLE
+100868c4	IniReadScannerSetting()
+100868dc	RATCH_TABLE section is none.
+100868fc	IniReadScannerSetting()
+10086914	VSMP_TABLE section is none.
+10086930	VSMP_TABLE
+1008693c	IniReadScannerSetting()
+10086954	VSMP_TABLE section is none.
+10086970	IniReadScannerSetting()
+10086988	BSMP_TABLE section is none.
+100869a4	BSMP_TABLE
+100869b0	IniReadScannerSetting()
+100869c8	BSMP_TABLE section is none.
+100869e4	MOTOR_TABLE%02d
+100869f4	IniReadScannerSetting()
+10086a0c	MOTOR_TABLE section is none.
+10086a2c	IniReadScannerSetting()
+10086a44	MOTOR_TABLE section is none.
+10086a64	IniReadScannerSetting()
+10086a7c	MOTOR_TABLE_NUMBER section is none.
+10086aa0	MOTOR_TABLE_NUMBER
+10086ab4	IniReadScannerSetting()
+10086acc	MOTOR_TABLE_NUMBER section is none.
+10086af0	IniReadScannerSetting()
+10086b08	MOTOR_TABLE_NUMBER_FAU section is none.
+10086b30	MOTOR_TABLE_NUMBER_FAU
+10086b48	IniReadScannerSetting()
+10086b60	MOTOR_TABLE_NUMBER_FAU section is none.
+10086b88	IniReadScannerSetting()
+10086ba0	MOTOR_TABLE_NUMBER_MOVE section is none.
+10086bcc	MOTOR_TABLE_NUMBER_MOVE
+10086be4	IniReadScannerSetting()
+10086bfc	MOTOR_TABLE_NUMBER_MOVE section is none.
+10086c28	IniReadScannerSetting()
+10086c40	MOTOR_DECSEL section is none.
+10086c60	MOTOR_DECSEL
+10086c70	IniReadScannerSetting()
+10086c88	MOTOR_DECSEL section is none.
+10086ca8	IniReadScannerSetting()
+10086cc0	SHADING_SCAN_UP_STEP section is none.
+10086ce8	SHADING_SCAN_UP_STEP
+10086d00	IniReadScannerSetting()
+10086d18	SHADING_SCAN_UP_STEP section is none.
+10086d40	IniReadScannerSetting()
+10086d58	MOTOR_START_SPEED section is none.
+10086d7c	MOTOR_START_SPEED
+10086d90	IniReadScannerSetting()
+10086da8	MOTOR_START_SPEED section is none.
+10086dcc	IniReadScannerSetting()
+10086de4	MOTOR_FIRST_GOHOME_LEN section is none.
+10086e0c	MOTOR_FIRST_GOHOME_LEN
+10086e24	IniReadScannerSetting()
+10086e3c	MOTOR_FIRST_GOHOME_LEN section is none.
+10086e64	IniReadScannerSetting()
+10086e7c	LINEPERIOD_BOOK section is none.
+10086ea0	LINEPERIOD_BOOK
+10086eb0	IniReadScannerSetting()
+10086ec8	LINEPERIOD_BOOK section is none.
+10086eec	IniReadScannerSetting()
+10086f04	LINEPERIOD_FAU section is none.
+10086f24	LINEPERIOD_FAU
+10086f34	IniReadScannerSetting()
+10086f4c	LINEPERIOD_FAU section is none.
+10086f6c	IniReadScannerSetting()
+10086f84	MOTORSTEPMODE_BOOK section is none.
+10086fa8	VERTICALRES_BOUND_BOOK
+10086fc0	IniReadScannerSetting()
+10086fd8	MOTORSTEPMODE_BOOK section is none.
+10086ffc	IniReadScannerSetting()
+10087014	MOTORSTEPMODE_FAU section is none.
+10087038	VERTICALRES_BOUND_FAU
+10087050	IniReadScannerSetting()
+10087068	MOTORSTEPMODE_FAU section is none.
+1008708c	IniReadScannerSetting()
+100870a4	MOTORSTEPMODE_BOOK section is none.
+100870c8	MOTORSTEPMODE_BOOK
+100870dc	IniReadScannerSetting()
+100870f4	MOTORSTEPMODE_BOOK section is none.
+10087118	IniReadScannerSetting()
+10087130	MOTORSTEPMODE_FAU section is none.
+10087154	MOTORSTEPMODE_FAU
+10087168	IniReadScannerSetting()
+10087180	MOTORSTEPMODE_FAU section is none.
+100871a4	IniReadScannerSetting()
+100871bc	SLOPETABLESTEP_BOOK section is none.
+100871e4	SLOPETABLESTEP_BOOK
+100871f8	IniReadScannerSetting()
+10087210	SLOPETABLESTEP_BOOK section is none.
+10087238	IniReadScannerSetting()
+10087250	SLOPETABLESTEP_FAU section is none.
+10087274	SLOPETABLESTEP_FAU
+10087288	IniReadScannerSetting()
+100872a0	SLOPETABLESTEP_FAU section is none.
+100872c4	IniReadScannerSetting()
+100872dc	MOTORPHASEINDEX_BOOK section is none.
+10087304	MOTORPHASEINDEX_BOOK
+1008731c	IniReadScannerSetting()
+10087334	MOTORPHASEINDEX_BOOK section is none.
+1008735c	IniReadScannerSetting()
+10087374	MOTORPHASEINDEX_FAU section is none.
+1008739c	MOTORPHASEINDEX_FAU
+100873b0	IniReadScannerSetting()
+100873c8	MOTORPHASEINDEX_FAU section is none.
+100873f0	IniReadScannerSetting()
+10087408	MOTORTESTMODE section is none.
+10087428	SPECIALMODE
+10087434	IniReadScannerSetting()
+1008744c	MOTORTESTMODE section is none.
+1008746c	IniReadScannerSetting()
+10087484	SPECIAL_R_EXPOSURE_RATE section is none.
+100874b0	SPECIAL_R_EXPOSURE_RATE
+100874c8	IniReadScannerSetting()
+100874e0	SPECIAL_R_EXPOSURE_RATE section is none.
+1008750c	IniReadScannerSetting()
+10087524	SPECIAL_G_EXPOSURE_RATE section is none.
+10087550	SPECIAL_G_EXPOSURE_RATE
+10087568	IniReadScannerSetting()
+10087580	SPECIAL_G_EXPOSURE_RATE section is none.
+100875ac	IniReadScannerSetting()
+100875c4	SPECIAL_B_EXPOSURE_RATE section is none.
+100875f0	SPECIAL_B_EXPOSURE_RATE
+10087608	IniReadScannerSetting()
+10087620	SPECIAL_B_EXPOSURE_RATE section is none.
+1008764c	IniReadScannerSetting()
+10087664	SPECIAL_IR_EXPOSURE_RATE section is none.
+10087690	SPECIAL_IR_EXPOSURE_RATE
+100876ac	IniReadScannerSetting()
+100876c4	SPECIAL_IR_EXPOSURE_RATE section is none.
+100876f0	IniReadScannerSetting()
+10087708	SPECIAL_DARK_SHADING_R_EXPOSURE_TIME section is none.
+10087740	SPECIAL_DARK_SHADING_R_EXPOSURE_TIME
+10087768	IniReadScannerSetting()
+10087780	SPECIAL_DARK_SHADING_R_EXPOSURE_TIME section is none.
+100877b8	IniReadScannerSetting()
+100877d0	SPECIAL_DARK_SHADING_G_EXPOSURE_TIME section is none.
+10087808	SPECIAL_DARK_SHADING_G_EXPOSURE_TIME
+10087830	IniReadScannerSetting()
+10087848	SPECIAL_DARK_SHADING_G_EXPOSURE_TIME section is none.
+10087880	IniReadScannerSetting()
+10087898	SPECIAL_DARK_SHADING_B_EXPOSURE_TIME section is none.
+100878d0	SPECIAL_DARK_SHADING_B_EXPOSURE_TIME
+100878f8	IniReadScannerSetting()
+10087910	SPECIAL_DARK_SHADING_B_EXPOSURE_TIME section is none.
+10087948	IniReadScannerSetting()
+10087960	SPECIAL_DARK_SHADING_IR_EXPOSURE_TIME section is none.
+10087998	SPECIAL_DARK_SHADING_IR_EXPOSURE_TIME
+100879c0	IniReadScannerSetting()
+100879d8	SPECIAL_DARK_SHADING_IR_EXPOSURE_TIME section is none.
+10087a10	IniReadScannerSetting()
+10087a28	SPECIAL_Z1MOD_SETTING section is none.
+10087a50	SPECIAL_Z1MOD_SETTING
+10087a68	IniReadScannerSetting()
+10087a80	SPECIAL_Z1MOD_SETTING section is none.
+10087aa8	IniReadScannerSetting()
+10087ac0	SPECIAL_Z2MOD_SETTING section is none.
+10087ae8	SPECIAL_Z2MOD_SETTING
+10087b00	IniReadScannerSetting()
+10087b18	SPECIAL_Z2MOD_SETTING section is none.
+10087b40	IniReadScannerSetting()
+10087b58	SPECIAL_Z1_ADD_FINALSTEP section is none.
+10087b84	SPECIAL_Z1_ADD_FINALSTEP
+10087ba0	IniReadScannerSetting()
+10087bb8	SPECIAL_Z1_ADD_FINALSTEP section is none.
+10087be4	IniReadScannerSetting()
+10087bfc	SSFEEDSTEP_FW section is none.
+10087c1c	SSFEEDSTEP_FW
+10087c2c	IniReadScannerSetting()
+10087c44	SSFEEDSTEP_FW section is none.
+10087c64	IniReadScannerSetting()
+10087c7c	SSFEEDSTEP_BW section is none.
+10087c9c	SSFEEDSTEP_BW
+10087cac	IniReadScannerSetting()
+10087cc4	SSFEEDSTEP_BW section is none.
+10087ce4	IniReadScannerSetting()
+10087cfc	BOOK_SHADING_R_TARGET section is none.
+10087d24	BOOK_SHADING_R_TARGET
+10087d3c	IniReadScannerSetting()
+10087d54	BOOK_SHADING_R_TARGET section is none.
+10087d7c	IniReadScannerSetting()
+10087d94	BOOK_SHADING_G_TARGET section is none.
+10087dbc	BOOK_SHADING_G_TARGET
+10087dd4	IniReadScannerSetting()
+10087dec	BOOK_SHADING_G_TARGET section is none.
+10087e14	IniReadScannerSetting()
+10087e2c	BOOK_SHADING_B_TARGET section is none.
+10087e54	BOOK_SHADING_B_TARGET
+10087e6c	IniReadScannerSetting()
+10087e84	BOOK_SHADING_B_TARGET section is none.
+10087eac	IniReadScannerSetting()
+10087ec4	FAU_SHADING_R_TARGET section is none.
+10087eec	FAU_SHADING_R_TARGET
+10087f04	IniReadScannerSetting()
+10087f1c	FAU_SHADING_R_TARGET section is none.
+10087f44	IniReadScannerSetting()
+10087f5c	FAU_SHADING_G_TARGET section is none.
+10087f84	FAU_SHADING_G_TARGET
+10087f9c	IniReadScannerSetting()
+10087fb4	FAU_SHADING_G_TARGET section is none.
+10087fdc	IniReadScannerSetting()
+10087ff4	FAU_SHADING_B_TARGET section is none.
+1008801c	FAU_SHADING_B_TARGET
+10088034	IniReadScannerSetting()
+1008804c	FAU_SHADING_B_TARGET section is none.
+10088074	IniReadScannerSetting()
+1008808c	FAU_SHADING_IR_TARGET section is none.
+100880b4	FAU_SHADING_IR_TARGET
+100880cc	IniReadScannerSetting()
+100880e4	FAU_SHADING_IR_TARGET section is none.
+1008810c	IniReadScannerSetting()
+10088124	BOOK_SHADING_R_OFFSET section is none.
+1008814c	BOOK_SHADING_R_OFFSET
+10088164	IniReadScannerSetting()
+1008817c	BOOK_SHADING_R_OFFSET section is none.
+100881a4	IniReadScannerSetting()
+100881bc	BOOK_SHADING_G_OFFSET section is none.
+100881e4	BOOK_SHADING_G_OFFSET
+100881fc	IniReadScannerSetting()
+10088214	BOOK_SHADING_G_OFFSET section is none.
+1008823c	IniReadScannerSetting()
+10088254	BOOK_SHADING_B_OFFSET section is none.
+1008827c	BOOK_SHADING_B_OFFSET
+10088294	IniReadScannerSetting()
+100882ac	BOOK_SHADING_B_OFFSET section is none.
+100882d4	IniReadScannerSetting()
+100882ec	BOOK_SHADING_R_GAIN section is none.
+10088314	BOOK_SHADING_R_GAIN
+10088328	IniReadScannerSetting()
+10088340	BOOK_SHADING_R_GAIN section is none.
+10088368	IniReadScannerSetting()
+10088380	BOOK_SHADING_G_GAIN section is none.
+100883a8	BOOK_SHADING_G_GAIN
+100883bc	IniReadScannerSetting()
+100883d4	BOOK_SHADING_G_GAIN section is none.
+100883fc	IniReadScannerSetting()
+10088414	BOOK_SHADING_B_GAIN section is none.
+1008843c	BOOK_SHADING_B_GAIN
+10088450	IniReadScannerSetting()
+10088468	BOOK_SHADING_B_GAIN section is none.
+10088490	IniReadScannerSetting()
+100884a8	FAU_SHADING_R_OFFSET_NEGA section is none.
+100884d4	FAU_SHADING_R_OFFSET_NEGA
+100884f0	IniReadScannerSetting()
+10088508	FAU_SHADING_R_OFFSET_NEGA section is none.
+10088534	IniReadScannerSetting()
+1008854c	FAU_SHADING_G_OFFSET_NEGA section is none.
+10088578	FAU_SHADING_G_OFFSET_NEGA
+10088594	IniReadScannerSetting()
+100885ac	FAU_SHADING_G_OFFSET_NEGA section is none.
+100885d8	IniReadScannerSetting()
+100885f0	FAU_SHADING_B_OFFSET_NEGA section is none.
+1008861c	FAU_SHADING_B_OFFSET_NEGA
+10088638	IniReadScannerSetting()
+10088650	FAU_SHADING_B_OFFSET_NEGA section is none.
+1008867c	IniReadScannerSetting()
+10088694	FAU_SHADING_IR_OFFSET_NEGA section is none.
+100886c0	FAU_SHADING_IR_OFFSET_NEGA
+100886dc	IniReadScannerSetting()
+100886f4	FAU_SHADING_IR_OFFSET_NEGA section is none.
+10088720	IniReadScannerSetting()
+10088738	FAU_SHADING_R_OFFSET_POSI section is none.
+10088764	FAU_SHADING_R_OFFSET_POSI
+10088780	IniReadScannerSetting()
+10088798	FAU_SHADING_R_OFFSET_POSI section is none.
+100887c4	IniReadScannerSetting()
+100887dc	FAU_SHADING_G_OFFSET_POSI section is none.
+10088808	FAU_SHADING_G_OFFSET_POSI
+10088824	IniReadScannerSetting()
+1008883c	FAU_SHADING_G_OFFSET_POSI section is none.
+10088868	IniReadScannerSetting()
+10088880	FAU_SHADING_B_OFFSET_POSI section is none.
+100888ac	FAU_SHADING_B_OFFSET_POSI
+100888c8	IniReadScannerSetting()
+100888e0	FAU_SHADING_B_OFFSET_POSI section is none.
+1008890c	IniReadScannerSetting()
+10088924	FAU_SHADING_IR_OFFSET_POSI section is none.
+10088950	FAU_SHADING_IR_OFFSET_POSI
+1008896c	IniReadScannerSetting()
+10088984	FAU_SHADING_IR_OFFSET_POSI section is none.
+100889b0	IniReadScannerSetting()
+100889c8	FAU_SHADING_R_GAIN section is none.
+100889ec	FAU_SHADING_R_GAIN
+10088a00	IniReadScannerSetting()
+10088a18	FAU_SHADING_R_GAIN section is none.
+10088a3c	IniReadScannerSetting()
+10088a54	FAU_SHADING_G_GAIN section is none.
+10088a78	FAU_SHADING_G_GAIN
+10088a8c	IniReadScannerSetting()
+10088aa4	FAU_SHADING_G_GAIN section is none.
+10088ac8	IniReadScannerSetting()
+10088ae0	FAU_SHADING_B_GAIN section is none.
+10088b04	FAU_SHADING_B_GAIN
+10088b18	IniReadScannerSetting()
+10088b30	FAU_SHADING_B_GAIN section is none.
+10088b54	IniReadScannerSetting()
+10088b6c	FAU_SHADING_IR_GAIN section is none.
+10088b94	FAU_SHADING_IR_GAIN
+10088ba8	IniReadScannerSetting()
+10088bc0	FAU_SHADING_IR_GAIN section is none.
+10088be8	IniReadScannerSetting()
+10088c00	BOOK_SHADING_R_COEFFICIENT section is none.
+10088c2c	BOOK_SHADING_R_COEFFICIENT
+10088c48	IniReadScannerSetting()
+10088c60	BOOK_SHADING_R_COEFFICIENT section is none.
+10088c8c	IniReadScannerSetting()
+10088ca4	BOOK_SHADING_G_COEFFICIENT section is none.
+10088cd0	BOOK_SHADING_G_COEFFICIENT
+10088cec	IniReadScannerSetting()
+10088d04	BOOK_SHADING_G_COEFFICIENT section is none.
+10088d30	IniReadScannerSetting()
+10088d48	BOOK_SHADING_B_COEFFICIENT section is none.
+10088d74	BOOK_SHADING_B_COEFFICIENT
+10088d90	IniReadScannerSetting()
+10088da8	BOOK_SHADING_B_COEFFICIENT section is none.
+10088dd4	IniReadScannerSetting()
+10088dec	FAU_POSI_SHADING_R_COEFFICIENT section is none.
+10088e1c	FAU_POSI_SHADING_R_COEFFICIENT
+10088e3c	IniReadScannerSetting()
+10088e54	FAU_POSI_SHADING_R_COEFFICIENT section is none.
+10088e84	IniReadScannerSetting()
+10088e9c	FAU_POSI_SHADING_G_COEFFICIENT section is none.
+10088ecc	FAU_POSI_SHADING_G_COEFFICIENT
+10088eec	IniReadScannerSetting()
+10088f04	FAU_POSI_SHADING_G_COEFFICIENT section is none.
+10088f34	IniReadScannerSetting()
+10088f4c	FAU_POSI_SHADING_B_COEFFICIENT section is none.
+10088f7c	FAU_POSI_SHADING_B_COEFFICIENT
+10088f9c	IniReadScannerSetting()
+10088fb4	FAU_POSI_SHADING_B_COEFFICIENT section is none.
+10088fe4	IniReadScannerSetting()
+10088ffc	FAU_NEGA_SHADING_R_COEFFICIENT section is none.
+1008902c	FAU_NEGA_SHADING_R_COEFFICIENT
+1008904c	IniReadScannerSetting()
+10089064	FAU_NEGA_SHADING_R_COEFFICIENT section is none.
+10089094	IniReadScannerSetting()
+100890ac	FAU_NEGA_SHADING_G_COEFFICIENT section is none.
+100890dc	FAU_NEGA_SHADING_G_COEFFICIENT
+100890fc	IniReadScannerSetting()
+10089114	FAU_NEGA_SHADING_G_COEFFICIENT section is none.
+10089144	IniReadScannerSetting()
+1008915c	FAU_NEGA_SHADING_B_COEFFICIENT section is none.
+1008918c	FAU_NEGA_SHADING_B_COEFFICIENT
+100891ac	IniReadScannerSetting()
+100891c4	FAU_NEGA_SHADING_B_COEFFICIENT section is none.
+100891f4	IniReadScannerSetting()
+1008920c	MOTOR_MSETTING section is none.
+1008922c	MOTOR_MSETTING
+1008923c	IniReadScannerSetting()
+10089254	MOTOR_MSETTING section is none.
+10089274	IniReadScannerSetting()
+1008928c	MOTOR_SLOWDOWN_CUTTER section is none.
+100892b4	MOTOR_SLOWDOWN_CUTTER
+100892cc	IniReadScannerSetting()
+100892e4	MOTOR_SLOWDOWN_CUTTER section is none.
+1008930c	IniReadScannerSetting()
+10089324	SPEED_MODE_THRESHOLD section is none.
+1008934c	SPEED_MODE_THRESHOLD
+10089364	IniReadScannerSetting()
+1008937c	SPEED_MODE_THRESHOLD section is none.
+100893a4	IniReadScannerSetting()
+100893bc	GET_DARKSHADING_EACH_SCAN section is none.
+100893e8	GET_DARKSHADING_EACH_SCAN
+10089404	IniReadScannerSetting()
+1008941c	GET_DARKSHADING_EACH_SCAN section is none.
+10089448	IniReadScannerSetting()
+10089460	IROZURE_PATTERN section is none.
+10089484	IROZURE_PATTERN
+10089494	IniReadScannerSetting()
+100894ac	IROZURE_PATTERN section is none.
+100894d0	IniReadScannerSetting()
+100894e8	RATCH_HIGH section is none.
+10089504	RATCH_HIGH
+10089510	IniReadScannerSetting()
+10089528	RATCH_HIGH section is none.
+10089544	IniReadScannerSetting()
+1008955c	RATCH_LOW section is none.
+10089578	RATCH_LOW
+10089584	IniReadScannerSetting()
+1008959c	RATCH_LOW section is none.
+100895b8	IniReadScannerSetting()
+100895d0	VSAMP_POINT section is none.
+100895f0	VSAMP_POINT
+100895fc	IniReadScannerSetting()
+10089614	VSAMP_POINT section is none.
+10089634	IniReadScannerSetting()
+1008964c	VSAMP_WIDTH section is none.
+1008966c	VSAMP_WIDTH
+10089678	IniReadScannerSetting()
+10089690	VSAMP_WIDTH section is none.
+100896b0	IniReadScannerSetting()
+100896c8	BSAMP_POINT section is none.
+100896e8	BSAMP_POINT
+100896f4	IniReadScannerSetting()
+1008970c	BSAMP_POINT section is none.
+1008972c	IniReadScannerSetting()
+10089744	BSAMP_WIDTH section is none.
+10089764	BSAMP_WIDTH
+10089770	IniReadScannerSetting()
+10089788	BSAMP_WIDTH section is none.
+100897a8	IniReadScannerSetting()
+100897c0	EFFECT_DARKOFFSET_WITH_WHITEDATA section is none.
+100897f4	EFFECT_DARKOFFSET_WITH_WHITEDATA
+10089818	IniReadScannerSetting()
+10089830	EFFECT_DARKOFFSET_WITH_WHITEDATA section is none.
+10089864	IniReadScannerSetting()
+1008987c	USE_FAU_PUREDARK_AVE section is none.
+100898a4	USE_FAU_PUREDARK_AVE
+100898bc	IniReadScannerSetting()
+100898d4	USE_FAU_PUREDARK_AVE section is none.
+100898fc	IniReadScannerSetting()
+10089914	USE_FAU_DARKWITHINWHITE_AVE section is none.
+10089944	USE_FAU_DARKWITHINWHITE_AVE
+10089960	IniReadScannerSetting()
+10089978	USE_FAU_DARKWITHINWHITE_AVE section is none.
+100899a8	IniReadScannerSetting()
+100899c0	FAU_PUREDARK_AVE_RATE section is none.
+100899e8	FAU_PUREDARK_AVE_RATE
+10089a00	IniReadScannerSetting()
+10089a18	FAU_PUREDARK_AVE_RATE section is none.
+10089a40	IniReadScannerSetting()
+10089a58	FAU_DARKWITHINWHITE_AVE_RATE section is none.
+10089a88	FAU_DARKWITHINWHITE_AVE_RATE
+10089aa8	IniReadScannerSetting()
+10089ac0	FAU_DARKWITHINWHITE_AVE_RATE section is none.
+10089af0	IniReadScannerSetting()
+10089b08	AFE_REGISTER_SETTING section is none.
+10089b30	AFE_REGISTER_SETTING
+10089b48	IniReadScannerSetting()
+10089b60	AFE_REGISTER_SETTING section is none.
+10089b88	IniReadScannerSetting()
+10089ba0	AFE_REGISTER_CCD_SETTING section is none.
+10089bcc	AFE_REGISTER_CCD_SETTING
+10089be8	IniReadScannerSetting()
+10089c00	AFE_REGISTER_CCD_SETTING section is none.
+10089c2c	IniReadScannerSetting()
+10089c44	SENSOR_CROP_OFFSET section is none.
+10089c68	SENSOR_CROP_OFFSET
+10089c7c	IniReadScannerSetting()
+10089c94	SENSOR_CROP_OFFSET section is none.
+10089cb8	IniReadScannerSetting()
+10089cd0	LAMP_EXPOSURE_TIME_TARGET section is none.
+10089cfc	LAMP_EXPOSURE_TIME_TARGET
+10089d18	IniReadScannerSetting()
+10089d30	LAMP_EXPOSURE_TIME_TARGET section is none.
+10089d5c	IniReadScannerSetting()
+10089d74	LAMP_EXPOSURE_TIME_RANGE section is none.
+10089da0	LAMP_EXPOSURE_TIME_RANGE
+10089dbc	IniReadScannerSetting()
+10089dd4	LAMP_EXPOSURE_TIME_RANGE section is none.
+10089e00	IniReadScannerSetting()
+10089e18	LAMP_EXPOSURE_TIME_TARGET_FAU section is none.
+10089e48	LAMP_EXPOSURE_TIME_TARGET_FAU
+10089e68	IniReadScannerSetting()
+10089e80	LAMP_EXPOSURE_TIME_TARGET_FAU section is none.
+10089eb0	IniReadScannerSetting()
+10089ec8	LAMP_EXPOSURE_TIME_TARGET_GRAY section is none.
+10089ef8	LAMP_EXPOSURE_TIME_TARGET_GRAY
+10089f18	IniReadScannerSetting()
+10089f30	LAMP_EXPOSURE_TIME_TARGET_GRAY section is none.
+10089f60	IniReadScannerSetting()
+10089f78	LAMP_EXPOSURE_TIME_RANGE_GRAY section is none.
+10089fa8	LAMP_EXPOSURE_TIME_RANGE_GRAY
+10089fc8	IniReadScannerSetting()
+10089fe0	LAMP_EXPOSURE_TIME_RANGE_GRAY section is none.
+1008a010	IniReadScannerSetting()
+1008a028	AFE_DEFAULT_GAIN_TO_AJUST_LED_LAMP_R section is none.
+1008a060	AFE_DEFAULT_GAIN_TO_AJUST_LED_LAMP_R
+1008a088	IniReadScannerSetting()
+1008a0a0	AFE_DEFAULT_GAIN_TO_AJUST_LED_LAMP_R section is none.
+1008a0d8	IniReadScannerSetting()
+1008a0f0	AFE_DEFAULT_GAIN_TO_AJUST_LED_LAMP_G section is none.
+1008a128	AFE_DEFAULT_GAIN_TO_AJUST_LED_LAMP_G
+1008a150	IniReadScannerSetting()
+1008a168	AFE_DEFAULT_GAIN_TO_AJUST_LED_LAMP_G section is none.
+1008a1a0	IniReadScannerSetting()
+1008a1b8	AFE_DEFAULT_GAIN_TO_AJUST_LED_LAMP_B section is none.
+1008a1f0	AFE_DEFAULT_GAIN_TO_AJUST_LED_LAMP_B
+1008a218	IniReadScannerSetting()
+1008a230	AFE_DEFAULT_GAIN_TO_AJUST_LED_LAMP_B section is none.
+1008a268	IniReadScannerSetting()
+1008a280	AFE_DEFAULT_GAIN_TO_AJUST_LED_LAMP_FAU_R section is none.
+1008a2bc	AFE_DEFAULT_GAIN_TO_AJUST_LED_LAMP_FAU_R
+1008a2e8	IniReadScannerSetting()
+1008a300	AFE_DEFAULT_GAIN_TO_AJUST_LED_LAMP_FAU_R section is none.
+1008a33c	IniReadScannerSetting()
+1008a354	AFE_DEFAULT_GAIN_TO_AJUST_LED_LAMP_FAU_G section is none.
+1008a390	AFE_DEFAULT_GAIN_TO_AJUST_LED_LAMP_FAU_G
+1008a3bc	IniReadScannerSetting()
+1008a3d4	AFE_DEFAULT_GAIN_TO_AJUST_LED_LAMP_FAU_G section is none.
+1008a410	IniReadScannerSetting()
+1008a428	AFE_DEFAULT_GAIN_TO_AJUST_LED_LAMP_FAU_B section is none.
+1008a464	AFE_DEFAULT_GAIN_TO_AJUST_LED_LAMP_FAU_B
+1008a490	IniReadScannerSetting()
+1008a4a8	AFE_DEFAULT_GAIN_TO_AJUST_LED_LAMP_FAU_B section is none.
+1008a4e4	IniReadScannerSetting()
+1008a4fc	EDGE_THRESHOLD_RATE section is none.
+1008a524	EDGE_THRESHOLD_RATE
+1008a538	IniReadScannerSetting()
+1008a550	EDGE_THRESHOLD_RATE section is none.
+1008a578	IniReadScannerSetting()
+1008a590	EDGE_CUT_UPPER_LINES section is none.
+1008a5b8	EDGE_CUT_UPPER_LINES
+1008a5d0	IniReadScannerSetting()
+1008a5e8	EDGE_CUT_UPPER_LINES section is none.
+1008a610	IniReadScannerSetting()
+1008a628	EDGE_CUT_LOWER_LINES section is none.
+1008a650	EDGE_CUT_LOWER_LINES
+1008a668	IniReadScannerSetting()
+1008a680	EDGE_CUT_LOWER_LINES section is none.
+1008a6a8	IniReadScannerSetting()
+1008a6c0	EDGE_AVAILABLE_UPPER_LINES section is none.
+1008a6ec	EDGE_AVAILABLE_UPPER_LINES
+1008a708	IniReadScannerSetting()
+1008a720	EDGE_AVAILABLE_UPPER_LINES section is none.
+1008a74c	IniReadScannerSetting()
+1008a764	EDGE_AVAILABLE_LOWER_LINES section is none.
+1008a790	EDGE_AVAILABLE_LOWER_LINES
+1008a7ac	IniReadScannerSetting()
+1008a7c4	EDGE_AVAILABLE_LOWER_LINES section is none.
+1008a7f0	IniReadScannerSetting()
+1008a808	EDGE_BACKWARD_FEED_STEP section is none.
+1008a834	EDGE_BACKWARD_FEED_STEP
+1008a84c	IniReadScannerSetting()
+1008a864	EDGE_BACKWARD_FEED_STEP section is none.
+1008a890	IniReadScannerSetting()
+1008a8a8	EDGE_SCAN_LINES section is none.
+1008a8cc	EDGE_SCAN_LINES
+1008a8dc	IniReadScannerSetting()
+1008a8f4	EDGE_SCAN_LINES section is none.
+1008a918	IniReadScannerSetting()
+1008a930	EDGE_WHITE_LINES_IN_A_ROW section is none.
+1008a95c	EDGE_WHITE_LINES_IN_A_ROW
+1008a978	IniReadScannerSetting()
+1008a990	EDGE_WHITE_LINES_IN_A_ROW section is none.
+1008a9bc	IniReadScannerSetting()
+1008a9d4	EDGE_BLACK_LINES_IN_A_ROW section is none.
+1008aa00	EDGE_BLACK_LINES_IN_A_ROW
+1008aa1c	IniReadScannerSetting()
+1008aa34	EDGE_BLACK_LINES_IN_A_ROW section is none.
+1008aa60	IniReadScannerSetting()
+1008aa78	EDGE_WHITE_THRESHOLD section is none.
+1008aaa0	EDGE_WHITE_THRESHOLD
+1008aab8	IniReadScannerSetting()
+1008aad0	EDGE_WHITE_THRESHOLD section is none.
+1008aaf8	IniReadScannerSetting()
+1008ab10	EDGE_BLACK_THRESHOLD section is none.
+1008ab38	EDGE_BLACK_THRESHOLD
+1008ab50	IniReadScannerSetting()
+1008ab68	EDGE_BLACK_THRESHOLD section is none.
+1008ab90	IniReadScannerSetting()
+1008aba8	EDGE_SEARCH_WIDTH section is none.
+1008abcc	EDGE_SEARCH_WIDTH
+1008abe0	IniReadScannerSetting()
+1008abf8	EDGE_SEARCH_WIDTH section is none.
+1008ac1c	IniReadScannerSetting()
+1008ac34	EDGE_MANUAL_EDGE_POSITION section is none.
+1008ac60	EDGE_MANUAL_EDGE_POSITION
+1008ac7c	IniReadScannerSetting()
+1008ac94	EDGE_MANUAL_EDGE_POSITION section is none.
+1008acc0	IniReadScannerSetting()
+1008acd8	EDGE_WHITE_LINES_IN_A_ROW_L section is none.
+1008ad08	EDGE_WHITE_LINES_IN_A_ROW_L
+1008ad24	IniReadScannerSetting()
+1008ad3c	EDGE_WHITE_LINES_IN_A_ROW_L section is none.
+1008ad6c	IniReadScannerSetting()
+1008ad84	EDGE_BLACK_LINES_IN_A_ROW_L section is none.
+1008adb4	EDGE_BLACK_LINES_IN_A_ROW_L
+1008add0	IniReadScannerSetting()
+1008ade8	EDGE_BLACK_LINES_IN_A_ROW_L section is none.
+1008ae18	IniReadScannerSetting()
+1008ae30	EDGE_WHITE_THRESHOLD_L section is none.
+1008ae58	EDGE_WHITE_THRESHOLD_L
+1008ae70	IniReadScannerSetting()
+1008ae88	EDGE_WHITE_THRESHOLD_L section is none.
+1008aeb0	IniReadScannerSetting()
+1008aec8	EDGE_BLACK_THRESHOLD_L section is none.
+1008aef0	EDGE_BLACK_THRESHOLD_L
+1008af08	IniReadScannerSetting()
+1008af20	EDGE_BLACK_THRESHOLD_L section is none.
+1008af48	IniReadScannerSetting()
+1008af60	JAGGY_FILTER_SETTING section is none.
+1008af88	JAGGY_FILTER_SETTING
+1008afa0	IniReadScannerSetting()
+1008afb8	JAGGY_FILTER_SETTING section is none.
+1008afe0	IniReadScannerSetting()
+1008aff8	SENSOR_CHIP_AREA section is none.
+1008b01c	SENSOR_CHIP_AREA
+1008b030	IniReadScannerSetting()
+1008b048	SENSOR_CHIP_AREA section is none.
+1008b06c	IniReadScannerSetting()
+1008b084	SENSOR_CHIP_ERROR_LEVEL section is none.
+1008b0b0	SENSOR_CHIP_ERROR_LEVEL
+1008b0c8	IniReadScannerSetting()
+1008b0e0	SENSOR_CHIP_ERROR_LEVEL section is none.
+1008b10c	IniReadScannerSetting()
+1008b124	CHIP_LEVEL_EXPOSURE_TIME_TARGET section is none.
+1008b158	CHIP_LEVEL_EXPOSURE_TIME_TARGET
+1008b178	IniReadScannerSetting()
+1008b190	CHIP_LEVEL_EXPOSURE_TIME_TARGET section is none.
+1008b1c4	IniReadScannerSetting()
+1008b1dc	CHIP_LEVEL_EXPOSURE_TIME_RANGE section is none.
+1008b20c	CHIP_LEVEL_EXPOSURE_TIME_RANGE
+1008b22c	IniReadScannerSetting()
+1008b244	CHIP_LEVEL_EXPOSURE_TIME_RANGE section is none.
+1008b274	IniReadScannerSetting()
+1008b28c	ASIC_REGISTER_SETTING section is none.
+1008b2b4	ASIC_REGISTER_SETTING
+1008b2cc	IniReadScannerSetting()
+1008b2e4	ASIC_REGISTER_SETTING section is none.
+1008b30c	IniReadScannerSetting()
+1008b324	CK1NEG_SETTING section is none.
+1008b344	CK1NEG_SETTING
+1008b354	IniReadScannerSetting()
+1008b36c	CK1NEG_SETTING section is none.
+1008b38c	IniReadScannerSetting()
+1008b3a4	CK1MAP_SETTING section is none.
+1008b3c4	CK1MAP_SETTING
+1008b3d4	IniReadScannerSetting()
+1008b3ec	CK1MAP_SETTING section is none.
+1008b40c	IniReadScannerSetting()
+1008b424	WARM_UP_TARGET_R section is none.
+1008b448	WARM_UP_TARGET_R
+1008b45c	IniReadScannerSetting()
+1008b474	WARM_UP_TARGET_R section is none.
+1008b498	IniReadScannerSetting()
+1008b4b0	WARM_UP_TARGET_G section is none.
+1008b4d4	WARM_UP_TARGET_G
+1008b4e8	IniReadScannerSetting()
+1008b500	WARM_UP_TARGET_G section is none.
+1008b524	IniReadScannerSetting()
+1008b53c	WARM_UP_TARGET_B section is none.
+1008b560	WARM_UP_TARGET_B
+1008b574	IniReadScannerSetting()
+1008b58c	WARM_UP_TARGET_B section is none.
+1008b5b0	IniReadScannerSetting()
+1008b5c8	WARM_UP_TARGET_IR section is none.
+1008b5ec	WARM_UP_TARGET_IR
+1008b600	IniReadScannerSetting()
+1008b618	WARM_UP_TARGET_IR section is none.
+1008b63c	IniReadScannerSetting()
+1008b654	WARM_UP_LL_RATIO_R section is none.
+1008b678	WARM_UP_LL_RATIO_R
+1008b68c	IniReadScannerSetting()
+1008b6a4	WARM_UP_LL_RATIO_R section is none.
+1008b6c8	IniReadScannerSetting()
+1008b6e0	WARM_UP_LL_RATIO_G section is none.
+1008b704	WARM_UP_LL_RATIO_G
+1008b718	IniReadScannerSetting()
+1008b730	WARM_UP_LL_RATIO_G section is none.
+1008b754	IniReadScannerSetting()
+1008b76c	WARM_UP_LL_RATIO_B section is none.
+1008b790	WARM_UP_LL_RATIO_B
+1008b7a4	IniReadScannerSetting()
+1008b7bc	WARM_UP_LL_RATIO_B section is none.
+1008b7e0	IniReadScannerSetting()
+1008b7f8	WARM_UP_LL_RATIO_IR section is none.
+1008b820	WARM_UP_LL_RATIO_IR
+1008b834	IniReadScannerSetting()
+1008b84c	WARM_UP_LL_RATIO_IR section is none.
+1008b874	IniReadScannerSetting()
+1008b88c	WARM_UP_TIME section is none.
+1008b8ac	WARM_UP_TIME
+1008b8bc	IniReadScannerSetting()
+1008b8d4	WARM_UP_TIME section is none.
+1008b8f4	IniReadScannerSetting()
+1008b90c	WARM_UP_COUNT section is none.
+1008b92c	WARM_UP_COUNT
+1008b93c	IniReadScannerSetting()
+1008b954	WARM_UP_COUNT section is none.
+1008b974	IniReadScannerSetting()
+1008b98c	WARM_UP_MAX_RATIO_R section is none.
+1008b9b4	WARM_UP_MAX_RATIO_R
+1008b9c8	IniReadScannerSetting()
+1008b9e0	WARM_UP_MAX_RATIO_R section is none.
+1008ba08	IniReadScannerSetting()
+1008ba20	WARM_UP_MAX_RATIO_G section is none.
+1008ba48	WARM_UP_MAX_RATIO_G
+1008ba5c	IniReadScannerSetting()
+1008ba74	WARM_UP_MAX_RATIO_G section is none.
+1008ba9c	IniReadScannerSetting()
+1008bab4	WARM_UP_MAX_RATIO_B section is none.
+1008badc	WARM_UP_MAX_RATIO_B
+1008baf0	IniReadScannerSetting()
+1008bb08	WARM_UP_MAX_RATIO_B section is none.
+1008bb30	IniReadScannerSetting()
+1008bb48	WARM_UP_MAX_RATIO_IR section is none.
+1008bb70	WARM_UP_MAX_RATIO_IR
+1008bb88	IniReadScannerSetting()
+1008bba0	WARM_UP_MAX_RATIO_IR section is none.
+1008bbc8	IniReadScannerSetting()
+1008bbe0	WARM_UP_OLD_RATIO_R section is none.
+1008bc08	WARM_UP_OLD_RATIO_R
+1008bc1c	IniReadScannerSetting()
+1008bc34	WARM_UP_OLD_RATIO_R section is none.
+1008bc5c	IniReadScannerSetting()
+1008bc74	WARM_UP_OLD_RATIO_G section is none.
+1008bc9c	WARM_UP_OLD_RATIO_G
+1008bcb0	IniReadScannerSetting()
+1008bcc8	WARM_UP_OLD_RATIO_G section is none.
+1008bcf0	IniReadScannerSetting()
+1008bd08	WARM_UP_OLD_RATIO_B section is none.
+1008bd30	WARM_UP_OLD_RATIO_B
+1008bd44	IniReadScannerSetting()
+1008bd5c	WARM_UP_OLD_RATIO_B section is none.
+1008bd84	IniReadScannerSetting()
+1008bd9c	WARM_UP_OLD_RATIO_IR section is none.
+1008bdc4	WARM_UP_OLD_RATIO_IR
+1008bddc	IniReadScannerSetting()
+1008bdf4	WARM_UP_OLD_RATIO_IR section is none.
+1008be1c	IniReadScannerSetting()
+1008be34	WARM_UP_DECISION_RANGE section is none.
+1008be5c	WARM_UP_DECISION_RANGE
+1008be74	IniReadScannerSetting()
+1008be8c	WARM_UP_OLD_RATIO_IR section is none.
+1008beb4	IniReadScannerSetting()
+1008becc	WARM_UP_DECISION_LEVEL section is none.
+1008bef4	WARM_UP_DECISION_LEVEL
+1008bf0c	IniReadScannerSetting()
+1008bf24	WARM_UP_DECISION_LEVEL section is none.
+1008bfbc	bad allocation
+1008bfd8	HH:mm:ss
+1008bfe4	dddd, MMMM dd, yyyy
+1008bff8	MM/dd/yy
+1008c00c	December
+1008c018	November
+1008c024	October
+1008c02c	September
+1008c038	August
+1008c050	April
+1008c058	March
+1008c060	February
+1008c06c	January
+1008c0a4	Saturday
+1008c0b0	Friday
+1008c0b8	Thursday
+1008c0c4	Wednesday
+1008c0d0	Tuesday
+1008c0d8	Monday
+1008c0e0	Sunday
+1008c108	am/pm
+1008c1e4	floor
+1008c1fc	exp10
+1008c218	log10
+1008c228	e+000
+1008c23e	GAIsProcessorFeaturePresent
+1008c25c	KERNEL32
+1008c268	CorExitProcess
+1008c278	mscoree.dll
+1008c284	runtime error 
+1008c298	TLOSS error\r\n
+1008c2a8	SING error\r\n
+1008c2b8	DOMAIN error\r\n
+1008c2c8	R6034\r\nAn application has made an attempt to load the C runtime library incorrectly.\nPlease contact the application's support team for more information.\r\n
+1008c368	R6033\r\n- Attempt to use MSIL code from this assembly during native code initialization\nThis indicates a bug in your application. It is most likely the result of calling an MSIL-compiled (/clr) function from a native constructor or from DllMain.\r\n
+1008c460	R6032\r\n- not enough space for locale information\r\n
+1008c498	R6031\r\n- Attempt to initialize the CRT more than once.\nThis indicates a bug in your application.\r\n
+1008c4fc	R6030\r\n- CRT not initialized\r\n
+1008c51c	R6028\r\n- unable to initialize heap\r\n
+1008c544	R6027\r\n- not enough space for lowio initialization\r\n
+1008c57c	R6026\r\n- not enough space for stdio initialization\r\n
+1008c5b4	R6025\r\n- pure virtual function call\r\n
+1008c5dc	R6024\r\n- not enough space for _onexit/atexit table\r\n
+1008c614	R6019\r\n- unable to open console device\r\n
+1008c640	R6018\r\n- unexpected heap error\r\n
+1008c664	R6017\r\n- unexpected multithread lock error\r\n
+1008c694	R6016\r\n- not enough space for thread data\r\n
+1008c6c0	\r\nThis application has requested the Runtime to terminate it in an unusual way.\nPlease contact the application's support team for more information.\r\n
+1008c758	R6009\r\n- not enough space for environment\r\n
+1008c784	R6008\r\n- not enough space for arguments\r\n
+1008c7b0	R6002\r\n- floating point support not loaded\r\n
+1008c7e0	Microsoft Visual C++ Runtime Library
+1008c810	<program name unknown>
+1008c828	Runtime Error!\n\nProgram: 
+1008c844	.mixcrt
+1008c84c	EncodePointer
+1008c85c	KERNEL32.DLL
+1008c86c	DecodePointer
+1008c87c	FlsFree
+1008c884	FlsSetValue
+1008c890	FlsGetValue
+1008c89c	FlsAlloc
+1008c8b8	bad exception
+1008c94c	(null)
+1008c95c	(null)
+1008ca2c	UTF-8
+1008ca34	UTF-16LE
+1008ca40	UNICODE
+1008ca54	Unknown exception
+10090414	SunMonTueWedThuFriSat
+1009042c	JanFebMarAprMayJunJulAugSepOctNovDec
+10090d5e	.=_nextafter
+10090dd8	InitializeCriticalSectionAndSpinCount
+10090e00	kernel32.dll
+10090e10	GetProcessWindowStation
+10090e28	GetUserObjectInformationA
+10090e44	GetLastActivePopup
+10090e58	GetActiveWindow
+10090e68	MessageBoxA
+10090e74	USER32.DLL
+10091690	1#QNAN
+10091698	1#INF
+100916a0	1#IND
+100916a8	1#SNAN
+100916b0	 Complete Object Locator'
+100916cc	 Class Hierarchy Descriptor'
+100916ec	 Base Class Array'
+10091700	 Base Class Descriptor at (
+1009171c	 Type Descriptor'
+10091730	`local static thread guard'
+1009174c	`managed vector copy constructor iterator'
+10091778	`vector vbase copy constructor iterator'
+100917a4	`vector copy constructor iterator'
+100917c8	`dynamic atexit destructor for '
+100917ec	`dynamic initializer for '
+10091808	`eh vector vbase copy constructor iterator'
+10091834	`eh vector copy constructor iterator'
+1009185c	`managed vector destructor iterator'
+10091884	`managed vector constructor iterator'
+100918ac	`placement delete[] closure'
+100918cc	`placement delete closure'
+100918e8	`omni callsig'
+100918f8	 delete[]
+10091904	 new[]
+1009190c	`local vftable constructor closure'
+10091930	`local vftable'
+10091940	`RTTI
+1009194c	`udt returning'
+1009195c	`copy constructor closure'
+10091978	`eh vector vbase constructor iterator'
+100919a0	`eh vector destructor iterator'
+100919c0	`eh vector constructor iterator'
+100919e4	`virtual displacement map'
+10091a00	`vector vbase constructor iterator'
+10091a24	`vector destructor iterator'
+10091a44	`vector constructor iterator'
+10091a64	`scalar deleting destructor'
+10091a84	`default constructor closure'
+10091aa4	`vector deleting destructor'
+10091ac4	`vbase destructor'
+10091ad8	`string'
+10091ae4	`local static guard'
+10091afc	`typeof'
+10091b08	`vcall'
+10091b10	`vbtable'
+10091b1c	`vftable'
+10091ba4	operator
+10091bc8	 delete
+10091bd8	__unaligned
+10091be4	__restrict
+10091bf0	__ptr64
+10091bf8	__clrcall
+10091c04	__fastcall
+10091c10	__thiscall
+10091c1c	__stdcall
+10091c28	__pascal
+10091c34	__cdecl
+10091c3c	__based(
+10091dc8	CONOUT$
+10092bca	Sleep
+10092bd2	GetTickCount
+10092be2	CreateFileMappingA
+10092bf8	GetLastError
+10092c08	GetVersionExA
+10092c18	UnmapViewOfFile
+10092c2a	MapViewOfFile
+10092c3a	CloseHandle
+10092c48	GetProcAddress
+10092c5a	LoadLibraryA
+10092c6a	GetTempPathA
+10092c7a	ReleaseMutex
+10092c8a	WaitForSingleObject
+10092ca0	CreateMutexA
+10092cb0	FreeLibrary
+10092cbe	GlobalMemoryStatusEx
+10092cd6	GetModuleFileNameA
+10092cec	GetModuleHandleA
+10092d00	FormatMessageA
+10092d12	WriteFile
+10092d1e	ReadFile
+10092d2a	DeviceIoControl
+10092d3c	CreateFileA
+10092d4a	GetExitCodeThread
+10092d5e	InterlockedDecrement
+10092d76	InterlockedIncrement
+10092d8e	QueryPerformanceFrequency
+10092daa	QueryPerformanceCounter
+10092dc4	CreateThread
+10092dd4	ExitThread
+10092de0	KERNEL32.dll
+10092df0	wsprintfA
+10092dfc	MessageBoxA
+10092e08	USER32.dll
+10092e16	RevertToSelf
+10092e26	SetSecurityDescriptorDacl
+10092e42	InitializeSecurityDescriptor
+10092e62	ImpersonateSelf
+10092e74	RegCloseKey
+10092e82	RegQueryValueExA
+10092e96	RegOpenKeyExA
+10092ea4	ADVAPI32.dll
+10092eb4	DeleteFileA
+10092ec2	HeapFree
+10092ece	HeapAlloc
+10092eda	RtlUnwind
+10092ee6	HeapReAlloc
+10092ef4	GetTimeFormatA
+10092f06	GetDateFormatA
+10092f18	GetSystemTimeAsFileTime
+10092f32	GetCurrentThreadId
+10092f48	GetCommandLineA
+10092f5a	GetProcessHeap
+10092f6c	TerminateProcess
+10092f80	GetCurrentProcess
+10092f94	UnhandledExceptionFilter
+10092fb0	SetUnhandledExceptionFilter
+10092fce	IsDebuggerPresent
+10092fe2	HeapDestroy
+10092ff0	HeapCreate
+10092ffe	VirtualFree
+1009300c	DeleteCriticalSection
+10093024	LeaveCriticalSection
+1009303c	EnterCriticalSection
+10093054	VirtualAlloc
+10093064	ExitProcess
+10093072	GetStdHandle
+10093082	TlsGetValue
+10093090	TlsAlloc
+1009309c	TlsSetValue
+100930aa	TlsFree
+100930b4	SetLastError
+100930c4	HeapSize
+100930d0	GetCPInfo
+100930dc	GetACP
+100930e6	GetOEMCP
+100930f2	IsValidCodePage
+10093104	MultiByteToWideChar
+1009311a	SetFilePointer
+1009312c	SetHandleCount
+1009313e	GetFileType
+1009314c	GetStartupInfoA
+1009315e	RaiseException
+10093170	WideCharToMultiByte
+10093186	GetConsoleCP
+10093196	GetConsoleMode
+100931a8	GetTimeZoneInformation
+100931c2	FreeEnvironmentStringsA
+100931dc	GetEnvironmentStrings
+100931f4	FreeEnvironmentStringsW
+1009320e	GetEnvironmentStringsW
+10093228	GetCurrentProcessId
+1009323e	InitializeCriticalSection
+1009325a	LCMapStringA
+1009326a	LCMapStringW
+1009327a	GetStringTypeA
+1009328c	GetStringTypeW
+1009329e	GetLocaleInfoA
+100932b0	SetStdHandle
+100932c0	FlushFileBuffers
+100932d4	WriteConsoleA
+100932e4	GetConsoleOutputCP
+100932fa	WriteConsoleW
+1009330a	SetEndOfFile
+1009331a	CompareStringA
+1009332c	CompareStringW
+1009333e	SetEnvironmentVariableA
+100934c8	CNQ4808L.dll
+100934d5	DoCalibration
+100934e3	FindScannerEx
+100934f1	GetAGData
+100934fb	GetCalibrationStatus
+10093510	GetCanonAPIVersion
+10093523	GetCropStatus
+10093531	GetDataStatus
+1009353f	GetLampStatus
+1009354d	GetOPUMode
+10093558	GetReadStatus
+10093566	GetScannerAbilitySize
+1009357c	GetScannerAbilityXp
+10093590	GetScannerStatus
+100935a1	InitialButton
+100935af	InitializeScanner
+100935c1	LockScanner
+100935cd	ReadPushButton
+100935dc	ReadRawData
+100935e8	ReadScan
+100935f1	SetAGData
+100935fb	SetErrorToDevice
+1009360c	SetGamma
+10093615	SetLamp
+1009361d	SetRawDataParameter
+10093631	SetScanParameter
+10093642	StartScanEx
+1009364e	StopScanEx
+10093659	TerminateScanner
+1009366a	TestScanner
+10093676	UnlockScanner
+10093684	ReadRegister
+10093691	WriteRegister
+1009425c	.?AVbad_alloc@std@@
+10094278	.?AVexception@std@@
+1009470c	.?AVbad_exception@std@@
+1009488e	abcdefghijklmnopqrstuvwxyz
+100948ae	ABCDEFGHIJKLMNOPQRSTUVWXYZ
+10094a99	abcdefghijklmnopqrstuvwxyz
+10094ab9	ABCDEFGHIJKLMNOPQRSTUVWXYZ
+10095118	.?AVtype_info@@
+101f6102	StringFileInfo
+101f6126	000004b0
+101f613e	CompanyName
+101f6158	CANON INC.
+101f6176	FileDescription
+101f6198	CanoScan 5600F
+101f61be	FileVersion
+101f61d8	1, 0, 4, 0
+101f61f6	InternalName
+101f6210	CNQ4808L.dll
+101f6232	LegalCopyright
+101f6250	Copyright CANON INC. 2008-2017  All Rights Reserved
+101f62be	OriginalFilename
+101f62e0	CanoScan 5600F
+101f6306	ProductVersion
+101f6324	1, 0, 4, 0
+101f6342	VarFileInfo
+101f6362	Translation
+101f6380	<assembly xmlns="urn:schemas-microsoft-com:asm.v1" manifestVersion="1.0">\r\n</assembly>PAPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGX
+ffdfff50	00000000-0000-0000-0000-000000000000

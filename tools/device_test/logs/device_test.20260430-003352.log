@@ -1,0 +1,534 @@
+Enumerating USB devices...
+Device bus=2 addr=55 vid:pid=05ac:0250 class=00 subclass=00 proto=00 configs=1
+Device bus=2 addr=45 vid:pid=1a40:0101 class=09 subclass=00 proto=01 configs=1
+Device bus=2 addr=0 vid:pid=8086:7e7d class=09 subclass=00 proto=03 configs=1
+Device bus=2 addr=26 vid:pid=8087:0033 class=e0 subclass=01 proto=01 configs=1
+Device bus=2 addr=38 vid:pid=17ef:a392 class=09 subclass=00 proto=02 configs=1
+Device bus=2 addr=41 vid:pid=17ef:a395 class=09 subclass=00 proto=01 configs=1
+Device bus=2 addr=49 vid:pid=1bcf:2701 class=ef subclass=02 proto=01 configs=1
+Device bus=2 addr=47 vid:pid=03f0:2341 class=00 subclass=00 proto=00 configs=1
+Device bus=2 addr=1 vid:pid=5986:2169 class=ef subclass=02 proto=01 configs=1
+Device bus=2 addr=2 vid:pid=04f3:0c8c class=00 subclass=00 proto=00 configs=1
+Device bus=2 addr=60 vid:pid=04a9:1906 class=ff subclass=ff proto=ff configs=1
+Device bus=1 addr=21 vid:pid=17ef:a391 class=09 subclass=00 proto=03 configs=1
+Device bus=2 addr=39 vid:pid=046d:c24f class=00 subclass=00 proto=00 configs=1
+Device bus=1 addr=22 vid:pid=17ef:a387 class=00 subclass=00 proto=00 configs=2
+Device bus=2 addr=57 vid:pid=17ef:a38f class=00 subclass=00 proto=00 configs=1
+Device bus=1 addr=23 vid:pid=17ef:a393 class=09 subclass=00 proto=03 configs=1
+Device bus=1 addr=0 vid:pid=8086:7ec0 class=09 subclass=00 proto=03 configs=1
+Device bus=2 addr=50 vid:pid=1038:12ad class=00 subclass=00 proto=00 configs=1
+Device bus=2 addr=44 vid:pid=17ef:a396 class=00 subclass=00 proto=00 configs=1
+Device bus=2 addr=40 vid:pid=17ef:a394 class=09 subclass=00 proto=02 configs=1
+
+Opening scanner 04a9:1906 on bus=2 addr=60...
+Opened device descriptor: usb=0200 class=ff/ff/ff configs=1
+Manufacturer: Canon
+Product: CanoScan
+
+Configuration/interface/endpoint tree:
+Config[0]: value=1 interfaces=1 attributes=0xc0 maxPower=5
+  Interface #0 alt=0 class=ff/ff/ff endpoints=3
+    EP 0x81 bulk maxPacket=512 interval=0
+    EP 0x02 bulk maxPacket=512 interval=0
+    EP 0x83 interrupt maxPacket=1 interval=8
+
+Attempting interface claim for interface #0...
+Kernel-driver activity query is not supported on this platform/backend.
+Interface claim succeeded.
+[scanbro-usb] [OUT][PC->scanner] vendor control IN setup (8 bytes)
+  0000: c0 04 8e 00 22 06 02 00 
+[scanbro-usb][IN] vendor control IN transferred 2 bytes
+[scanbro-usb] [IN][scanner->PC] vendor control IN response (2 bytes)
+  0000: 00 55 
+
+[preview-attempt-03] mode enabled.
+[preview-attempt-03] design: clean state-machine reconstruction (not prepend replay).
+[preview-attempt-03] source-of-truth window: 03_lamp_on_window_min_3129_3178.pcapng
+[preview-attempt-03] raw output: data/preview-attempt-0x81.raw
+[preview-attempt-03] limits: timeout=500 ms bulk-in-size=8192 max-bytes=131072 max-bulk-in-transfers=32 max-total-transfers=220
+[preview-attempt-03] phases: setup-preamble -> ghidra-start -> pointer-submit -> ghidra-read-loop
+[preview-attempt] frame 1051 control OUT request=0x04 value=0x0083 index=0x0000 len=2
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT setup (8 bytes)
+  0000: 40 04 83 00 00 00 02 00 
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT payload (2 bytes)
+  0000: 6c 00 
+[scanbro-usb][OUT] vendor control OUT transferred 2 bytes
+[preview-attempt] frame 1053 control OUT request=0x04 value=0x0083 index=0x0000 len=2
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT setup (8 bytes)
+  0000: 40 04 83 00 00 00 02 00 
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT payload (2 bytes)
+  0000: 6c 00 
+[scanbro-usb][OUT] vendor control OUT transferred 2 bytes
+[preview-attempt] frame 1055 control OUT request=0x04 value=0x0083 index=0x0000 len=2
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT setup (8 bytes)
+  0000: 40 04 83 00 00 00 02 00 
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT payload (2 bytes)
+  0000: 6c 00 
+[scanbro-usb][OUT] vendor control OUT transferred 2 bytes
+[preview-attempt] frame 1059 control IN request=0x0c value=0x008e index=0x0000 len=1
+[scanbro-usb] [OUT][PC->scanner] vendor control IN setup (8 bytes)
+  0000: c0 0c 8e 00 00 00 01 00 
+[scanbro-usb][IN] vendor control IN transferred 1 bytes
+[scanbro-usb] [IN][scanner->PC] vendor control IN response (1 bytes)
+  0000: 00 
+[preview-attempt] frame 1061 control IN request=0x04 value=0x008e index=0x0622 len=2
+[scanbro-usb] [OUT][PC->scanner] vendor control IN setup (8 bytes)
+  0000: c0 04 8e 00 22 06 02 00 
+[scanbro-usb][IN] vendor control IN transferred 2 bytes
+[scanbro-usb] [IN][scanner->PC] vendor control IN response (2 bytes)
+  0000: 00 55 
+[preview-attempt] frame 1063 control OUT request=0x04 value=0x0083 index=0x0000 len=2
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT setup (8 bytes)
+  0000: 40 04 83 00 00 00 02 00 
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT payload (2 bytes)
+  0000: 0e 01 
+[scanbro-usb][OUT] vendor control OUT transferred 2 bytes
+[preview-attempt] frame 1071 control OUT request=0x04 value=0x0083 index=0x0000 len=2
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT setup (8 bytes)
+  0000: 40 04 83 00 00 00 02 00 
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT payload (2 bytes)
+  0000: 0e 00 
+[scanbro-usb][OUT] vendor control OUT transferred 2 bytes
+[preview-attempt] frame 1073 control OUT request=0x04 value=0x0083 index=0x0000 len=2
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT setup (8 bytes)
+  0000: 40 04 83 00 00 00 02 00 
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT payload (2 bytes)
+  0000: 01 40 
+[scanbro-usb][OUT] vendor control OUT transferred 2 bytes
+[preview-attempt] frame 1093 control OUT request=0x04 value=0x0083 index=0x0000 len=2
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT setup (8 bytes)
+  0000: 40 04 83 00 00 00 02 00 
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT payload (2 bytes)
+  0000: 74 00 
+[scanbro-usb][OUT] vendor control OUT transferred 2 bytes
+[preview-attempt] frame 1095 control OUT request=0x04 value=0x0083 index=0x0000 len=2
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT setup (8 bytes)
+  0000: 40 04 83 00 00 00 02 00 
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT payload (2 bytes)
+  0000: 75 33 
+[scanbro-usb][OUT] vendor control OUT transferred 2 bytes
+[preview-attempt] frame 1097 control OUT request=0x04 value=0x0083 index=0x0000 len=2
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT setup (8 bytes)
+  0000: 40 04 83 00 00 00 02 00 
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT payload (2 bytes)
+  0000: 76 33 
+[scanbro-usb][OUT] vendor control OUT transferred 2 bytes
+[preview-attempt] frame 1099 control IN request=0x04 value=0x008e index=0x0b22 len=2
+[scanbro-usb] [OUT][PC->scanner] vendor control IN setup (8 bytes)
+  0000: c0 04 8e 00 22 0b 02 00 
+[scanbro-usb][IN] vendor control IN transferred 2 bytes
+[scanbro-usb] [IN][scanner->PC] vendor control IN response (2 bytes)
+  0000: 01 55 
+[preview-attempt] frame 1101 control OUT request=0x04 value=0x0083 index=0x0000 len=2
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT setup (8 bytes)
+  0000: 40 04 83 00 00 00 02 00 
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT payload (2 bytes)
+  0000: 0b 6b 
+[scanbro-usb][OUT] vendor control OUT transferred 2 bytes
+[preview-attempt] frame 1103 control OUT request=0x0c value=0x008c index=0x0010 len=1
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT setup (8 bytes)
+  0000: 40 0c 8c 00 10 00 01 00 
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT payload (1 bytes)
+  0000: 0d 
+[scanbro-usb][OUT] vendor control OUT transferred 1 bytes
+[preview-attempt] frame 1105 control OUT request=0x0c value=0x008c index=0x0013 len=1
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT setup (8 bytes)
+  0000: 40 0c 8c 00 13 00 01 00 
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT payload (1 bytes)
+  0000: 0e 
+[scanbro-usb][OUT] vendor control OUT transferred 1 bytes
+[preview-attempt] frame 1107 control OUT request=0x04 value=0x0083 index=0x0000 len=2
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT setup (8 bytes)
+  0000: 40 04 83 00 00 00 02 00 
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT payload (2 bytes)
+  0000: 6f a0 
+[scanbro-usb][OUT] vendor control OUT transferred 2 bytes
+[preview-attempt] frame 1109 control OUT request=0x04 value=0x0083 index=0x0000 len=2
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT setup (8 bytes)
+  0000: 40 04 83 00 00 00 02 00 
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT payload (2 bytes)
+  0000: 6e 7f 
+[scanbro-usb][OUT] vendor control OUT transferred 2 bytes
+[preview-attempt] frame 1111 control OUT request=0x04 value=0x0083 index=0x0000 len=2
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT setup (8 bytes)
+  0000: 40 04 83 00 00 00 02 00 
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT payload (2 bytes)
+  0000: a7 1c 
+[scanbro-usb][OUT] vendor control OUT transferred 2 bytes
+[preview-attempt] frame 1113 control IN request=0x04 value=0x008e index=0x6d22 len=2
+[scanbro-usb] [OUT][PC->scanner] vendor control IN setup (8 bytes)
+  0000: c0 04 8e 00 22 6d 02 00 
+[scanbro-usb][IN] vendor control IN transferred 2 bytes
+[scanbro-usb] [IN][scanner->PC] vendor control IN response (2 bytes)
+  0000: 5f 55 
+[preview-attempt] frame 1115 control OUT request=0x04 value=0x0083 index=0x0000 len=2
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT setup (8 bytes)
+  0000: 40 04 83 00 00 00 02 00 
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT payload (2 bytes)
+  0000: 6d 5f 
+[scanbro-usb][OUT] vendor control OUT transferred 2 bytes
+[preview-attempt] frame 1117 control IN request=0x04 value=0x008e index=0x6c22 len=2
+[scanbro-usb] [OUT][PC->scanner] vendor control IN setup (8 bytes)
+  0000: c0 04 8e 00 22 6c 02 00 
+[scanbro-usb][IN] vendor control IN transferred 2 bytes
+[scanbro-usb] [IN][scanner->PC] vendor control IN response (2 bytes)
+  0000: 83 55 
+[preview-attempt] frame 1119 control OUT request=0x04 value=0x0083 index=0x0000 len=2
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT setup (8 bytes)
+  0000: 40 04 83 00 00 00 02 00 
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT payload (2 bytes)
+  0000: 6c 80 
+[scanbro-usb][OUT] vendor control OUT transferred 2 bytes
+[preview-attempt] frame 1121 control IN request=0x04 value=0x008e index=0x6c22 len=2
+[scanbro-usb] [OUT][PC->scanner] vendor control IN setup (8 bytes)
+  0000: c0 04 8e 00 22 6c 02 00 
+[scanbro-usb][IN] vendor control IN transferred 2 bytes
+[scanbro-usb] [IN][scanner->PC] vendor control IN response (2 bytes)
+  0000: 83 55 
+[preview-attempt] frame 1123 control OUT request=0x04 value=0x0083 index=0x0000 len=2
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT setup (8 bytes)
+  0000: 40 04 83 00 00 00 02 00 
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT payload (2 bytes)
+  0000: 6c 80 
+[scanbro-usb][OUT] vendor control OUT transferred 2 bytes
+[preview-attempt] frame 1129 control IN request=0x04 value=0x008e index=0x6c22 len=2
+[scanbro-usb] [OUT][PC->scanner] vendor control IN setup (8 bytes)
+  0000: c0 04 8e 00 22 6c 02 00 
+[scanbro-usb][IN] vendor control IN transferred 2 bytes
+[scanbro-usb] [IN][scanner->PC] vendor control IN response (2 bytes)
+  0000: 83 55 
+[preview-attempt] frame 1131 control OUT request=0x04 value=0x0083 index=0x0000 len=2
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT setup (8 bytes)
+  0000: 40 04 83 00 00 00 02 00 
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT payload (2 bytes)
+  0000: 6c 81 
+[scanbro-usb][OUT] vendor control OUT transferred 2 bytes
+[preview-attempt] frame 1133 control IN request=0x04 value=0x008e index=0x6c22 len=2
+[scanbro-usb] [OUT][PC->scanner] vendor control IN setup (8 bytes)
+  0000: c0 04 8e 00 22 6c 02 00 
+[scanbro-usb][IN] vendor control IN transferred 2 bytes
+[scanbro-usb] [IN][scanner->PC] vendor control IN response (2 bytes)
+  0000: 83 55 
+[preview-attempt] frame 1135 control OUT request=0x04 value=0x0083 index=0x0000 len=2
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT setup (8 bytes)
+  0000: 40 04 83 00 00 00 02 00 
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT payload (2 bytes)
+  0000: 6c c1 
+[scanbro-usb][OUT] vendor control OUT transferred 2 bytes
+[preview-attempt] frame 1141 control IN request=0x04 value=0x008e index=0x6c22 len=2
+[scanbro-usb] [OUT][PC->scanner] vendor control IN setup (8 bytes)
+  0000: c0 04 8e 00 22 6c 02 00 
+[scanbro-usb][IN] vendor control IN transferred 2 bytes
+[scanbro-usb] [IN][scanner->PC] vendor control IN response (2 bytes)
+  0000: 83 55 
+[preview-attempt] frame 1143 control OUT request=0x04 value=0x0083 index=0x0000 len=2
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT setup (8 bytes)
+  0000: 40 04 83 00 00 00 02 00 
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT payload (2 bytes)
+  0000: 6c d1 
+[scanbro-usb][OUT] vendor control OUT transferred 2 bytes
+[preview-attempt] frame 1145 control IN request=0x04 value=0x008e index=0xa622 len=2
+[scanbro-usb] [OUT][PC->scanner] vendor control IN setup (8 bytes)
+  0000: c0 04 8e 00 22 a6 02 00 
+[scanbro-usb][IN] vendor control IN transferred 2 bytes
+[scanbro-usb] [IN][scanner->PC] vendor control IN response (2 bytes)
+  0000: 03 55 
+[preview-attempt] frame 1147 control OUT request=0x04 value=0x0083 index=0x0000 len=2
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT setup (8 bytes)
+  0000: 40 04 83 00 00 00 02 00 
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT payload (2 bytes)
+  0000: a6 07 
+[scanbro-usb][OUT] vendor control OUT transferred 2 bytes
+[preview-attempt] frame 1149 control IN request=0x04 value=0x008e index=0xa622 len=2
+[scanbro-usb] [OUT][PC->scanner] vendor control IN setup (8 bytes)
+  0000: c0 04 8e 00 22 a6 02 00 
+[scanbro-usb][IN] vendor control IN transferred 2 bytes
+[scanbro-usb] [IN][scanner->PC] vendor control IN response (2 bytes)
+  0000: 07 55 
+[preview-attempt] frame 1151 control OUT request=0x04 value=0x0083 index=0x0000 len=2
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT setup (8 bytes)
+  0000: 40 04 83 00 00 00 02 00 
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT payload (2 bytes)
+  0000: a6 0f 
+[scanbro-usb][OUT] vendor control OUT transferred 2 bytes
+[preview-attempt] frame 1153 control IN request=0x04 value=0x008e index=0xa622 len=2
+[scanbro-usb] [OUT][PC->scanner] vendor control IN setup (8 bytes)
+  0000: c0 04 8e 00 22 a6 02 00 
+[scanbro-usb][IN] vendor control IN transferred 2 bytes
+[scanbro-usb] [IN][scanner->PC] vendor control IN response (2 bytes)
+  0000: 0f 55 
+[preview-attempt] frame 1155 control OUT request=0x04 value=0x0083 index=0x0000 len=2
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT setup (8 bytes)
+  0000: 40 04 83 00 00 00 02 00 
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT payload (2 bytes)
+  0000: a6 1f 
+[scanbro-usb][OUT] vendor control OUT transferred 2 bytes
+[preview-attempt] frame 1157 control IN request=0x04 value=0x008e index=0x6d22 len=2
+[scanbro-usb] [OUT][PC->scanner] vendor control IN setup (8 bytes)
+  0000: c0 04 8e 00 22 6d 02 00 
+[scanbro-usb][IN] vendor control IN transferred 2 bytes
+[scanbro-usb] [IN][scanner->PC] vendor control IN response (2 bytes)
+  0000: 5f 55 
+[preview-attempt] frame 1159 control OUT request=0x04 value=0x0083 index=0x0000 len=2
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT setup (8 bytes)
+  0000: 40 04 83 00 00 00 02 00 
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT payload (2 bytes)
+  0000: 6d 5f 
+[scanbro-usb][OUT] vendor control OUT transferred 2 bytes
+[preview-attempt] frame 1161 control IN request=0x04 value=0x008e index=0x6c22 len=2
+[scanbro-usb] [OUT][PC->scanner] vendor control IN setup (8 bytes)
+  0000: c0 04 8e 00 22 6c 02 00 
+[scanbro-usb][IN] vendor control IN transferred 2 bytes
+[scanbro-usb] [IN][scanner->PC] vendor control IN response (2 bytes)
+  0000: 83 55 
+[preview-attempt] frame 1165 control OUT request=0x04 value=0x0083 index=0x0000 len=2
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT setup (8 bytes)
+  0000: 40 04 83 00 00 00 02 00 
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT payload (2 bytes)
+  0000: 6c d1 
+[scanbro-usb][OUT] vendor control OUT transferred 2 bytes
+[preview-attempt] frame 1167 control IN request=0x04 value=0x008e index=0x6c22 len=2
+[scanbro-usb] [OUT][PC->scanner] vendor control IN setup (8 bytes)
+  0000: c0 04 8e 00 22 6c 02 00 
+[scanbro-usb][IN] vendor control IN transferred 2 bytes
+[scanbro-usb] [IN][scanner->PC] vendor control IN response (2 bytes)
+  0000: 83 55 
+[preview-attempt] frame 1169 control IN request=0x04 value=0x008e index=0x6c22 len=2
+[scanbro-usb] [OUT][PC->scanner] vendor control IN setup (8 bytes)
+  0000: c0 04 8e 00 22 6c 02 00 
+[scanbro-usb][IN] vendor control IN transferred 2 bytes
+[scanbro-usb] [IN][scanner->PC] vendor control IN response (2 bytes)
+  0000: 83 55 
+[preview-attempt] frame 1171 control OUT request=0x04 value=0x0083 index=0x0000 len=2
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT setup (8 bytes)
+  0000: 40 04 83 00 00 00 02 00 
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT payload (2 bytes)
+  0000: 6c f1 
+[scanbro-usb][OUT] vendor control OUT transferred 2 bytes
+[preview-attempt] frame 1173 control IN request=0x04 value=0x008e index=0x6c22 len=2
+[scanbro-usb] [OUT][PC->scanner] vendor control IN setup (8 bytes)
+  0000: c0 04 8e 00 22 6c 02 00 
+[scanbro-usb][IN] vendor control IN transferred 2 bytes
+[scanbro-usb] [IN][scanner->PC] vendor control IN response (2 bytes)
+  0000: 83 55 
+[preview-attempt] frame 1639 control OUT request=0x04 value=0x0083 index=0x0000 len=2
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT setup (8 bytes)
+  0000: 40 04 83 00 00 00 02 00 
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT payload (2 bytes)
+  0000: 02 08 
+[scanbro-usb][OUT] vendor control OUT transferred 2 bytes
+[preview-attempt] frame 1641 control IN request=0x04 value=0x008e index=0x0222 len=2
+[scanbro-usb] [OUT][PC->scanner] vendor control IN setup (8 bytes)
+  0000: c0 04 8e 00 22 02 02 00 
+[scanbro-usb][IN] vendor control IN transferred 2 bytes
+[scanbro-usb] [IN][scanner->PC] vendor control IN response (2 bytes)
+  0000: 08 55 
+[preview-attempt] frame 1643 control OUT request=0x04 value=0x0083 index=0x0000 len=2
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT setup (8 bytes)
+  0000: 40 04 83 00 00 00 02 00 
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT payload (2 bytes)
+  0000: 02 00 
+[scanbro-usb][OUT] vendor control OUT transferred 2 bytes
+[preview-attempt] frame 1645 control OUT request=0x04 value=0x0083 index=0x0000 len=2
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT setup (8 bytes)
+  0000: 40 04 83 00 00 00 02 00 
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT payload (2 bytes)
+  0000: 6a 04 
+[scanbro-usb][OUT] vendor control OUT transferred 2 bytes
+[preview-attempt] frame 1647 control OUT request=0x04 value=0x0083 index=0x0000 len=2
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT setup (8 bytes)
+  0000: 40 04 83 00 00 00 02 00 
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT payload (2 bytes)
+  0000: 1f 04 
+[scanbro-usb][OUT] vendor control OUT transferred 2 bytes
+[preview-attempt] frame 1817 control IN request=0x04 value=0x008e index=0x0222 len=2
+[scanbro-usb] [OUT][PC->scanner] vendor control IN setup (8 bytes)
+  0000: c0 04 8e 00 22 02 02 00 
+[scanbro-usb][IN] vendor control IN transferred 2 bytes
+[scanbro-usb] [IN][scanner->PC] vendor control IN response (2 bytes)
+  0000: 00 55 
+[preview-attempt] frame 1819 control OUT request=0x04 value=0x0083 index=0x0000 len=2
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT setup (8 bytes)
+  0000: 40 04 83 00 00 00 02 00 
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT payload (2 bytes)
+  0000: 02 80 
+[scanbro-usb][OUT] vendor control OUT transferred 2 bytes
+[preview-attempt] frame 1821 control IN request=0x04 value=0x008e index=0x0222 len=2
+[scanbro-usb] [OUT][PC->scanner] vendor control IN setup (8 bytes)
+  0000: c0 04 8e 00 22 02 02 00 
+[scanbro-usb][IN] vendor control IN transferred 2 bytes
+[scanbro-usb] [IN][scanner->PC] vendor control IN response (2 bytes)
+  0000: 80 55 
+[preview-attempt] frame 1823 control OUT request=0x04 value=0x0083 index=0x0000 len=2
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT setup (8 bytes)
+  0000: 40 04 83 00 00 00 02 00 
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT payload (2 bytes)
+  0000: 02 80 
+[scanbro-usb][OUT] vendor control OUT transferred 2 bytes
+[preview-attempt] frame 1825 control IN request=0x04 value=0x008e index=0x0222 len=2
+[scanbro-usb] [OUT][PC->scanner] vendor control IN setup (8 bytes)
+  0000: c0 04 8e 00 22 02 02 00 
+[scanbro-usb][IN] vendor control IN transferred 2 bytes
+[scanbro-usb] [IN][scanner->PC] vendor control IN response (2 bytes)
+  0000: 80 55 
+[preview-attempt] frame 1827 control OUT request=0x04 value=0x0083 index=0x0000 len=2
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT setup (8 bytes)
+  0000: 40 04 83 00 00 00 02 00 
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT payload (2 bytes)
+  0000: 02 c0 
+[scanbro-usb][OUT] vendor control OUT transferred 2 bytes
+[preview-attempt] frame 1829 control IN request=0x04 value=0x008e index=0x0222 len=2
+[scanbro-usb] [OUT][PC->scanner] vendor control IN setup (8 bytes)
+  0000: c0 04 8e 00 22 02 02 00 
+[scanbro-usb][IN] vendor control IN transferred 2 bytes
+[scanbro-usb] [IN][scanner->PC] vendor control IN response (2 bytes)
+  0000: c0 55 
+[preview-attempt] frame 1833 control OUT request=0x04 value=0x0083 index=0x0000 len=2
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT setup (8 bytes)
+  0000: 40 04 83 00 00 00 02 00 
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT payload (2 bytes)
+  0000: 02 c0 
+[scanbro-usb][OUT] vendor control OUT transferred 2 bytes
+[preview-attempt] frame 1835 control IN request=0x04 value=0x008e index=0x0222 len=2
+[scanbro-usb] [OUT][PC->scanner] vendor control IN setup (8 bytes)
+  0000: c0 04 8e 00 22 02 02 00 
+[scanbro-usb][IN] vendor control IN transferred 2 bytes
+[scanbro-usb] [IN][scanner->PC] vendor control IN response (2 bytes)
+  0000: c0 55 
+[preview-attempt] frame 1837 control OUT request=0x04 value=0x0083 index=0x0000 len=2
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT setup (8 bytes)
+  0000: 40 04 83 00 00 00 02 00 
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT payload (2 bytes)
+  0000: 02 c0 
+[scanbro-usb][OUT] vendor control OUT transferred 2 bytes
+[preview-attempt] frame 1839 control IN request=0x04 value=0x008e index=0x0222 len=2
+[scanbro-usb] [OUT][PC->scanner] vendor control IN setup (8 bytes)
+  0000: c0 04 8e 00 22 02 02 00 
+[scanbro-usb][IN] vendor control IN transferred 2 bytes
+[scanbro-usb] [IN][scanner->PC] vendor control IN response (2 bytes)
+  0000: c0 55 
+[preview-attempt] frame 1841 control OUT request=0x04 value=0x0083 index=0x0000 len=2
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT setup (8 bytes)
+  0000: 40 04 83 00 00 00 02 00 
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT payload (2 bytes)
+  0000: 02 c0 
+[scanbro-usb][OUT] vendor control OUT transferred 2 bytes
+[preview-attempt] frame 1843 control OUT request=0x04 value=0x0083 index=0x0000 len=2
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT setup (8 bytes)
+  0000: 40 04 83 00 00 00 02 00 
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT payload (2 bytes)
+  0000: 21 08 
+[scanbro-usb][OUT] vendor control OUT transferred 2 bytes
+[preview-attempt] frame 1845 control OUT request=0x04 value=0x0083 index=0x0000 len=2
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT setup (8 bytes)
+  0000: 40 04 83 00 00 00 02 00 
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT payload (2 bytes)
+  0000: 24 08 
+[scanbro-usb][OUT] vendor control OUT transferred 2 bytes
+[preview-attempt] frame 1847 control OUT request=0x04 value=0x0083 index=0x0000 len=2
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT setup (8 bytes)
+  0000: 40 04 83 00 00 00 02 00 
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT payload (2 bytes)
+  0000: 69 01 
+[scanbro-usb][OUT] vendor control OUT transferred 2 bytes
+[preview-attempt] frame 1849 control OUT request=0x04 value=0x0083 index=0x0000 len=2
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT setup (8 bytes)
+  0000: 40 04 83 00 00 00 02 00 
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT payload (2 bytes)
+  0000: 6a 08 
+[scanbro-usb][OUT] vendor control OUT transferred 2 bytes
+[preview-attempt] frame 1851 control OUT request=0x04 value=0x0083 index=0x0000 len=2
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT setup (8 bytes)
+  0000: 40 04 83 00 00 00 02 00 
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT payload (2 bytes)
+  0000: 5f 01 
+[scanbro-usb][OUT] vendor control OUT transferred 2 bytes
+[preview-attempt] frame 1853 control OUT request=0x04 value=0x0083 index=0x0000 len=2
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT setup (8 bytes)
+  0000: 40 04 83 00 00 00 02 00 
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT payload (2 bytes)
+  0000: 3d 00 
+[scanbro-usb][OUT] vendor control OUT transferred 2 bytes
+[preview-attempt] frame 1855 control OUT request=0x04 value=0x0083 index=0x0000 len=2
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT setup (8 bytes)
+  0000: 40 04 83 00 00 00 02 00 
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT payload (2 bytes)
+  0000: 3e 00 
+[scanbro-usb][OUT] vendor control OUT transferred 2 bytes
+[preview-attempt] frame 1857 control OUT request=0x04 value=0x0083 index=0x0000 len=2
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT setup (8 bytes)
+  0000: 40 04 83 00 00 00 02 00 
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT payload (2 bytes)
+  0000: 3f 04 
+[scanbro-usb][OUT] vendor control OUT transferred 2 bytes
+[preview-attempt] frame 1859 control OUT request=0x04 value=0x0083 index=0x0000 len=2
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT setup (8 bytes)
+  0000: 40 04 83 00 00 00 02 00 
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT payload (2 bytes)
+  0000: 25 00 
+[scanbro-usb][OUT] vendor control OUT transferred 2 bytes
+[preview-attempt] frame 1861 control OUT request=0x04 value=0x0083 index=0x0000 len=2
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT setup (8 bytes)
+  0000: 40 04 83 00 00 00 02 00 
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT payload (2 bytes)
+  0000: 26 00 
+[scanbro-usb][OUT] vendor control OUT transferred 2 bytes
+[preview-attempt] frame 1863 control OUT request=0x04 value=0x0083 index=0x0000 len=2
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT setup (8 bytes)
+  0000: 40 04 83 00 00 00 02 00 
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT payload (2 bytes)
+  0000: 27 10 
+[scanbro-usb][OUT] vendor control OUT transferred 2 bytes
+[preview-attempt] frame 1865 control OUT request=0x04 value=0x0083 index=0x0000 len=2
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT setup (8 bytes)
+  0000: 40 04 83 00 00 00 02 00 
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT payload (2 bytes)
+  0000: 23 01 
+[scanbro-usb][OUT] vendor control OUT transferred 2 bytes
+[preview-attempt] frame 1867 control OUT request=0x04 value=0x0083 index=0x0000 len=2
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT setup (8 bytes)
+  0000: 40 04 83 00 00 00 02 00 
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT payload (2 bytes)
+  0000: 22 01 
+[scanbro-usb][OUT] vendor control OUT transferred 2 bytes
+[preview-attempt] frame 1869 control IN request=0x04 value=0x008e index=0x6c22 len=2
+[scanbro-usb] [OUT][PC->scanner] vendor control IN setup (8 bytes)
+  0000: c0 04 8e 00 22 6c 02 00 
+[scanbro-usb][IN] vendor control IN transferred 2 bytes
+[scanbro-usb] [IN][scanner->PC] vendor control IN response (2 bytes)
+  0000: 83 55 
+[preview-attempt] frame 1871 control OUT request=0x04 value=0x0083 index=0x0000 len=2
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT setup (8 bytes)
+  0000: 40 04 83 00 00 00 02 00 
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT payload (2 bytes)
+  0000: 6c f1 
+[scanbro-usb][OUT] vendor control OUT transferred 2 bytes
+[preview-attempt] frame 1873 control IN request=0x04 value=0x008e index=0x6c22 len=2
+[scanbro-usb] [OUT][PC->scanner] vendor control IN setup (8 bytes)
+  0000: c0 04 8e 00 22 6c 02 00 
+[scanbro-usb][IN] vendor control IN transferred 2 bytes
+[scanbro-usb] [IN][scanner->PC] vendor control IN response (2 bytes)
+  0000: 83 55 
+[preview-attempt] frame 1875 control OUT request=0x04 value=0x0083 index=0x0000 len=2
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT setup (8 bytes)
+  0000: 40 04 83 00 00 00 02 00 
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT payload (2 bytes)
+  0000: 6c f1 
+[scanbro-usb][OUT] vendor control OUT transferred 2 bytes
+[preview-attempt] frame 1877 control OUT request=0x04 value=0x0082 index=0x0001 len=8
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT setup (8 bytes)
+  0000: 40 04 82 00 01 00 08 00 
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT payload (8 bytes)
+  0000: 00 00 00 10 80 00 00 00 
+[scanbro-usb][OUT] vendor control OUT transferred 8 bytes
+[preview-attempt] frame 1879 bulk OUT endpoint=0x02 len=128
+[preview-attempt] frame 1881 control OUT request=0x04 value=0x0082 index=0x0001 len=8
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT setup (8 bytes)
+  0000: 40 04 82 00 01 00 08 00 
+[scanbro-usb] [OUT][PC->scanner] vendor control OUT payload (8 bytes)
+  0000: 00 40 00 10 80 00 00 00 
+[scanbro-usb] vendor control OUT timeout; retrying (1/2)
+[scanbro-usb] vendor control OUT timeout; retrying (2/2)
+[scanbro-usb] vendor control OUT failed: LIBUSB_ERROR_TIMEOUT (-7)
+[preview-attempt-03] failed: frame 1881 control OUT request=0x04 value=0x0082 index=0x0001 len=8
+[preview-attempt-03] bytes saved before failure: 0

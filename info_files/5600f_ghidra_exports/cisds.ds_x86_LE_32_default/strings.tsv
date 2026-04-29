@@ -1,0 +1,290 @@
+address	value
+1000e1d0	Unicows.dll
+1000e1dc	???.???
+1000e1fc	Kernel32.dll
+1000e218	Kernel32.dll
+1000e228	empty
+1000e238	PATH
+1000e244	InstallDirectory
+1000e268	CreateActCtxW
+1000e278	ActivateActCtx
+1000e288	DeactivateActCtx
+1000e29c	FindActCtxSectionStringW
+1000e2b8	QueryActCtxW
+1000e2c8	Comctl32.dll
+1000e2e4	GetModuleHandleExW
+1000e2f8	IsolationAware function called after IsolationAwareCleanup\n
+1000e334	ProductName
+1000e34c	ProductFamily
+1000e368	Manufacturer
+1000e386	 DriverDate
+1000e3a0	DriverVersion
+1000e3bc	tpmClose
+1000e3c8	tpmOpen
+1000e3d0	tpmDispatch
+1000e3dc	tpm.dll
+1000e3f0	AvailableDriver
+1000e410	SOFTWARE
+1000e424	bad allocation
+1000e4c8	Canon
+1000e4d4	ScanGear
+1000e4e8	Devices
+1000e4f8	__Canon_ScanGear_Main__
+1000e544	CorExitProcess
+1000e554	mscoree.dll
+1000e560	runtime error 
+1000e574	TLOSS error\r\n
+1000e584	SING error\r\n
+1000e594	DOMAIN error\r\n
+1000e5a8	R6034\r\nAn application has made an attempt to load the C runtime library incorrectly.\nPlease contact the application's support team for more information.\r\n
+1000e648	R6033\r\n- Attempt to use MSIL code from this assembly during native code initialization\nThis indicates a bug in your application. It is most likely the result of calling an MSIL-compiled (/clr) function from a native constructor or from DllMain.\r\n
+1000e740	R6032\r\n- not enough space for locale information\r\n
+1000e778	R6031\r\n- Attempt to initialize the CRT more than once.\nThis indicates a bug in your application.\r\n
+1000e7dc	R6030\r\n- CRT not initialized\r\n
+1000e7fc	R6028\r\n- unable to initialize heap\r\n
+1000e824	R6027\r\n- not enough space for lowio initialization\r\n
+1000e85c	R6026\r\n- not enough space for stdio initialization\r\n
+1000e894	R6025\r\n- pure virtual function call\r\n
+1000e8bc	R6024\r\n- not enough space for _onexit/atexit table\r\n
+1000e8f4	R6019\r\n- unable to open console device\r\n
+1000e920	R6018\r\n- unexpected heap error\r\n
+1000e944	R6017\r\n- unexpected multithread lock error\r\n
+1000e974	R6016\r\n- not enough space for thread data\r\n
+1000e9a0	\r\nThis application has requested the Runtime to terminate it in an unusual way.\nPlease contact the application's support team for more information.\r\n
+1000ea38	R6009\r\n- not enough space for environment\r\n
+1000ea64	R6008\r\n- not enough space for arguments\r\n
+1000ea90	R6002\r\n- floating point support not loaded\r\n
+1000eac0	Microsoft Visual C++ Runtime Library
+1000eaf0	<program name unknown>
+1000eb08	Runtime Error!\n\nProgram: 
+1000eb3c	bad exception
+1000eb54	EncodePointer
+1000eb64	KERNEL32.DLL
+1000eb74	DecodePointer
+1000eb84	FlsFree
+1000eb8c	FlsSetValue
+1000eb98	FlsGetValue
+1000eba4	FlsAlloc
+1000ec40	Unknown exception
+1000ec74	InitializeCriticalSectionAndSpinCount
+1000ec9c	kernel32.dll
+1000ecac	GetProcessWindowStation
+1000ecc4	GetUserObjectInformationA
+1000ece0	GetLastActivePopup
+1000ecf4	GetActiveWindow
+1000ed04	MessageBoxA
+1000ed10	USER32.DLL
+1000ed1c	 Complete Object Locator'
+1000ed38	 Class Hierarchy Descriptor'
+1000ed58	 Base Class Array'
+1000ed6c	 Base Class Descriptor at (
+1000ed88	 Type Descriptor'
+1000ed9c	`local static thread guard'
+1000edb8	`managed vector copy constructor iterator'
+1000ede4	`vector vbase copy constructor iterator'
+1000ee10	`vector copy constructor iterator'
+1000ee34	`dynamic atexit destructor for '
+1000ee58	`dynamic initializer for '
+1000ee74	`eh vector vbase copy constructor iterator'
+1000eea0	`eh vector copy constructor iterator'
+1000eec8	`managed vector destructor iterator'
+1000eef0	`managed vector constructor iterator'
+1000ef18	`placement delete[] closure'
+1000ef38	`placement delete closure'
+1000ef54	`omni callsig'
+1000ef64	 delete[]
+1000ef70	 new[]
+1000ef78	`local vftable constructor closure'
+1000ef9c	`local vftable'
+1000efac	`RTTI
+1000efb8	`udt returning'
+1000efc8	`copy constructor closure'
+1000efe4	`eh vector vbase constructor iterator'
+1000f00c	`eh vector destructor iterator'
+1000f02c	`eh vector constructor iterator'
+1000f050	`virtual displacement map'
+1000f06c	`vector vbase constructor iterator'
+1000f090	`vector destructor iterator'
+1000f0b0	`vector constructor iterator'
+1000f0d0	`scalar deleting destructor'
+1000f0f0	`default constructor closure'
+1000f110	`vector deleting destructor'
+1000f130	`vbase destructor'
+1000f144	`string'
+1000f150	`local static guard'
+1000f168	`typeof'
+1000f174	`vcall'
+1000f17c	`vbtable'
+1000f188	`vftable'
+1000f210	operator
+1000f234	 delete
+1000f244	__unaligned
+1000f250	__restrict
+1000f25c	__ptr64
+1000f264	__clrcall
+1000f270	__fastcall
+1000f27c	__thiscall
+1000f288	__stdcall
+1000f294	__pascal
+1000f2a0	__cdecl
+1000f2a8	__based(
+1000fc48	HH:mm:ss
+1000fc54	dddd, MMMM dd, yyyy
+1000fc68	MM/dd/yy
+1000fc7c	December
+1000fc88	November
+1000fc94	October
+1000fc9c	September
+1000fca8	August
+1000fcc0	April
+1000fcc8	March
+1000fcd0	February
+1000fcdc	January
+1000fd14	Saturday
+1000fd20	Friday
+1000fd28	Thursday
+1000fd34	Wednesday
+1000fd40	Tuesday
+1000fd48	Monday
+1000fd50	Sunday
+1000fd74	(null)
+1000fd84	(null)
+1000fe4c	SunMonTueWedThuFriSat
+1000fe64	JanFebMarAprMayJunJulAugSepOctNovDec
+1000fe8c	CONOUT$
+10010a16	GetModuleHandleA
+10010a2a	GetModuleHandleW
+10010a3e	GetProcAddress
+10010a50	GetFileAttributesW
+10010a66	GetVersion
+10010a74	lstrcmpW
+10010a80	SetEnvironmentVariableW
+10010a9a	GetEnvironmentVariableW
+10010ab4	LoadLibraryW
+10010ac4	GetLastError
+10010ad4	SetLastError
+10010ae4	GetModuleFileNameW
+10010afa	OutputDebugStringA
+10010b10	LockResource
+10010b20	LoadResource
+10010b30	FindResourceW
+10010b40	FreeLibrary
+10010b4e	MultiByteToWideChar
+10010b64	WideCharToMultiByte
+10010b7a	lstrlenW
+10010b86	GlobalFree
+10010b94	GlobalUnlock
+10010ba4	GlobalReAlloc
+10010bb4	lstrcpyW
+10010bc0	GlobalLock
+10010bce	GlobalAlloc
+10010bda	KERNEL32.dll
+10010bea	RegCloseKey
+10010bf8	RegQueryValueExW
+10010c0c	RegEnumValueW
+10010c1c	RegOpenKeyExW
+10010c2c	RegSetValueExW
+10010c3e	RegFlushKey
+10010c4c	RegDeleteValueW
+10010c5e	RegCreateKeyExW
+10010c6e	ADVAPI32.dll
+10010c7e	HeapFree
+10010c8a	HeapAlloc
+10010c96	RtlUnwind
+10010ca2	GetCurrentThreadId
+10010cb8	GetCommandLineA
+10010cca	GetVersionExA
+10010cda	GetProcessHeap
+10010cec	HeapReAlloc
+10010cfa	HeapDestroy
+10010d08	HeapCreate
+10010d16	VirtualFree
+10010d24	DeleteCriticalSection
+10010d3c	LeaveCriticalSection
+10010d54	EnterCriticalSection
+10010d6c	VirtualAlloc
+10010d7c	TerminateProcess
+10010d90	GetCurrentProcess
+10010da4	UnhandledExceptionFilter
+10010dc0	SetUnhandledExceptionFilter
+10010dde	IsDebuggerPresent
+10010df2	ExitProcess
+10010e00	WriteFile
+10010e0c	GetStdHandle
+10010e1c	GetModuleFileNameA
+10010e32	TlsGetValue
+10010e40	TlsAlloc
+10010e4c	TlsSetValue
+10010e5a	TlsFree
+10010e64	InterlockedIncrement
+10010e7c	InterlockedDecrement
+10010e94	Sleep
+10010e9c	SetHandleCount
+10010eae	GetFileType
+10010ebc	GetStartupInfoA
+10010ece	FreeEnvironmentStringsA
+10010ee8	GetEnvironmentStrings
+10010f00	FreeEnvironmentStringsW
+10010f1a	GetEnvironmentStringsW
+10010f34	QueryPerformanceCounter
+10010f4e	GetTickCount
+10010f5e	GetCurrentProcessId
+10010f74	GetSystemTimeAsFileTime
+10010f8e	HeapSize
+10010f9a	GetCPInfo
+10010fa6	GetACP
+10010fb0	GetOEMCP
+10010fbc	IsValidCodePage
+10010fce	RaiseException
+10010fe0	InitializeCriticalSection
+10010ffc	LoadLibraryA
+1001100c	LCMapStringA
+1001101c	LCMapStringW
+1001102c	GetStringTypeA
+1001103e	GetStringTypeW
+10011050	GetLocaleInfoA
+10011062	SetFilePointer
+10011074	GetConsoleCP
+10011084	GetConsoleMode
+10011096	SetStdHandle
+100110a6	WriteConsoleA
+100110b6	GetConsoleOutputCP
+100110cc	WriteConsoleW
+100110dc	CreateFileA
+100110ea	CloseHandle
+100110f8	FlushFileBuffers
+10011142	CISDS.dll
+1001114c	DS_Entry
+10012014	.?AVAssociation@@
+10012030	.?AVAssociationSet@@
+10012050	.?AVbad_alloc@std@@
+1001208c	.?AVtype_info@@
+100120a8	.?AVexception@std@@
+10012424	.?AVbad_exception@std@@
+1001267e	abcdefghijklmnopqrstuvwxyz
+1001269e	ABCDEFGHIJKLMNOPQRSTUVWXYZ
+10012889	abcdefghijklmnopqrstuvwxyz
+100128a9	ABCDEFGHIJKLMNOPQRSTUVWXYZ
+10016478	GroupIcon
+100164ee	StringFileInfo
+10016512	040904b0
+1001652a	CompanyName
+10016544	CANON INC.
+10016562	FileDescription
+10016584	ScanGear TWAIN Data Source
+100165c2	FileVersion
+100165dc	14.0.7.47
+100165f6	InternalName
+10016610	CISDS
+10016622	LegalCopyright
+10016640	Copyright CANON INC. 2008 All Rights Reserved
+100166a2	OriginalFilename
+100166c4	CISDS.DS
+100166de	ProductName
+100166f8	ScanGear
+10016712	ProductVersion
+10016730	14.0.7.47
+1001674a	VarFileInfo
+1001676a	Translation
+10016788	<assembly xmlns="urn:schemas-microsoft-com:asm.v1" manifestVersion="1.0"><dependency><dependentAssembly><assemblyIdentity type="win32" name="Microsoft.Windows.Common-Controls" version="6.0.0.0" processorArchitecture="X86" publicKeyToken="6595b64144ccf1df" language="*"></assemblyIdentity></dependentAssembly></dependency></assembly>PADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPAD
+ffdfff50	00000000-0000-0000-0000-000000000000

@@ -1,0 +1,377 @@
+address	value
+10019218	__Canon_ScanGear_Main__
+100192c4	bad allocation
+10019358	(Code:%X)
+1001936c	Enable
+1001937c	NONSTI
+1001938c	empty
+10019398	PortName
+100193d4	SimpleDriverInterface_Cmd
+10019408	SimpleDriverInterface_Lock
+10019440	Unicows.dll
+1001944c	???.???
+1001946c	Kernel32.dll
+10019488	Kernel32.dll
+10019554	CreateActCtxW
+10019564	ActivateActCtx
+10019574	DeactivateActCtx
+10019588	FindActCtxSectionStringW
+100195a4	QueryActCtxW
+100195b4	Comctl32.dll
+100195d0	GetModuleHandleExW
+100195e4	IsolationAware function called after IsolationAwareCleanup\n
+10019620	DeleteUSD
+1001962c	CreateUSD
+100196f0	SG_Client_ReadSemapho
+1001971c	kernel32
+10019730	IsWow64Process
+100197fc	ScanGear_STI_Terminate_Process
+1001983c	CNBJNPSCAN
+10019854	StiCreateInstance
+10019868	\STI.DLL
+1001987c	StiInterface
+10019898	_SG_IPM_DATA_
+100198b4	SOFTWARE
+10019958	Canon
+10019964	ScanGear
+10019978	Devices
+10019988	GetThreadPreferredUILanguages
+100199a8	kernel32.dll
+100199c4	SGRES_JP.DLL
+100199e0	SGRES_ID.DLL
+100199fc	SGRES_TH.DLL
+10019a18	SGRES_AR.DLL
+10019a34	SGRES_TR.DLL
+10019a50	SGRES_GR.DLL
+10019a6c	SGRES_FI.DLL
+10019a88	SGRES_SE.DLL
+10019aa4	SGRES_NO.DLL
+10019ac0	SGRES_DK.DLL
+10019adc	SGRES_KR.DLL
+10019af8	SGRES_CZ.DLL
+10019b14	SGRES_HU.DLL
+10019b30	SGRES_RU.DLL
+10019b4c	SGRES_PL.DLL
+10019b68	SGRES_NL.DLL
+10019b84	SGRES_PT.DLL
+10019ba0	SGRES_ES.DLL
+10019bbc	SGRES_IT.DLL
+10019bd8	SGRES_DE.DLL
+10019bf4	SGRES_FR.DLL
+10019c10	SGRES_US.DLL
+10019c2c	SGRES_TW.DLL
+10019c48	SGRES_CN.DLL
+10019c64	Language
+10019c78	LangID
+10019c88	\_SETSCN_.INI
+10019ce8	runtime error 
+10019cfc	TLOSS error\r\n
+10019d0c	SING error\r\n
+10019d1c	DOMAIN error\r\n
+10019d30	R6034\r\nAn application has made an attempt to load the C runtime library incorrectly.\nPlease contact the application's support team for more information.\r\n
+10019dd0	R6033\r\n- Attempt to use MSIL code from this assembly during native code initialization\nThis indicates a bug in your application. It is most likely the result of calling an MSIL-compiled (/clr) function from a native constructor or from DllMain.\r\n
+10019ec8	R6032\r\n- not enough space for locale information\r\n
+10019f00	R6031\r\n- Attempt to initialize the CRT more than once.\nThis indicates a bug in your application.\r\n
+10019f64	R6030\r\n- CRT not initialized\r\n
+10019f84	R6028\r\n- unable to initialize heap\r\n
+10019fac	R6027\r\n- not enough space for lowio initialization\r\n
+10019fe4	R6026\r\n- not enough space for stdio initialization\r\n
+1001a01c	R6025\r\n- pure virtual function call\r\n
+1001a044	R6024\r\n- not enough space for _onexit/atexit table\r\n
+1001a07c	R6019\r\n- unable to open console device\r\n
+1001a0a8	R6018\r\n- unexpected heap error\r\n
+1001a0cc	R6017\r\n- unexpected multithread lock error\r\n
+1001a0fc	R6016\r\n- not enough space for thread data\r\n
+1001a128	\r\nThis application has requested the Runtime to terminate it in an unusual way.\nPlease contact the application's support team for more information.\r\n
+1001a1c0	R6009\r\n- not enough space for environment\r\n
+1001a1ec	R6008\r\n- not enough space for arguments\r\n
+1001a218	R6002\r\n- floating point support not loaded\r\n
+1001a248	Microsoft Visual C++ Runtime Library
+1001a278	<program name unknown>
+1001a290	Runtime Error!\n\nProgram: 
+1001a2ac	.mixcrt
+1001a2b4	EncodePointer
+1001a2c4	KERNEL32.DLL
+1001a2d4	DecodePointer
+1001a2e4	FlsFree
+1001a2ec	FlsSetValue
+1001a2f8	FlsGetValue
+1001a304	FlsAlloc
+1001a328	bad exception
+1001a344	Unknown exception
+1001a358	CorExitProcess
+1001a368	mscoree.dll
+1001a414	UTF-16LE
+1001a428	UNICODE
+1001a448	(null)
+1001a50c	e+000
+1001a526	GAIsProcessorFeaturePresent
+1001a544	KERNEL32
+1001a550	 Complete Object Locator'
+1001a56c	 Class Hierarchy Descriptor'
+1001a58c	 Base Class Array'
+1001a5a0	 Base Class Descriptor at (
+1001a5bc	 Type Descriptor'
+1001a5d0	`local static thread guard'
+1001a5ec	`managed vector copy constructor iterator'
+1001a618	`vector vbase copy constructor iterator'
+1001a644	`vector copy constructor iterator'
+1001a668	`dynamic atexit destructor for '
+1001a68c	`dynamic initializer for '
+1001a6a8	`eh vector vbase copy constructor iterator'
+1001a6d4	`eh vector copy constructor iterator'
+1001a6fc	`managed vector destructor iterator'
+1001a724	`managed vector constructor iterator'
+1001a74c	`placement delete[] closure'
+1001a76c	`placement delete closure'
+1001a788	`omni callsig'
+1001a798	 delete[]
+1001a7a4	 new[]
+1001a7ac	`local vftable constructor closure'
+1001a7d0	`local vftable'
+1001a7e0	`RTTI
+1001a7ec	`udt returning'
+1001a7fc	`copy constructor closure'
+1001a818	`eh vector vbase constructor iterator'
+1001a840	`eh vector destructor iterator'
+1001a860	`eh vector constructor iterator'
+1001a884	`virtual displacement map'
+1001a8a0	`vector vbase constructor iterator'
+1001a8c4	`vector destructor iterator'
+1001a8e4	`vector constructor iterator'
+1001a904	`scalar deleting destructor'
+1001a924	`default constructor closure'
+1001a944	`vector deleting destructor'
+1001a964	`vbase destructor'
+1001a978	`string'
+1001a984	`local static guard'
+1001a99c	`typeof'
+1001a9a8	`vcall'
+1001a9b0	`vbtable'
+1001a9bc	`vftable'
+1001aa44	operator
+1001aa68	 delete
+1001aa78	__unaligned
+1001aa84	__restrict
+1001aa90	__ptr64
+1001aa98	__clrcall
+1001aaa4	__fastcall
+1001aab0	__thiscall
+1001aabc	__stdcall
+1001aac8	__pascal
+1001aad4	__cdecl
+1001aadc	__based(
+1001ac68	GetProcessWindowStation
+1001ac80	GetUserObjectInformationA
+1001ac9c	GetLastActivePopup
+1001acb0	GetActiveWindow
+1001acc0	MessageBoxA
+1001accc	USER32.DLL
+1001acd8	InitializeCriticalSectionAndSpinCount
+1001ad00	kernel32.dll
+1001b520	HH:mm:ss
+1001b52c	dddd, MMMM dd, yyyy
+1001b540	MM/dd/yy
+1001b554	December
+1001b560	November
+1001b56c	October
+1001b574	September
+1001b580	August
+1001b598	April
+1001b5a0	March
+1001b5a8	February
+1001b5b4	January
+1001b5ec	Saturday
+1001b5f8	Friday
+1001b600	Thursday
+1001b60c	Wednesday
+1001b618	Tuesday
+1001b620	Monday
+1001b628	Sunday
+1001b64c	SunMonTueWedThuFriSat
+1001b664	JanFebMarAprMayJunJulAugSepOctNovDec
+1001b68c	CONOUT$
+1001b694	1#QNAN
+1001b69c	1#INF
+1001b6a4	1#IND
+1001b6ac	1#SNAN
+1001c95a	IsBadCodePtr
+1001c96a	EnterCriticalSection
+1001c982	LeaveCriticalSection
+1001c99a	InitializeCriticalSection
+1001c9b6	DeleteCriticalSection
+1001c9ce	IsBadWritePtr
+1001c9de	FormatMessageW
+1001c9f0	lstrcpyW
+1001c9fc	lstrlenW
+1001ca08	LocalFree
+1001ca14	GetLastError
+1001ca24	FreeLibrary
+1001ca32	CreateSemaphoreW
+1001ca46	CloseHandle
+1001ca54	ReleaseSemaphore
+1001ca68	WaitForSingleObject
+1001ca7e	GetModuleHandleA
+1001ca92	GetModuleHandleW
+1001caa6	GetProcAddress
+1001cab8	GetFileAttributesW
+1001cace	GetVersion
+1001cadc	InitializeCriticalSectionAndSpinCount
+1001cb04	Sleep
+1001cb0c	LoadLibraryW
+1001cb1c	SetLastError
+1001cb2c	GetModuleFileNameW
+1001cb42	OutputDebugStringA
+1001cb58	GetCurrentProcess
+1001cb6c	SetEvent
+1001cb78	GetCurrentThreadId
+1001cb8e	ResetEvent
+1001cb9c	CreateEventW
+1001cbac	GetSystemDirectoryW
+1001cbc2	UnmapViewOfFile
+1001cbd4	MapViewOfFile
+1001cbe4	OpenFileMappingW
+1001cbf8	GlobalFree
+1001cc06	GlobalUnlock
+1001cc16	GlobalReAlloc
+1001cc26	GlobalLock
+1001cc34	GlobalAlloc
+1001cc42	GetSystemDefaultLangID
+1001cc5c	GetUserDefaultLangID
+1001cc74	GetPrivateProfileStringW
+1001cc90	MultiByteToWideChar
+1001cca6	WideCharToMultiByte
+1001ccba	KERNEL32.dll
+1001ccca	LoadStringW
+1001ccd6	USER32.dll
+1001cce4	RegCloseKey
+1001ccf2	RegQueryValueExW
+1001cd06	RegEnumValueW
+1001cd16	RegOpenKeyExW
+1001cd26	RegSetValueExW
+1001cd38	RegFlushKey
+1001cd46	RegDeleteValueW
+1001cd58	RegCreateKeyExW
+1001cd68	ADVAPI32.dll
+1001cd78	RtlUnwind
+1001cd84	RaiseException
+1001cd96	HeapFree
+1001cda2	HeapAlloc
+1001cdae	ExitThread
+1001cdbc	CreateThread
+1001cdcc	GetCommandLineA
+1001cdde	GetVersionExA
+1001cdee	GetProcessHeap
+1001ce00	HeapReAlloc
+1001ce0e	UnhandledExceptionFilter
+1001ce2a	SetUnhandledExceptionFilter
+1001ce48	WriteFile
+1001ce54	GetStdHandle
+1001ce64	GetModuleFileNameA
+1001ce7a	TlsGetValue
+1001ce88	TlsAlloc
+1001ce94	TlsSetValue
+1001cea2	TlsFree
+1001ceac	InterlockedIncrement
+1001cec4	InterlockedDecrement
+1001cedc	TerminateProcess
+1001cef0	IsDebuggerPresent
+1001cf04	HeapSize
+1001cf10	ExitProcess
+1001cf1e	GetCPInfo
+1001cf2a	GetACP
+1001cf34	GetOEMCP
+1001cf40	IsValidCodePage
+1001cf52	HeapDestroy
+1001cf60	HeapCreate
+1001cf6e	VirtualFree
+1001cf7c	VirtualAlloc
+1001cf8c	SetHandleCount
+1001cf9e	GetFileType
+1001cfac	GetStartupInfoA
+1001cfbe	FreeEnvironmentStringsA
+1001cfd8	GetEnvironmentStrings
+1001cff0	FreeEnvironmentStringsW
+1001d00a	GetEnvironmentStringsW
+1001d024	QueryPerformanceCounter
+1001d03e	GetTickCount
+1001d04e	GetCurrentProcessId
+1001d064	GetSystemTimeAsFileTime
+1001d07e	GetConsoleCP
+1001d08e	GetConsoleMode
+1001d0a0	LoadLibraryA
+1001d0b0	GetLocaleInfoA
+1001d0c2	LCMapStringA
+1001d0d2	LCMapStringW
+1001d0e2	GetStringTypeA
+1001d0f4	GetStringTypeW
+1001d106	SetFilePointer
+1001d118	SetStdHandle
+1001d128	FlushFileBuffers
+1001d13c	WriteConsoleA
+1001d14c	GetConsoleOutputCP
+1001d162	WriteConsoleW
+1001d172	CreateFileA
+1001d28e	SCANINTF.dll
+1001d29b	??0ScannerInterface@@QAE@PB_WP6AHHK@Z@Z
+1001d2c3	??1ScannerInterface@@QAE@XZ
+1001d2df	??4ScannerInterface@@QAEAAV0@ABV0@@Z
+1001d304	?Close@ScannerInterface@@QAEKXZ
+1001d324	?DeviceIsBusy@ScannerInterface@@IAEHXZ
+1001d34b	?DeviceIsClosed@ScannerInterface@@IAEHXZ
+1001d374	?DeviceIsOpen@ScannerInterface@@IAEHXZ
+1001d39b	?GetCapability@ScannerInterface@@QAEKKPAHPAPAX@Z
+1001d3cc	?GetCapabilityCurrentValue@ScannerInterface@@IAEKK@Z
+1001d401	?GetCapabilityFlags@ScannerInterface@@QAEKKPAK@Z
+1001d432	?GetCapabilityList@ScannerInterface@@QAEKPAPAKPAK@Z
+1001d466	?GetCapabilityUnits@ScannerInterface@@QAEKK@Z
+1001d494	?GetCapabilityValue@ScannerInterface@@QAEKKPAK@Z
+1001d4c5	?GetDeviceID@ScannerInterface@@QAEKXZ
+1001d4eb	?GetDeviceName@ScannerInterface@@QAEKPADPAH@Z
+1001d519	?GetKeyName@ScannerInterface@@QAEPB_WXZ
+1001d541	?GetLastErrorInfo@ScannerInterface@@QAEKPAUDrvErrorInfo@@@Z
+1001d57d	?Get_Client@ScannerInterface@@QAEPAXXZ
+1001d5a4	?InitCapabilityTable@ScannerInterface@@IAEKXZ
+1001d5d2	?IsFilmUnitAttached@ScannerInterface@@QAEHXZ
+1001d5ff	?Open@ScannerInterface@@QAEKXZ
+1001d61e	?SetCapability@ScannerInterface@@QAEKKK@Z
+1001d648	?SetDeviceOpen@ScannerInterface@@IAEXH@Z
+1001e010	.?AVBaseUSD@@
+1001e990	.?AVD241UUSD@@
+1001e9a8	.?AVUsbD241U_STIDeviceInterface@@
+1001e9d4	.?AVbad_alloc@std@@
+1001ee44	.?AVSimpleDriverInterface@@
+1001ee74	.?AVSG_NonStiClient@@
+1001ee94	.?AVSG_Client@@
+1001eeb4	.?AVSG_StiClient@@
+1001eee4	.?AVAssociation@@
+1001ef00	.?AVAssociationSet@@
+1001ef28	.?AVtype_info@@
+1001ef4c	.?AVexception@std@@
+1001f1c4	.?AVbad_exception@std@@
+1001f346	abcdefghijklmnopqrstuvwxyz
+1001f366	ABCDEFGHIJKLMNOPQRSTUVWXYZ
+1001f551	abcdefghijklmnopqrstuvwxyz
+1001f571	ABCDEFGHIJKLMNOPQRSTUVWXYZ
+10023102	StringFileInfo
+10023126	040904b0
+1002313e	CompanyName
+10023158	CANON INC.
+10023176	FileDescription
+10023198	ScanGear Scanner Interface
+100231d6	FileVersion
+100231f0	14.0.7.47
+1002320a	InternalName
+10023224	SCANINTF
+1002323e	LegalCopyright
+1002325c	Copyright CANON INC. 2008 All Rights Reserved
+100232be	OriginalFilename
+100232e0	SCANINTF.DLL
+10023302	ProductName
+1002331c	ScanGear
+10023336	ProductVersion
+10023354	14.0.7.47
+1002336e	VarFileInfo
+1002338e	Translation
+100233ac	<assembly xmlns="urn:schemas-microsoft-com:asm.v1" manifestVersion="1.0"><dependency><dependentAssembly><assemblyIdentity type="win32" name="Microsoft.Windows.Common-Controls" version="6.0.0.0" processorArchitecture="X86" publicKeyToken="6595b64144ccf1df" language="*"></assemblyIdentity></dependentAssembly></dependency></assembly>PADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGX
+ffdfff50	00000000-0000-0000-0000-000000000000

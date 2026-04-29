@@ -7,8 +7,10 @@ typedef struct preview03_readiness_result
 {
     int seen_4422_0e55;
     int seen_4522_7855;
+    int seen_generic_ready;
     unsigned int seen_4422_iteration;
     unsigned int seen_4522_iteration;
+    unsigned int seen_generic_iteration;
     char last_4222[32];
     char last_4322[32];
     char last_4422[32];

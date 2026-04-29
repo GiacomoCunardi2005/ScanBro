@@ -1,0 +1,289 @@
+address	value
+1000f1c8	sRGB Color Space Profile.icm
+1000f24c	ColorGear
+1000f260	ProductId
+1000f278	\*.*
+1000f284	%s\%s
+1000f320	empty
+1000f32c	Software
+1000f340	option
+1000f350	Canon
+1000f364	Devices
+1000f37c	(null)
+1000f394	Invalid parameter passed to C runtime function.\n
+1000f3d8	bad exception
+1000f3e8	EncodePointer
+1000f3f8	KERNEL32.DLL
+1000f408	DecodePointer
+1000f418	FlsFree
+1000f420	FlsSetValue
+1000f42c	FlsGetValue
+1000f438	FlsAlloc
+1000f44c	CorExitProcess
+1000f45c	mscoree.dll
+1000f468	runtime error 
+1000f47c	TLOSS error\r\n
+1000f48c	SING error\r\n
+1000f49c	DOMAIN error\r\n
+1000f4b0	R6034\r\nAn application has made an attempt to load the C runtime library incorrectly.\nPlease contact the application's support team for more information.\r\n
+1000f550	R6033\r\n- Attempt to use MSIL code from this assembly during native code initialization\nThis indicates a bug in your application. It is most likely the result of calling an MSIL-compiled (/clr) function from a native constructor or from DllMain.\r\n
+1000f648	R6032\r\n- not enough space for locale information\r\n
+1000f680	R6031\r\n- Attempt to initialize the CRT more than once.\nThis indicates a bug in your application.\r\n
+1000f6e4	R6030\r\n- CRT not initialized\r\n
+1000f704	R6028\r\n- unable to initialize heap\r\n
+1000f72c	R6027\r\n- not enough space for lowio initialization\r\n
+1000f764	R6026\r\n- not enough space for stdio initialization\r\n
+1000f79c	R6025\r\n- pure virtual function call\r\n
+1000f7c4	R6024\r\n- not enough space for _onexit/atexit table\r\n
+1000f7fc	R6019\r\n- unable to open console device\r\n
+1000f828	R6018\r\n- unexpected heap error\r\n
+1000f84c	R6017\r\n- unexpected multithread lock error\r\n
+1000f87c	R6016\r\n- not enough space for thread data\r\n
+1000f8a8	\r\nThis application has requested the Runtime to terminate it in an unusual way.\nPlease contact the application's support team for more information.\r\n
+1000f940	R6009\r\n- not enough space for environment\r\n
+1000f96c	R6008\r\n- not enough space for arguments\r\n
+1000f998	R6002\r\n- floating point support not loaded\r\n
+1000f9c8	Microsoft Visual C++ Runtime Library
+1000f9f4	<program name unknown>
+1000fa0c	Runtime Error!\n\nProgram: 
+1000fa28	 Complete Object Locator'
+1000fa44	 Class Hierarchy Descriptor'
+1000fa64	 Base Class Array'
+1000fa78	 Base Class Descriptor at (
+1000fa94	 Type Descriptor'
+1000faa8	`local static thread guard'
+1000fac4	`managed vector copy constructor iterator'
+1000faf0	`vector vbase copy constructor iterator'
+1000fb1c	`vector copy constructor iterator'
+1000fb40	`dynamic atexit destructor for '
+1000fb64	`dynamic initializer for '
+1000fb80	`eh vector vbase copy constructor iterator'
+1000fbac	`eh vector copy constructor iterator'
+1000fbd4	`managed vector destructor iterator'
+1000fbfc	`managed vector constructor iterator'
+1000fc24	`placement delete[] closure'
+1000fc44	`placement delete closure'
+1000fc60	`omni callsig'
+1000fc70	 delete[]
+1000fc7c	 new[]
+1000fc84	`local vftable constructor closure'
+1000fca8	`local vftable'
+1000fcb8	`RTTI
+1000fcc4	`udt returning'
+1000fcd4	`copy constructor closure'
+1000fcf0	`eh vector vbase constructor iterator'
+1000fd18	`eh vector destructor iterator'
+1000fd38	`eh vector constructor iterator'
+1000fd5c	`virtual displacement map'
+1000fd78	`vector vbase constructor iterator'
+1000fd9c	`vector destructor iterator'
+1000fdbc	`vector constructor iterator'
+1000fddc	`scalar deleting destructor'
+1000fdfc	`default constructor closure'
+1000fe1c	`vector deleting destructor'
+1000fe3c	`vbase destructor'
+1000fe50	`string'
+1000fe5c	`local static guard'
+1000fe74	`typeof'
+1000fe80	`vcall'
+1000fe88	`vbtable'
+1000fe94	`vftable'
+1000ff1c	operator
+1000ff44	 delete
+1000ff54	__unaligned
+1000ff60	__restrict
+1000ff6c	__ptr64
+1000ff74	__clrcall
+1000ff80	__fastcall
+1000ff8c	__thiscall
+1000ff98	__stdcall
+1000ffa4	__pascal
+1000ffb0	__cdecl
+1000ffb8	__based(
+1001022c	Unknown exception
+10010260	InitializeCriticalSectionAndSpinCount
+10010288	kernel32.dll
+100102a4	GetProcessWindowStation
+100102bc	GetUserObjectInformationA
+100102d8	GetLastActivePopup
+100102ec	GetActiveWindow
+100102fc	MessageBoxA
+10010308	USER32.DLL
+10010b20	HH:mm:ss
+10010b2c	dddd, MMMM dd, yyyy
+10010b40	MM/dd/yy
+10010b54	December
+10010b60	November
+10010b6c	October
+10010b74	September
+10010b80	August
+10010b98	April
+10010ba0	March
+10010ba8	February
+10010bb4	January
+10010bec	Saturday
+10010bf8	Friday
+10010c00	Thursday
+10010c0c	Wednesday
+10010c18	Tuesday
+10010c20	Monday
+10010c28	Sunday
+10010c4c	CONOUT$
+10010c54	SetThreadStackGuarantee
+10010c6c	SunMonTueWedThuFriSat
+10010c84	JanFebMarAprMayJunJulAugSepOctNovDec
+1001169a	DeleteColorTransform
+100116b2	TranslateColors
+100116c4	GetColorDirectoryW
+100116da	EnumColorProfilesW
+100116f0	CloseColorProfile
+10011704	GetColorProfileHeader
+1001171c	OpenColorProfileW
+10011730	IsColorProfileValid
+10011746	CreateColorTransformW
+1001175c	mscms.dll
+10011768	WideCharToMultiByte
+1001177e	FindClose
+1001178a	FindNextFileW
+1001179a	FindFirstFileW
+100117ac	GlobalFree
+100117ba	GlobalHandle
+100117ca	GlobalAlloc
+100117d8	lstrlenW
+100117e4	SetLastError
+100117f4	lstrcmpW
+10011800	GetVersion
+1001180c	KERNEL32.dll
+1001181c	RegCloseKey
+1001182a	RegQueryValueExW
+1001183e	RegEnumValueW
+1001184e	RegOpenKeyExW
+1001185e	RegSetValueExW
+10011870	RegFlushKey
+1001187e	RegDeleteValueW
+10011890	RegCreateKeyExW
+100118a0	ADVAPI32.dll
+100118b0	RaiseException
+100118c2	RtlUnwind
+100118ce	HeapAlloc
+100118da	GetLastError
+100118ea	HeapFree
+100118f6	GetCommandLineA
+10011908	GetVersionExA
+10011918	HeapReAlloc
+10011926	OutputDebugStringA
+1001193c	GetProcAddress
+1001194e	GetModuleHandleA
+10011962	TlsGetValue
+10011970	TlsAlloc
+1001197c	TlsSetValue
+1001198a	TlsFree
+10011994	InterlockedIncrement
+100119ac	InterlockedDecrement
+100119c4	GetCurrentThreadId
+100119da	TerminateProcess
+100119ee	GetCurrentProcess
+10011a02	UnhandledExceptionFilter
+10011a1e	SetUnhandledExceptionFilter
+10011a3c	DeleteCriticalSection
+10011a54	LeaveCriticalSection
+10011a6c	EnterCriticalSection
+10011a84	VirtualFree
+10011a92	VirtualAlloc
+10011aa2	HeapDestroy
+10011ab0	HeapCreate
+10011abe	ExitProcess
+10011acc	WriteFile
+10011ad8	GetStdHandle
+10011ae8	GetModuleFileNameA
+10011afe	SetHandleCount
+10011b10	GetFileType
+10011b1e	GetStartupInfoA
+10011b30	FreeEnvironmentStringsA
+10011b4a	GetEnvironmentStrings
+10011b62	FreeEnvironmentStringsW
+10011b7c	GetEnvironmentStringsW
+10011b96	QueryPerformanceCounter
+10011bb0	GetTickCount
+10011bc0	GetCurrentProcessId
+10011bd6	GetSystemTimeAsFileTime
+10011bf0	SetFilePointer
+10011c02	GetConsoleCP
+10011c12	GetConsoleMode
+10011c24	GetCPInfo
+10011c30	GetACP
+10011c3a	GetOEMCP
+10011c46	MultiByteToWideChar
+10011c5c	Sleep
+10011c64	InitializeCriticalSection
+10011c80	GetModuleHandleW
+10011c94	LoadLibraryA
+10011ca4	SetStdHandle
+10011cb4	WriteConsoleA
+10011cc4	GetConsoleOutputCP
+10011cda	WriteConsoleW
+10011cea	LCMapStringA
+10011cfa	LCMapStringW
+10011d0a	GetStringTypeA
+10011d1c	GetStringTypeW
+10011d2e	GetLocaleInfoA
+10011d40	CreateFileA
+10011d4e	CloseHandle
+10011d5c	FlushFileBuffers
+10011d70	VirtualProtect
+10011d82	GetSystemInfo
+10011d92	VirtualQuery
+10011e90	CNx2008I.dll
+10011e9d	??0CICMFunction@@QAE@ABV0@@Z
+10011eba	??0CICMFunction@@QAE@XZ
+10011ed2	??0CSImageEnhance@@QAE@ABV0@@Z
+10011ef1	??0CSImageEnhance@@QAE@XZ
+10011f0b	??0CS_ImageEnhance@@QAE@ABV0@@Z
+10011f2b	??0CS_ImageEnhance@@QAE@XZ
+10011f46	??1CICMFunction@@UAE@XZ
+10011f5e	??1CSImageEnhance@@UAE@XZ
+10011f78	??1CS_ImageEnhance@@UAE@XZ
+10011f93	??4CICMFunction@@QAEAAV0@ABV0@@Z
+10011fb4	??4CSImageEnhance@@QAEAAV0@ABV0@@Z
+10011fd7	??4CS_ImageEnhance@@QAEAAV0@ABV0@@Z
+10011ffb	??_7CICMFunction@@6B@
+10012011	??_7CSImageEnhance@@6B@
+10012029	??_7CS_ImageEnhance@@6B@
+10012042	?Scale@CS_ImageEnhance@@UAEJPAVCS_ImageData@@KK@Z
+10012074	CreateICMObj
+10012081	CreateImgEnhObj
+10012091	DeleteICMObj
+1001209e	DeleteImgEnhObj
+10013008	.?AVCICMFunction@@
+10013024	.?AVCICMFunc@@
+1001303c	.?AVCSImageEnhance@@
+1001305c	.?AVCS_ImageEnhance@@
+1001307c	.?AVAssociation@@
+10013098	.?AVAssociationSet@@
+10013240	.?AVbad_exception@std@@
+10013260	.?AVexception@@
+100138ee	abcdefghijklmnopqrstuvwxyz
+1001390e	ABCDEFGHIJKLMNOPQRSTUVWXYZ
+10013af9	abcdefghijklmnopqrstuvwxyz
+10013b19	ABCDEFGHIJKLMNOPQRSTUVWXYZ
+100160c2	StringFileInfo
+100160e6	040904b0
+100160fe	CompanyName
+10016118	CANON INC.
+10016136	FileDescription
+10016158	WIA Scanner Driver Image Enhancement dll
+100161b2	FileVersion
+100161cc	1, 1, 3, 0
+100161ea	InternalName
+10016204	CNx2008I
+1001621e	LegalCopyright
+1001623c	Copyright CANON INC. 2008 All Rights Reserved
+1001629e	OriginalFilename
+100162c0	CNx2008I.dll
+100162e2	ProductName
+100162fc	WIA Scanner Driver
+1001632a	ProductVersion
+10016348	1, 2, 0, 0
+10016366	VarFileInfo
+10016386	Translation
+ffdfff50	00000000-0000-0000-0000-000000000000

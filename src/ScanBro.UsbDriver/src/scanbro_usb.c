@@ -9,10 +9,12 @@
 
 #if defined(_WIN32)
 #include <direct.h>
+#include <windows.h>
 #define SB_USB_MKDIR(path) _mkdir(path)
 #else
 #include <sys/stat.h>
 #include <sys/types.h>
+#include <unistd.h>
 #define SB_USB_MKDIR(path) mkdir(path, 0777)
 #endif
 
@@ -23,6 +25,15 @@ static FILE *g_sb_usb_history_log_file = NULL;
 static char g_sb_usb_history_log_path[256] = {0};
 static int g_sb_usb_log_session_started = 0;
 static int g_sb_usb_log_atexit_registered = 0;
+
+static void sb_usb_sleep_ms(unsigned int milliseconds)
+{
+#if defined(_WIN32)
+    Sleep(milliseconds);
+#else
+    usleep((useconds_t)(milliseconds * 1000U));
+#endif
+}
 
 static void sb_usb_build_history_log_path(char *out_path, size_t out_path_size)
 {
@@ -392,20 +403,42 @@ static int sb_usb_control_transfer(
         sb_usb_hex_dump(out_payload_label, buffer, buffer_size);
     }
 
-    status = libusb_control_transfer(
-        handle,
-        bm_request_type,
-        request,
-        value,
-        index,
-        buffer,
-        buffer_size,
-        timeout_ms);
-
-    if (status < 0)
     {
-        sb_usb_log_libusb_error(operation, status);
-        return status;
+        const int max_attempts = 3;
+        int attempt;
+
+        status = LIBUSB_ERROR_OTHER;
+        for (attempt = 1; attempt <= max_attempts; ++attempt)
+        {
+            status = libusb_control_transfer(
+                handle,
+                bm_request_type,
+                request,
+                value,
+                index,
+                buffer,
+                buffer_size,
+                timeout_ms);
+
+            if (status >= 0)
+            {
+                break;
+            }
+
+            if (status != LIBUSB_ERROR_TIMEOUT || attempt == max_attempts)
+            {
+                sb_usb_log_libusb_error(operation, status);
+                return status;
+            }
+
+            fprintf(
+                stderr,
+                "[scanbro-usb] %s timeout; retrying (%d/%d)\n",
+                operation,
+                attempt,
+                max_attempts - 1);
+            sb_usb_sleep_ms(50U);
+        }
     }
 
     printf(

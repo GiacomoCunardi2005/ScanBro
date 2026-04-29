@@ -1,0 +1,22 @@
+Enumerating USB devices...
+Device bus=2 addr=46 vid:pid=05ac:0250 class=00 subclass=00 proto=00 configs=1
+Device bus=2 addr=45 vid:pid=1a40:0101 class=09 subclass=00 proto=01 configs=1
+Device bus=2 addr=0 vid:pid=8086:7e7d class=09 subclass=00 proto=03 configs=1
+Device bus=2 addr=26 vid:pid=8087:0033 class=e0 subclass=01 proto=01 configs=1
+Device bus=2 addr=38 vid:pid=17ef:a392 class=09 subclass=00 proto=02 configs=1
+Device bus=2 addr=41 vid:pid=17ef:a395 class=09 subclass=00 proto=01 configs=1
+Device bus=2 addr=49 vid:pid=1bcf:2701 class=ef subclass=02 proto=01 configs=1
+Device bus=2 addr=47 vid:pid=03f0:2341 class=00 subclass=00 proto=00 configs=1
+Device bus=2 addr=1 vid:pid=5986:2169 class=ef subclass=02 proto=01 configs=1
+Device bus=2 addr=2 vid:pid=04f3:0c8c class=00 subclass=00 proto=00 configs=1
+Device bus=1 addr=21 vid:pid=17ef:a391 class=09 subclass=00 proto=03 configs=1
+Device bus=2 addr=39 vid:pid=046d:c24f class=00 subclass=00 proto=00 configs=1
+Device bus=1 addr=22 vid:pid=17ef:a387 class=00 subclass=00 proto=00 configs=2
+Device bus=2 addr=51 vid:pid=17ef:a38f class=00 subclass=00 proto=00 configs=1
+Device bus=1 addr=23 vid:pid=17ef:a393 class=09 subclass=00 proto=03 configs=1
+Device bus=1 addr=0 vid:pid=8086:7ec0 class=09 subclass=00 proto=03 configs=1
+Device bus=2 addr=50 vid:pid=1038:12ad class=00 subclass=00 proto=00 configs=1
+Device bus=2 addr=44 vid:pid=17ef:a396 class=00 subclass=00 proto=00 configs=1
+Device bus=2 addr=40 vid:pid=17ef:a394 class=09 subclass=00 proto=02 configs=1
+Target scanner 04a9:1906 not found.
+Check cable/power and verify which Windows driver is currently bound.

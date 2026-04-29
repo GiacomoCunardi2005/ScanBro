@@ -1,8 +1,22 @@
 #include "usb_device.h"
 
 #include <string.h>
+#ifdef _WIN32
+#include <windows.h>
+#else
+#include <unistd.h>
+#endif
 
 #include "device_test_logging.h"
+
+static void usb_device_sleep_ms(unsigned int milliseconds)
+{
+#ifdef _WIN32
+    Sleep(milliseconds);
+#else
+    usleep((useconds_t)milliseconds * 1000U);
+#endif
+}
 
 static const char *endpoint_type_to_text(uint8_t attributes)
 {
@@ -255,9 +269,11 @@ int usb_device_session_open(usb_device_session *session, uint16_t target_vid, ui
         session->target_desc.bDeviceProtocol,
         session->target_desc.bNumConfigurations);
 
-    print_string_descriptor(session->target_handle, session->target_desc.iManufacturer, "Manufacturer");
-    print_string_descriptor(session->target_handle, session->target_desc.iProduct, "Product");
-    print_string_descriptor(session->target_handle, session->target_desc.iSerialNumber, "Serial");
+    /*
+     * Skip optional string-descriptor reads during active debugging:
+     * they are not required for protocol replay and can add extra EP0 traffic
+     * while the device is transitioning to ready state.
+     */
 
     printf("\nConfiguration/interface/endpoint tree:\n");
     session->claim_interface = print_config_and_find_claimable_interface(
@@ -266,37 +282,7 @@ int usb_device_session_open(usb_device_session *session, uint16_t target_vid, ui
 
     if (session->claim_interface >= 0)
     {
-        int kernel_state = libusb_kernel_driver_active(session->target_handle, session->claim_interface);
-
-        printf("\nAttempting interface claim for interface #%d...\n", session->claim_interface);
-        if (kernel_state == 1)
-        {
-            printf("Kernel driver is attached on interface #%d.\n", session->claim_interface);
-        }
-        else if (kernel_state == 0)
-        {
-            printf("No kernel driver attached on interface #%d.\n", session->claim_interface);
-        }
-        else if (kernel_state != LIBUSB_ERROR_NOT_SUPPORTED)
-        {
-            sb_usb_log_libusb_error("libusb_kernel_driver_active", kernel_state);
-        }
-        else
-        {
-            printf("Kernel-driver activity query is not supported on this platform/backend.\n");
-        }
-
-        status = sb_usb_claim_interface(session->target_handle, session->claim_interface);
-        if (status == LIBUSB_SUCCESS)
-        {
-            printf("Interface claim succeeded.\n");
-            sb_usb_release_interface(session->target_handle, session->claim_interface);
-        }
-        else
-        {
-            printf(
-                "Interface claim failed. If status is BUSY/ACCESS, close Canon apps and switch driver state before retrying.\n");
-        }
+        printf("\nClaimable interface detected: #%d\n", session->claim_interface);
     }
     else
     {
@@ -317,6 +303,88 @@ int usb_device_claim_for_active_mode(usb_device_session *session)
 
     status = sb_usb_claim_interface(session->target_handle, session->claim_interface);
     if (status != LIBUSB_SUCCESS)
+    {
+        return 0;
+    }
+
+    return 1;
+}
+
+int usb_device_prepare_active_mode(usb_device_session *session)
+{
+    uint8_t probe_response[2] = {0U, 0U};
+    int status;
+
+    if (session == NULL || session->target_handle == NULL || session->claim_interface < 0)
+    {
+        return 0;
+    }
+
+    status = libusb_set_configuration(session->target_handle, 1);
+    if (status != LIBUSB_SUCCESS && status != LIBUSB_ERROR_BUSY)
+    {
+        sb_usb_log_libusb_error("libusb_set_configuration", status);
+    }
+
+    status = libusb_set_interface_alt_setting(session->target_handle, session->claim_interface, 0);
+    if (status != LIBUSB_SUCCESS)
+    {
+        sb_usb_log_libusb_error("libusb_set_interface_alt_setting", status);
+    }
+
+    status = sb_usb_vendor_control_in(
+        session->target_handle,
+        0x04U,
+        0x008EU,
+        0x0622U,
+        probe_response,
+        (uint16_t)sizeof(probe_response),
+        500U);
+    if (status >= 0)
+    {
+        return 1;
+    }
+
+    fprintf(stderr, "[preview-attempt] active-mode prepare probe failed, waiting and retrying.\n");
+    usb_device_sleep_ms(1200U);
+
+    status = libusb_set_configuration(session->target_handle, 1);
+    if (status != LIBUSB_SUCCESS && status != LIBUSB_ERROR_BUSY)
+    {
+        sb_usb_log_libusb_error("libusb_set_configuration", status);
+    }
+
+    status = libusb_set_interface_alt_setting(session->target_handle, session->claim_interface, 0);
+    if (status != LIBUSB_SUCCESS)
+    {
+        sb_usb_log_libusb_error("libusb_set_interface_alt_setting", status);
+    }
+
+    status = sb_usb_vendor_control_in(
+        session->target_handle,
+        0x04U,
+        0x008EU,
+        0x0622U,
+        probe_response,
+        (uint16_t)sizeof(probe_response),
+        1200U);
+    if (status >= 0)
+    {
+        return 1;
+    }
+
+    fprintf(stderr, "[preview-attempt] active-mode prepare second probe failed, final retry.\n");
+    usb_device_sleep_ms(2000U);
+
+    status = sb_usb_vendor_control_in(
+        session->target_handle,
+        0x04U,
+        0x008EU,
+        0x0622U,
+        probe_response,
+        (uint16_t)sizeof(probe_response),
+        2000U);
+    if (status < 0)
     {
         return 0;
     }

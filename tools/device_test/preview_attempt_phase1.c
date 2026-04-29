@@ -758,25 +758,25 @@ int preview03_run_transition_phase(
         }
 
         {
-            const int reg6c_consume_ready =
-                preview_response_is_two_byte_value(response_6c22, response_6c22_length, 0xF1U, 0x55U) ||
-                preview_response_is_two_byte_value(response_6c22, response_6c22_length, 0xF0U, 0x55U);
+            const int reg6c_status_valid = (response_6c22_length == 2U && response_6c22[1] == 0x55U);
+            const int reg6c_hw_ready =
+                reg6c_status_valid &&
+                ((response_6c22[0] & 0x80U) != 0U);
             const int response_6b22_latched =
                 preview_response_is_two_byte_value(response_6b22, response_6b22_length, 0x87U, 0x55U);
 
             if (!out_result->wrote_6cf0 &&
                 out_result->prepared_6c_gpio10_high &&
                 response_6b22_latched &&
-                reg6c_consume_ready)
+                reg6c_hw_ready)
             {
                 printf(
-                    "[preview-attempt-03][phase-1-transition] iter=%u 6cf0 trigger: gate met (6b22=%s 0122=%s 0d22=%s 6c22=%s seen_f155=%s mode=literal-6cf0)\n",
+                    "[preview-attempt-03][phase-1-transition] iter=%u 6cf0 trigger: gate met (6b22=%s 0122=%s 0d22=%s 6c22=%s mode=ghidra-reg6c-bit7)\n",
                     iteration,
                     out_result->last_6b22,
                     out_result->last_0122,
                     out_result->last_0d22,
-                    out_result->last_6c22,
-                    out_result->seen_6c22_f155 ? "yes" : "no");
+                    out_result->last_6c22);
                 if (!preview_run_phase1_reg6c_gpio10_write(
                         target_handle,
                         state,
@@ -793,11 +793,10 @@ int preview03_run_transition_phase(
             else if (!out_result->wrote_6cf0 &&
                      out_result->prepared_6c_gpio10_high &&
                      response_6b22_latched &&
-                     response_6c22_length == 2U &&
-                     response_6c22[1] == 0x55U)
+                     reg6c_status_valid)
             {
                 printf(
-                    "[preview-attempt-03][phase-1-transition] iter=%u 6cf0 pending: waiting for capture-grounded REG6C consume state (need 6c22=f155/f055, current=%s)\n",
+                    "[preview-attempt-03][phase-1-transition] iter=%u 6cf0 pending: REG6C status valid but not hw-ready (need bit7=1, current=%s)\n",
                     iteration,
                     out_result->last_6c22);
             }
@@ -814,16 +813,12 @@ int preview03_run_transition_phase(
             {
                 preview_state_poll_step post_6cf0_poll_4122;
                 preview_state_poll_step post_6cf0_poll_0122;
-                uint8_t response_0100[8];
                 uint8_t response_4122[8];
                 uint8_t response_0122_post[8];
                 size_t response_4122_length = 0U;
                 size_t response_0122_post_length = 0U;
-                char response_0100_text[32];
                 char response_4122_hex[32];
                 char response_0122_post_hex[32];
-                int status_0100;
-                int response_2647_ok;
                 int response_4122_ready;
                 int response_0122_ready;
 
@@ -835,43 +830,9 @@ int preview03_run_transition_phase(
                 }
 
                 printf(
-                    "[preview-attempt-03][phase-1-transition] iter=%u frame=2647 post-6cf0 capture-window poll attempt=%u\n",
+                    "[preview-attempt-03][phase-1-transition] iter=%u post-6cf0 readiness poll attempt=%u\n",
                     iteration,
                     post_6cf0_window_attempts);
-                memset(response_0100, 0, sizeof(response_0100));
-                status_0100 = sb_usb_vendor_control_in(
-                    target_handle,
-                    0x01U,
-                    0x0000U,
-                    0x0000U,
-                    response_0100,
-                    1U,
-                    kTransferTimeoutMs);
-                if (status_0100 < 0)
-                {
-                    sb_usb_log_libusb_error("post-6cf0 vendor control IN", status_0100);
-                    snprintf(response_0100_text, sizeof(response_0100_text), "<error:%d>", status_0100);
-                    printf(
-                        "[preview-attempt-03][phase-1-transition] iter=%u frame=2647 vendor-control response=%s\n",
-                        iteration,
-                        response_0100_text);
-                }
-                else if (status_0100 != 1)
-                {
-                    snprintf(response_0100_text, sizeof(response_0100_text), "<len:%d>", status_0100);
-                    printf(
-                        "[preview-attempt-03][phase-1-transition] iter=%u frame=2647 vendor-control response=%s\n",
-                        iteration,
-                        response_0100_text);
-                }
-                else
-                {
-                    snprintf(response_0100_text, sizeof(response_0100_text), "%02X", response_0100[0]);
-                    printf(
-                        "[preview-attempt-03][phase-1-transition] iter=%u frame=2647 vendor-control response=%s\n",
-                        iteration,
-                        response_0100_text);
-                }
 
                 memset(&post_6cf0_poll_4122, 0, sizeof(post_6cf0_poll_4122));
                 post_6cf0_poll_4122.frame_number = 2649U;
@@ -921,20 +882,21 @@ int preview03_run_transition_phase(
                 response_0122_length = response_0122_post_length;
                 snprintf(out_result->last_0122, sizeof(out_result->last_0122), "%s", response_0122_post_hex);
 
-                response_2647_ok = (status_0100 == 1);
                 response_4122_ready =
-                    preview_response_is_two_byte_value(response_4122, response_4122_length, 0xC4U, 0x55U);
+                    response_4122_length == 2U &&
+                    response_4122[1] == 0x55U &&
+                    ((response_4122[0] & 0x40U) != 0U) &&
+                    ((response_4122[0] & 0x01U) == 0U);
                 response_0122_ready =
                     preview_response_is_two_byte_value(response_0122_post, response_0122_post_length, 0x40U, 0x55U) ||
                     preview_response_is_two_byte_value(response_0122_post, response_0122_post_length, 0x41U, 0x55U);
 
-                if (response_2647_ok && response_4122_ready && response_0122_ready)
+                if (response_4122_ready && response_0122_ready)
                 {
                     printf(
-                        "[preview-attempt-03][phase-1-transition] iter=%u post-6cf0 capture-window ready attempt=%u 2647=%s 4122=%s 0122=%s\n",
+                        "[preview-attempt-03][phase-1-transition] iter=%u post-6cf0 readiness ready attempt=%u 4122=%s 0122=%s\n",
                         iteration,
                         post_6cf0_window_attempts,
-                        response_0100_text,
                         response_4122_hex,
                         response_0122_post_hex);
                     post_6cf0_window_complete = 1;
@@ -942,10 +904,9 @@ int preview03_run_transition_phase(
                 else
                 {
                     printf(
-                        "[preview-attempt-03][phase-1-transition] iter=%u post-6cf0 capture-window pending attempt=%u 2647=%s 4122=%s 0122=%s (need 2647=00, 4122=c455, 0122=4055/4155 before 0140)\n",
+                        "[preview-attempt-03][phase-1-transition] iter=%u post-6cf0 readiness pending attempt=%u 4122=%s 0122=%s (need 4122 bit6=1 bit0=0, 0122=4055/4155 before 0140)\n",
                         iteration,
                         post_6cf0_window_attempts,
-                        response_0100_text,
                         response_4122_hex,
                         response_0122_post_hex);
                 }
@@ -1116,7 +1077,7 @@ int preview03_run_transition_phase(
             out_result->wrote_0d01 &&
             out_result->wrote_0fff &&
             out_result->wrote_0140 &&
-            out_result->seen_6c22_f055)
+            out_result->wrote_6cf0)
         {
             break;
         }

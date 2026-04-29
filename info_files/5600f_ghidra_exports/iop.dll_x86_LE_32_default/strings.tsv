@@ -1,0 +1,610 @@
+address	value
+1001e32c	__Canon_ScanGear_Main__
+1001e35c	bad allocation
+1001e36c	empty
+1001e3c8	GreyDelta
+1001e3f8	ColorDelta
+1001e42c	Unicows.dll
+1001e438	???.???
+1001e458	Kernel32.dll
+1001e474	Kernel32.dll
+1001e527	ASGIPPDEF
+1001e648	CreateActCtxW
+1001e658	ActivateActCtx
+1001e668	DeactivateActCtx
+1001e67c	FindActCtxSectionStringW
+1001e698	QueryActCtxW
+1001e6a8	Comctl32.dll
+1001e6c4	GetModuleHandleExW
+1001e6d8	IsolationAware function called after IsolationAwareCleanup\n
+1001e714	InitCommonControls
+1001e728	comctl32.dll
+1001e744	SensorType
+1001e7c4	Execute Every Scan
+1001e7ec	LampOffTime
+1001e804	SG_SecondBoot
+1001e820	DetailInfoBtn
+1001e83c	MonitorGamma
+1001e858	Image Type FAUMON ThumbSize
+1001e890	Image Type FAUCOL ThumbSize
+1001e8c8	ScanEndSound_File
+1001e8ec	ScanEndSound_Sw
+1001e910	ScanStartSound_File
+1001e938	ScanStartSound_Sw
+1001e95c	DataFolder
+1001e974	UserTempFolder
+1001e994	MonitorCorrect
+1001e9b4	SilentMode
+1001e9cc	RemoveWF
+1001e9e0	ThumbCutOutSize
+1001ea00	ColorMatch Pos
+1001ea20	ColorMatch Neg
+1001ea40	ColorMatch Platen
+1001ea64	HiQualityScan
+1001ea80	Gray ColorMatch
+1001eaa0	Color ColorMatch
+1001eac4	FilmCutSmall
+1001eae0	Film Type
+1001eb30	ColorMatch Output
+1001eb58	platen
+1001ec70	EXECUTIVE
+1001ec84	STATEMENT
+1001ec98	BUSINESS CARD
+1001eccc	US LEGAL
+1001ece0	US LETTER
+1001ecf4	B5 LETTER
+1001ed08	A4 LETTER
+1001ed28	SOFTWARE
+1001edd0	Canon
+1001eddc	ScanGear
+1001edf0	Devices
+1001ee00	_SG_IPM_DATA_
+1001ee1c	Canon\%s
+1001ee30	Canon\%s\Temp
+1001ee4c	AppData
+1001ee5c	Explorer
+1001ee70	Shell Folders
+1001ee90	Microsoft\Windows\CurrentVersion
+1001eed4	DummyData
+1001eef8	GetThreadPreferredUILanguages
+1001ef18	kernel32.dll
+1001ef34	SGRES_JP.DLL
+1001ef50	SGRES_ID.DLL
+1001ef6c	SGRES_TH.DLL
+1001ef88	SGRES_AR.DLL
+1001efa4	SGRES_TR.DLL
+1001efc0	SGRES_GR.DLL
+1001efdc	SGRES_FI.DLL
+1001eff8	SGRES_SE.DLL
+1001f014	SGRES_NO.DLL
+1001f030	SGRES_DK.DLL
+1001f04c	SGRES_KR.DLL
+1001f068	SGRES_CZ.DLL
+1001f084	SGRES_HU.DLL
+1001f0a0	SGRES_RU.DLL
+1001f0bc	SGRES_PL.DLL
+1001f0d8	SGRES_NL.DLL
+1001f0f4	SGRES_PT.DLL
+1001f110	SGRES_ES.DLL
+1001f12c	SGRES_IT.DLL
+1001f148	SGRES_DE.DLL
+1001f164	SGRES_FR.DLL
+1001f180	SGRES_US.DLL
+1001f19c	SGRES_TW.DLL
+1001f1b8	SGRES_CN.DLL
+1001f1d4	Language
+1001f1e8	LangID
+1001f1f8	\_SETSCN_.INI
+1001f214	TASKDIALOG
+1001f22c	GetThemeSysFont
+1001f23c	CloseThemeData
+1001f24c	OpenThemeData
+1001f25c	UxTheme.dll
+1001f274	TaskDialogIndirect
+1001f2a8	Unknown exception
+1001f2e0	CorExitProcess
+1001f2f0	mscoree.dll
+1001f2fc	runtime error 
+1001f310	TLOSS error\r\n
+1001f320	SING error\r\n
+1001f330	DOMAIN error\r\n
+1001f340	R6034\r\nAn application has made an attempt to load the C runtime library incorrectly.\nPlease contact the application's support team for more information.\r\n
+1001f3e0	R6033\r\n- Attempt to use MSIL code from this assembly during native code initialization\nThis indicates a bug in your application. It is most likely the result of calling an MSIL-compiled (/clr) function from a native constructor or from DllMain.\r\n
+1001f4d8	R6032\r\n- not enough space for locale information\r\n
+1001f510	R6031\r\n- Attempt to initialize the CRT more than once.\nThis indicates a bug in your application.\r\n
+1001f574	R6030\r\n- CRT not initialized\r\n
+1001f594	R6028\r\n- unable to initialize heap\r\n
+1001f5bc	R6027\r\n- not enough space for lowio initialization\r\n
+1001f5f4	R6026\r\n- not enough space for stdio initialization\r\n
+1001f62c	R6025\r\n- pure virtual function call\r\n
+1001f654	R6024\r\n- not enough space for _onexit/atexit table\r\n
+1001f68c	R6019\r\n- unable to open console device\r\n
+1001f6b8	R6018\r\n- unexpected heap error\r\n
+1001f6dc	R6017\r\n- unexpected multithread lock error\r\n
+1001f70c	R6016\r\n- not enough space for thread data\r\n
+1001f738	\r\nThis application has requested the Runtime to terminate it in an unusual way.\nPlease contact the application's support team for more information.\r\n
+1001f7d0	R6009\r\n- not enough space for environment\r\n
+1001f7fc	R6008\r\n- not enough space for arguments\r\n
+1001f828	R6002\r\n- floating point support not loaded\r\n
+1001f858	Microsoft Visual C++ Runtime Library
+1001f888	<program name unknown>
+1001f8a0	Runtime Error!\n\nProgram: 
+1001f8bc	e+000
+1001f8d6	GAIsProcessorFeaturePresent
+1001f8f4	KERNEL32
+1001f900	.mixcrt
+1001f908	EncodePointer
+1001f918	KERNEL32.DLL
+1001f928	DecodePointer
+1001f938	FlsFree
+1001f940	FlsSetValue
+1001f94c	FlsGetValue
+1001f958	FlsAlloc
+1001f974	bad exception
+1001f98c	ccs=
+1001f998	UTF-8
+1001f9a4	UTF-16LE
+1001f9b8	UNICODE
+1001fa4c	(null)
+1001fa5c	(null)
+1001fb24	InitializeCriticalSectionAndSpinCount
+1001fb4c	kernel32.dll
+1001fb5c	GetProcessWindowStation
+1001fb74	GetUserObjectInformationA
+1001fb90	GetLastActivePopup
+1001fba4	GetActiveWindow
+1001fbb4	MessageBoxA
+1001fbc0	USER32.DLL
+1001fbcc	 Complete Object Locator'
+1001fbe8	 Class Hierarchy Descriptor'
+1001fc08	 Base Class Array'
+1001fc1c	 Base Class Descriptor at (
+1001fc38	 Type Descriptor'
+1001fc4c	`local static thread guard'
+1001fc68	`managed vector copy constructor iterator'
+1001fc94	`vector vbase copy constructor iterator'
+1001fcc0	`vector copy constructor iterator'
+1001fce4	`dynamic atexit destructor for '
+1001fd08	`dynamic initializer for '
+1001fd24	`eh vector vbase copy constructor iterator'
+1001fd50	`eh vector copy constructor iterator'
+1001fd78	`managed vector destructor iterator'
+1001fda0	`managed vector constructor iterator'
+1001fdc8	`placement delete[] closure'
+1001fde8	`placement delete closure'
+1001fe04	`omni callsig'
+1001fe14	 delete[]
+1001fe20	 new[]
+1001fe28	`local vftable constructor closure'
+1001fe4c	`local vftable'
+1001fe5c	`RTTI
+1001fe68	`udt returning'
+1001fe78	`copy constructor closure'
+1001fe94	`eh vector vbase constructor iterator'
+1001febc	`eh vector destructor iterator'
+1001fedc	`eh vector constructor iterator'
+1001ff00	`virtual displacement map'
+1001ff1c	`vector vbase constructor iterator'
+1001ff40	`vector destructor iterator'
+1001ff60	`vector constructor iterator'
+1001ff80	`scalar deleting destructor'
+1001ffa0	`default constructor closure'
+1001ffc0	`vector deleting destructor'
+1001ffe0	`vbase destructor'
+1001fff4	`string'
+10020000	`local static guard'
+10020018	`typeof'
+10020024	`vcall'
+1002002c	`vbtable'
+10020038	`vftable'
+100200c0	operator
+100200e4	 delete
+100200f4	__unaligned
+10020100	__restrict
+1002010c	__ptr64
+10020114	__clrcall
+10020120	__fastcall
+1002012c	__thiscall
+10020138	__stdcall
+10020144	__pascal
+10020150	__cdecl
+10020158	__based(
+10020af8	HH:mm:ss
+10020b04	dddd, MMMM dd, yyyy
+10020b18	MM/dd/yy
+10020b2c	December
+10020b38	November
+10020b44	October
+10020b4c	September
+10020b58	August
+10020b70	April
+10020b78	March
+10020b80	February
+10020b8c	January
+10020bc4	Saturday
+10020bd0	Friday
+10020bd8	Thursday
+10020be4	Wednesday
+10020bf0	Tuesday
+10020bf8	Monday
+10020c00	Sunday
+10020c24	1#QNAN
+10020c2c	1#INF
+10020c34	1#IND
+10020c3c	1#SNAN
+10020c44	SunMonTueWedThuFriSat
+10020c5c	JanFebMarAprMayJunJulAugSepOctNovDec
+10020c84	CONOUT$
+100227a6	??1ScannerInterface@@QAE@XZ
+100227c4	?GetCapability@ScannerInterface@@QAEKKPAHPAPAX@Z
+100227f8	?GetLastErrorInfo@ScannerInterface@@QAEKPAUDrvErrorInfo@@@Z
+10022836	?Close@ScannerInterface@@QAEKXZ
+10022858	?GetCapabilityUnits@ScannerInterface@@QAEKK@Z
+10022888	?GetKeyName@ScannerInterface@@QAEPB_WXZ
+100228b2	?Open@ScannerInterface@@QAEKXZ
+100228d4	??0ScannerInterface@@QAE@PB_WP6AHHK@Z@Z
+100228fe	?SetCapability@ScannerInterface@@QAEKKK@Z
+1002292a	?GetDeviceID@ScannerInterface@@QAEKXZ
+10022952	?GetCapabilityFlags@ScannerInterface@@QAEKKPAK@Z
+10022986	?GetCapabilityList@ScannerInterface@@QAEKPAPAKPAK@Z
+100229ba	SCANINTF.dll
+100229ca	lstrcmpW
+100229d6	GetModuleHandleA
+100229ea	GetModuleHandleW
+100229fe	GetProcAddress
+10022a10	GetFileAttributesW
+10022a26	GetVersion
+10022a34	GetVersionExW
+10022a44	IsBadCodePtr
+10022a54	FreeLibrary
+10022a62	LocalFree
+10022a6e	FormatMessageW
+10022a80	GetLastError
+10022a90	lstrcpyW
+10022a9c	GetModuleFileNameW
+10022ab2	LoadLibraryW
+10022ac2	SetLastError
+10022ad2	OutputDebugStringA
+10022ae8	lstrlenW
+10022af4	GlobalFree
+10022b02	GlobalUnlock
+10022b12	GlobalReAlloc
+10022b22	GlobalLock
+10022b30	GlobalAlloc
+10022b3e	CloseHandle
+10022b4c	DeleteCriticalSection
+10022b64	LeaveCriticalSection
+10022b7c	EnterCriticalSection
+10022b94	UnmapViewOfFile
+10022ba6	MapViewOfFile
+10022bb6	OpenFileMappingW
+10022bca	lstrcatW
+10022bd6	GetTempPathW
+10022be6	InitializeCriticalSection
+10022c02	DeleteFileW
+10022c10	GetTempFileNameW
+10022c24	lstrcmpiW
+10022c30	CreateDirectoryW
+10022c44	GetVolumeInformationW
+10022c5c	GetSystemDefaultLangID
+10022c76	GetUserDefaultLangID
+10022c8e	GetPrivateProfileStringW
+10022caa	MultiByteToWideChar
+10022cc0	WideCharToMultiByte
+10022cd4	KERNEL32.dll
+10022ce4	SetRect
+10022cee	IsRectEmpty
+10022cfc	wsprintfW
+10022d08	ReleaseDC
+10022d14	GetDC
+10022d1c	MessageBoxExW
+10022d2c	GetDialogBaseUnits
+10022d42	DrawTextW
+10022d4e	SetRectEmpty
+10022d5c	USER32.dll
+10022d6a	DeleteObject
+10022d7a	GetDeviceCaps
+10022d8a	SelectObject
+10022d9a	CreateFontIndirectW
+10022dae	GDI32.dll
+10022dba	RegCloseKey
+10022dc8	RegQueryValueExW
+10022ddc	RegEnumValueW
+10022dec	RegOpenKeyExW
+10022dfc	RegSetValueExW
+10022e0e	RegFlushKey
+10022e1c	RegDeleteValueW
+10022e2e	RegCreateKeyExW
+10022e3e	ADVAPI32.dll
+10022e4e	PathAddBackslashW
+10022e62	PathRemoveBackslashW
+10022e78	SHLWAPI.dll
+10022e86	HeapAlloc
+10022e92	HeapReAlloc
+10022ea0	HeapFree
+10022eac	RtlUnwind
+10022eb8	RaiseException
+10022eca	GetCurrentThreadId
+10022ee0	GetCommandLineA
+10022ef2	GetVersionExA
+10022f02	GetProcessHeap
+10022f14	VirtualFree
+10022f22	VirtualAlloc
+10022f32	HeapDestroy
+10022f40	HeapCreate
+10022f4e	ExitProcess
+10022f5c	WriteFile
+10022f68	GetStdHandle
+10022f78	GetModuleFileNameA
+10022f8e	HeapSize
+10022f9a	TerminateProcess
+10022fae	GetCurrentProcess
+10022fc2	UnhandledExceptionFilter
+10022fde	SetUnhandledExceptionFilter
+10022ffc	IsDebuggerPresent
+10023010	TlsGetValue
+1002301e	TlsAlloc
+1002302a	TlsSetValue
+10023038	TlsFree
+10023042	InterlockedIncrement
+1002305a	InterlockedDecrement
+10023072	SetFilePointer
+10023084	ReadFile
+10023090	Sleep
+10023098	SetHandleCount
+100230aa	GetFileType
+100230b8	GetStartupInfoA
+100230ca	FreeEnvironmentStringsA
+100230e4	GetEnvironmentStrings
+100230fc	FreeEnvironmentStringsW
+10023116	GetEnvironmentStringsW
+10023130	QueryPerformanceCounter
+1002314a	GetTickCount
+1002315a	GetCurrentProcessId
+10023170	GetSystemTimeAsFileTime
+1002318a	GetCPInfo
+10023196	GetACP
+100231a0	GetOEMCP
+100231ac	IsValidCodePage
+100231be	GetConsoleCP
+100231ce	GetConsoleMode
+100231e0	LoadLibraryA
+100231f0	GetLocaleInfoA
+10023202	SetStdHandle
+10023212	FlushFileBuffers
+10023226	CreateFileW
+10023234	LCMapStringA
+10023244	LCMapStringW
+10023254	GetStringTypeA
+10023266	GetStringTypeW
+10023278	WriteConsoleA
+10023288	GetConsoleOutputCP
+1002329e	WriteConsoleW
+100232ae	SetEndOfFile
+100232be	CreateFileA
+10023686	IOP.dll
+1002368e	??0CImageAnalysis@@QAE@ABV0@@Z
+100236ad	??0CImageAnalysis@@QAE@PADHHH@Z
+100236cd	??0CImageAnalysis@@QAE@XZ
+100236e7	??0CImageData@@QAE@ABV0@@Z
+10023702	??0CImageData@@QAE@PADHHH@Z
+1002371e	??0CImageData@@QAE@XZ
+10023734	??0IopPaperPixSize@@QAE@ABV0@@Z
+10023754	??0IopPaperPixSize@@QAE@K@Z
+10023770	??0IopPaperPixSize@@QAE@XZ
+1002378b	??0IopPaperSize@@QAE@ABV0@@Z
+100237a8	??0IopPaperSize@@QAE@K@Z
+100237c1	??0IopPaperSize@@QAE@XZ
+100237d9	??0Iop_Manager@@QAE@ABV0@@Z
+100237f5	??0Iop_Manager@@QAE@XZ
+1002380c	??1CImageAnalysis@@UAE@XZ
+10023826	??1CImageData@@UAE@XZ
+1002383c	??1IopPaperPixSize@@UAE@XZ
+10023857	??1IopPaperSize@@UAE@XZ
+1002386f	??1Iop_Manager@@UAE@XZ
+10023886	??4CImageAnalysis@@QAEAAV0@ABV0@@Z
+100238a9	??4CImageData@@QAEAAV0@ABV0@@Z
+100238c8	??4IopPaperPixSize@@QAEAAV0@ABV0@@Z
+100238ec	??4IopPaperSize@@QAEAAV0@ABV0@@Z
+1002390d	??4Iop_Manager@@QAEAAV0@ABV0@@Z
+1002392d	??_7CImageAnalysis@@6B@
+10023945	??_7CImageData@@6B@
+10023959	??_7IopPaperPixSize@@6B@
+10023972	??_7IopPaperSize@@6B@
+10023988	??_7Iop_Manager@@6B@
+1002399d	?AutoCrop@CImageAnalysis@@AAEHPAV1@AAUtagRECT@@@Z
+100239cf	?AutoCrop@CImageAnalysis@@QAEHAAUtagRECT@@@Z
+100239fc	?BitsPerPixel@CImageData@@QAEHXZ
+10023a1d	?ChangeCapability@Iop_Manager@@QAEHJEEEPAX@Z
+10023a4a	?CheckOSUpgrade@Iop_Manager@@AAEHPAUHINSTANCE__@@@Z
+10023a7e	?CloseIopManager@Iop_Manager@@UAEXXZ
+10023aa3	?CloseUIRequest@Iop_Manager@@UAEXXZ
+10023ac7	?CreateImageObject@CImageAnalysis@@SAPAV1@PADHHHPA_W@Z
+10023afe	?DisableIop@Iop_Manager@@UAEHXZ
+10023b1e	?EnableIop@Iop_Manager@@UAEHPAUHWND__@@H@Z
+10023b49	?ErrorMessage@Iop_Manager@@AAEHH@Z
+10023b6c	?FindBorderColor@CImageAnalysis@@AAEHPAV1@W4EnhImageSide@@PAKAAUtagRECT@@@Z
+10023bb8	?FormatErrorString@Iop_Manager@@AAEXHAAVFG_String@@@Z
+10023bee	?GetApplicationName@Iop_Manager@@QAEPADXZ
+10023c18	?GetCapabilities@Iop_Manager@@AAEHPAGPAJ@Z
+10023c43	?GetCurrentCapabilitySetting@Iop_Manager@@UAEHJPAX@Z
+10023c78	?GetDefaultCapabilitySetting@Iop_Manager@@UAEHJPAX@Z
+10023cad	?GetDeviceCapabilityRange@Iop_Manager@@EAEHJPAXPAJ@Z
+10023ce2	?GetDeviceObject@Iop_Manager@@UAEPAVScannerInterface@@XZ
+10023d1b	?GetFinalCapabilityRange@Iop_Manager@@UAEHJPAXPAJ@Z
+10023d4f	?GetPixel@CImageAnalysis@@UAEKHH@Z
+10023d72	?GetPixel@CImageAnalysis@@UAEKXZ
+10023d93	?GetSupportedCapabilities@Iop_Manager@@UAEHPAUS_IopSupportedCaps@@PAH@Z
+10023ddb	?Get_AppHwnd@Iop_Manager@@QAEPAUHWND__@@XZ
+10023e06	?Get_DeviceParam@Iop_Manager@@QAEJPAXPAK@Z
+10023e31	?HasCapChanged@Iop_Manager@@UAEHJ@Z
+10023e55	?InitCapAppFlag@Iop_Manager@@AAEHXZ
+10023e79	?InitCapList@Iop_Manager@@AAEHXZ
+10023e9a	?InitCapability@Iop_Manager@@AAEHXZ
+10023ebe	?InitDeviceCaps@Iop_Manager@@AAEHXZ
+10023ee2	?InitRegistryInfo@Iop_Manager@@AAEXXZ
+10023f08	?InitSoftwareCaps@Iop_Manager@@AAEHXZ
+10023f2e	?NextPixel@CImageAnalysis@@UAEKXZ
+10023f50	?NotifyClients@Iop_Manager@@QAEXKK@Z
+10023f75	?NumberofNonBorderNeighbors@CImageAnalysis@@AAEHPAV1@KHH@Z
+10023fb0	?OpenIopManager@Iop_Manager@@UAEHPB_WAAVFG_String@@@Z
+10023fe6	?PixelHeight@CImageData@@QAEHXZ
+10024006	?PixelWidth@CImageData@@QAEHXZ
+10024025	?Read_DeviceParamFile@Iop_Manager@@QAEJXZ
+1002404f	?Register@Iop_Manager@@UAEHP6GXKK@Z@Z
+10024075	?ResetCapabilityRange@Iop_Manager@@UAEHJ@Z
+100240a0	?ResetCurrentCap@Iop_Manager@@QAEHJ@Z
+100240c6	?ResetCurrentCapability@Iop_Manager@@UAEHJ@Z
+100240f3	?ScanEventProc@Iop_Manager@@SAHHK@Z
+10024117	?SetApplicationName@Iop_Manager@@QAEXPAD@Z
+10024142	?SetCurrentCapability@Iop_Manager@@UAEHJPAX@Z
+10024170	?SetCurrentCapabilityNoSyn@Iop_Manager@@AAEHJPAX@Z
+100241a3	?SetFinalCapabilityRange@Iop_Manager@@UAEHJPAXPAJ@Z
+100241d7	?SetPaperPixSize@IopPaperPixSize@@QAEHK@Z
+10024201	?SetPaperSize@IopPaperSize@@QAEHK@Z
+10024225	?SetPosition@CImageAnalysis@@UAEXHH@Z
+1002424b	?SetSoftwareCap@Iop_Manager@@AAEHUIOPCAPMATRIX@@@Z
+1002427e	?SynchronizeBitdepths@Iop_Manager@@AAEHK@Z
+100242a9	?SynchronizeCapWithDriver@Iop_Manager@@AAEXJPAX@Z
+100242db	?SynchronizeCaps@Iop_Manager@@AAEXJ@Z
+10024301	?TranslateClassToCompBpp@Iop_Manager@@AAEHHPAK0@Z
+10024333	?TranslatePxelTypeToBppAndClass@Iop_Manager@@QAEHKPAK0@Z
+1002436c	?Unregister@Iop_Manager@@UAEHP6GXKK@Z@Z
+10024394	?ValidateSupportedsizesFinalRange@Iop_Manager@@AAEXXZ
+100243ca	?XferReady@Iop_Manager@@UAEXXZ
+100243e9	?m_ignoreScanEvent@Iop_Manager@@0KA
+1002440d	?pThisObj@Iop_Manager@@2PAV1@A
+1002500c	.?AV?$List@VIopCapBase@@@@
+10025030	.?AVCapContainer@@
+1002505c	.?AVIopPaperPixSize@@
+1002507c	.?AVIopPaperSize@@
+10025098	.?AVCImageData@@
+100250b4	.?AVCImageAnalysis@@
+100250d4	.?AVCImageAnalysisBW@@
+100250f4	.?AVCImageAnalysisGray8@@
+10025118	.?AVCImageAnalysisColor@@
+1002513c	.?AVbad_alloc@std@@
+10025160	.?AVIopCapBase@@
+1002517c	.?AVIop_Manager@@
+10025198	.?AVexception@std@@
+100251b4	.?AV?$IopCapOneValue@N@@
+100251d8	.?AV?$IopCapOneValue@K@@
+100251fc	.?AV?$IopCapRectangle@N@@
+10025220	.?AV?$IopCapRange@K@@
+10025240	.?AV?$IopCapArray@K@@
+1002585c	.?AVIopCapCurve@@
+10025878	.?AVIopCapCurve16@@
+10025894	.?AVIopCap_ColorProfile@@
+100258c8	custom
+10025b84	.?AVAssociation@@
+10025ba0	.?AVAssociationSet@@
+10025bdc	.?AVtype_info@@
+10025fb0	.?AVbad_exception@std@@
+1002656e	abcdefghijklmnopqrstuvwxyz
+1002658e	ABCDEFGHIJKLMNOPQRSTUVWXYZ
+10026779	abcdefghijklmnopqrstuvwxyz
+10026799	ABCDEFGHIJKLMNOPQRSTUVWXYZ
+1002aed4	Dialog
+1002afbc	Dialog
+1002aff0	Open
+1002affa	Save As
+1002b00a	All Files (*.*)
+1002b02a	Untitled
+1002b040	an unnamed file
+1002b076	&Hide
+1002b0a0	No error message is available.
+1002b0de	An unsupported operation was attempted.
+1002b12e	A required resource was unavailable.
+1002b178	Out of memory.
+1002b196	An unknown error has occurred.
+1002b1d4	An invalid argument was encountered.
+1002b234	Invalid filename.
+1002b258	Failed to open document.
+1002b28a	Failed to save document.
+1002b2bc	Save changes to %1?
+1002b2e4	Failed to create empty document.
+1002b326	The file is too large to open.
+1002b364	Could not start print job.
+1002b39a	Failed to launch help.
+1002b3c8	Internal application error.
+1002b400	Command failed.
+1002b420	Insufficient memory to perform operation.
+1002b474	System registry entries have been removed and the INI file (if any) was deleted.
+1002b516	Not all of the system registry entries (or INI file) were removed.
+1002b59c	This program requires the file %s, which was not found on this system.
+1002b62a	This program is linked to the missing export %s in the file %s. This machine may have an incompatible version of %s.
+1002b718	Please enter an integer.
+1002b74a	Please enter a number.
+1002b778	Please enter an integer between %1 and %2.
+1002b7ce	Please enter a number between %1 and %2.
+1002b820	Please enter no more than %1 characters.
+1002b872	Please select a button.
+1002b8a2	Please enter an integer between 0 and 255.
+1002b8f8	Please enter a positive integer.
+1002b93a	Please enter a date and/or time.
+1002b97c	Please enter a currency.
+1002b9ae	Please enter a GUID.
+1002b9d8	Please enter a time.
+1002ba02	Please enter a date.
+1002ba34	Unexpected file format.
+1002ba64	%1\nCannot find this file.\nPlease verify that the correct path and file name are given.
+1002bb12	Destination disk drive is full.
+1002bb52	Unable to read from %1, it is opened by someone else.
+1002bbbe	Unable to write to %1, it is read-only or opened by someone else.
+1002bc42	An unexpected error occurred while reading %1.
+1002bca0	An unexpected error occurred while writing %1.
+1002bd10	%1: %2\nContinue running script?
+1002bd50	Dispatch exception: %1
+1002bdb4	Unable to read write-only property.
+1002bdfc	Unable to write read-only property.
+1002be48	Unable to load mail system support.
+1002be90	Mail system DLL is invalid.
+1002bec8	Send Mail failed to send message.
+1002bf28	No error occurred.
+1002bf4e	An unknown error occurred while accessing %1.
+1002bfaa	%1 was not found.
+1002bfce	%1 contains an invalid path.
+1002c008	%1 could not be opened because there are too many open files.
+1002c084	Access to %1 was denied.
+1002c0b6	An invalid file handle was associated with %1.
+1002c114	%1 could not be removed because it is the current directory.
+1002c18e	%1 could not be created because the directory is full.
+1002c1fc	Seek failed on %1
+1002c220	A hardware I/O error was reported while accessing %1.
+1002c28c	A sharing violation occurred while accessing %1.
+1002c2ee	A locking violation occurred while accessing %1.
+1002c350	Disk full while accessing %1.
+1002c38c	An attempt was made to access %1 past its end.
+1002c3ec	No error occurred.
+1002c412	An unknown error occurred while accessing %1.
+1002c46e	An attempt was made to write to the reading %1.
+1002c4ce	An attempt was made to access %1 past its end.
+1002c52c	An attempt was made to read from the writing %1.
+1002c58e	%1 has a bad format.
+1002c5b8	%1 contained an unexpected object.
+1002c5fe	%1 contains an incorrect schema.
+1002c650	pixels
+1002c67e	Uncheck
+1002c68e	Check
+1002c69a	Mixed
+1002c85e	StringFileInfo
+1002c882	040904b0
+1002c89a	CompanyName
+1002c8b4	CANON INC.
+1002c8d2	FileDescription
+1002c8f4	ScanGear Image Operations Manager
+1002c93e	FileVersion
+1002c958	14.0.7.47
+1002c972	InternalName
+1002c99a	LegalCopyright
+1002c9b8	Copyright CANON INC. 2008 All Rights Reserved
+1002ca1a	OriginalFilename
+1002ca3c	IOP.DLL
+1002ca52	ProductName
+1002ca6c	ScanGear
+1002ca86	ProductVersion
+1002caa4	14.0.7.47
+1002cabe	VarFileInfo
+1002cade	Translation
+1002cafc	<assembly xmlns="urn:schemas-microsoft-com:asm.v1" manifestVersion="1.0"><dependency><dependentAssembly><assemblyIdentity type="win32" name="Microsoft.Windows.Common-Controls" version="6.0.0.0" processorArchitecture="X86" publicKeyToken="6595b64144ccf1df" language="*"></assemblyIdentity></dependentAssembly></dependency></assembly>PADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGX
+ffdfff50	00000000-0000-0000-0000-000000000000

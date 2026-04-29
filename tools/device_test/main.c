@@ -47,6 +47,11 @@ int main(int argc, char **argv)
             return 1;
         }
 
+        /*
+         * Ghidra-driven replay works more reliably when we avoid extra probe traffic
+         * before frame-driven control steps.
+         */
+
         preview_status = options.run_preview_attempt03
                              ? preview_run_attempt03_mode(session.target_handle)
                              : preview_run_attempt_mode(session.target_handle);

@@ -31,7 +31,7 @@ int preview03_run_readiness_phase(
     started_ms = preview_now_ms();
     deadline_ms = started_ms + phase_timeout_ms;
 
-    while (!(out_result->seen_4422_0e55 && out_result->seen_4522_7855))
+    while (1)
     {
         uint8_t response_4222[8];
         uint8_t response_4322[8];
@@ -149,21 +149,39 @@ int preview03_run_readiness_phase(
             out_result->seen_4522_iteration = iteration;
         }
 
+        if (!out_result->seen_generic_ready &&
+            response_4222_length == 2U && response_4222[1] == 0x55U &&
+            response_4322_length == 2U && response_4322[1] == 0x55U &&
+            response_4422_length == 2U && response_4422[1] == 0x55U &&
+            response_4522_length == 2U && response_4522[1] == 0x55U)
+        {
+            out_result->seen_generic_ready = 1;
+            out_result->seen_generic_iteration = iteration;
+        }
+
         printf(
-            "[preview-attempt-03][phase-2-readiness] iter=%u summary 4222=%s 4322=%s 4422=%s 4522=%s seen_4422_0e55=%s seen_4522_7855=%s\n",
+            "[preview-attempt-03][phase-2-readiness] iter=%u summary 4222=%s 4322=%s 4422=%s 4522=%s seen_4422_0e55=%s seen_4522_7855=%s seen_generic_ready=%s\n",
             iteration,
             out_result->last_4222,
             out_result->last_4322,
             out_result->last_4422,
             out_result->last_4522,
             out_result->seen_4422_0e55 ? "yes" : "no",
-            out_result->seen_4522_7855 ? "yes" : "no");
+            out_result->seen_4522_7855 ? "yes" : "no",
+            out_result->seen_generic_ready ? "yes" : "no");
+
+        if ((out_result->seen_4422_0e55 && out_result->seen_4522_7855) ||
+            out_result->seen_generic_ready)
+        {
+            break;
+        }
     }
 
     printf(
-        "[preview-attempt-03][phase-2-readiness] complete first_seen_4422_iter=%u first_seen_4522_iter=%u elapsed_ms=%llu\n",
+        "[preview-attempt-03][phase-2-readiness] complete first_seen_4422_iter=%u first_seen_4522_iter=%u first_seen_generic_iter=%u elapsed_ms=%llu\n",
         out_result->seen_4422_iteration,
         out_result->seen_4522_iteration,
+        out_result->seen_generic_iteration,
         (unsigned long long)(preview_now_ms() - started_ms));
     return 1;
 }

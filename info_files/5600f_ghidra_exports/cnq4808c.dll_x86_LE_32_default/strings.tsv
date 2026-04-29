@@ -1,0 +1,651 @@
+address	value
+1002d2c8	IX-24135H       
+1002d2ec	IX-48075H       
+1002d310	IX-48085H       
+1002d334	MP240 series    
+1002d358	MP260 series    
+1002d37c	MP480 series    
+1002d3a0	MP540 series    
+1002d3c4	MP620 series    
+1002d3e8	MP630 series    
+1002d40c	MP980 series    
+1002d5c4	SVCHOST.EXE
+1002d5dc	CNBJNPSCAN
+1002d5f4	\USDRESUS.DLL
+1002d610	\USDRESID.DLL
+1002d62c	\USDRESAR.DLL
+1002d648	\USDRESTH.DLL
+1002d664	\USDRESTR.DLL
+1002d680	\USDRESSE.DLL
+1002d69c	\USDRESNO.DLL
+1002d6b8	\USDRESGR.DLL
+1002d6d4	\USDRESFI.DLL
+1002d6f0	\USDRESDK.DLL
+1002d70c	\USDRESJP.DLL
+1002d728	\USDRESKR.DLL
+1002d744	\USDRESCZ.DLL
+1002d760	\USDRESHU.DLL
+1002d77c	\USDRESRU.DLL
+1002d798	\USDRESPL.DLL
+1002d7b4	\USDRESNL.DLL
+1002d7d0	\USDRESPT.DLL
+1002d7ec	\USDRESES.DLL
+1002d808	\USDRESIT.DLL
+1002d824	\USDRESDE.DLL
+1002d840	\USDRESFR.DLL
+1002d85c	\USDRESTW.DLL
+1002d878	\USDRESCN.DLL
+1002d894	Language
+1002d8a8	LangID
+1002d8b8	\_SETSCN_.INI
+1002d8d4	IDPushButton10
+1002d8f4	IDPushButton9
+1002d910	IDPushButton8
+1002d92c	IDPushButton7
+1002d948	IDPushButton6
+1002d964	IDPushButton5
+1002d980	IDPushButton4
+1002d99c	IDPushButton3
+1002d9b8	IDPushButton2
+1002d9d4	IDPushButton1
+1002d9f0	InstallDirectory
+1002da14	SimulationMode
+1002da34	ImageProcessingFilter
+1002da60	DeviceKey
+1002da74	DeviceData
+1002da94	PushEventImageSource
+1002dac0	PushEventScanType
+1002dae4	PushEventButtonType
+1002dc94	GetReadStatus
+1002dca4	GetCropStatus
+1002dcb4	SetErrorToDevice
+1002dcc8	UnlockScanner
+1002dcd8	LockScanner
+1002dce4	GetLampStatus
+1002dcf4	GetOPUMode
+1002dd00	GetCanonAPIVersionXP
+1002dd18	SetGamma
+1002dd24	SetLamp
+1002dd2c	GetScannerAbilityXp
+1002dd40	GetScannerAbilitySize
+1002dd58	TerminateScanner
+1002dd6c	StopScanEx
+1002dd78	StartScanEx
+1002dd84	GetCarriagePosition
+1002dd98	GetCalibrationStatus
+1002ddb0	DoCalibration
+1002ddc0	ReadPushButton
+1002ddd0	InitialButton
+1002dde0	ReadScan
+1002ddec	GetAGData
+1002ddf8	SetAGData
+1002de04	SetScanParameter
+1002de18	GetScannerStatus
+1002de2c	GetDataStatus
+1002de3c	TestScanner
+1002de48	InitializeScanner
+1002de5c	FindScannerEx
+1002de6c	\ABILITY.BIN
+1002de88	IX-24135H       
+1002deac	IX-48075H       
+1002ded0	IX-48085H       
+1002def4	MP240 series    
+1002df18	MP260 series    
+1002df3c	MP480 series    
+1002df60	MP540 series    
+1002df84	MP620 series    
+1002dfa8	MP630 series    
+1002dfcc	MP980 series    
+1002dff0	\CNQ2413L.DLL
+1002e00c	IX-24135H
+1002e020	Global\L100 Mutex
+1002e044	\CNQ4807L.DLL
+1002e060	IX-48075H
+1002e074	Global\L200 Mutex
+1002e098	\CNQ4808L.DLL
+1002e0b4	IX-48085H
+1002e0c8	Global\5600F series Mutex
+1002e0fc	\CNC240L.DLL
+1002e118	MP240 series
+1002e134	Global\MP240 series Mutex
+1002e168	\CNC260L.DLL
+1002e184	MP260 series
+1002e1a0	Global\MP260 series Mutex
+1002e1d4	\CNC480L.DLL
+1002e1f0	MP480 series
+1002e20c	Global\MP480 series Mutex
+1002e240	\CNC540L.DLL
+1002e25c	MP540 series
+1002e278	Global\MP540 series Mutex
+1002e2ac	\CNC620L.DLL
+1002e2c8	MP620 series
+1002e2e4	Global\MP620 series Mutex
+1002e318	\CNC630L.DLL
+1002e334	MP630 series
+1002e350	Global\MP630 series Mutex
+1002e384	\CNC980L.DLL
+1002e3a0	MP980 series
+1002e3bc	Global\MP980 series Mutex
+1002e3f0	IX-24135H       
+1002e414	IX-48075H       
+1002e438	IX-48085H       
+1002e45c	MP240 series    
+1002e480	MP260 series    
+1002e4a4	MP480 series    
+1002e4c8	MP540 series    
+1002e4ec	MP620 series    
+1002e510	MP630 series    
+1002e534	MP980 series    
+1002e558	empty
+1002e570	No Error
+1002e584	Device Error, Unknown Error
+1002e5cc	        
+1002e5e8	Root
+1002e5fc	\Root
+1002e610	CNQ4808
+1002e620	CNQ4807
+1002e630	CNQ2413
+1002e640	ButtonNum
+1002e654	Feeder
+1002e664	Flatbed
+1002e674	\Top
+1002e680	IX-24135H       
+1002e6a4	IX-48075H       
+1002e6c8	IX-48085H       
+1002e6ec	MP240 series    
+1002e710	MP260 series    
+1002e734	MP480 series    
+1002e758	MP540 series    
+1002e77c	MP620 series    
+1002e7a0	MP630 series    
+1002e7c4	MP980 series    
+1002e8b4	Show preview control
+1002e8e0	Orientation
+1002e8f8	Page Size
+1002e90c	Page Height
+1002e924	Page Width
+1002e93c	Actual Y Resolution
+1002e964	Actual X Resolution
+1002e98c	Halftone
+1002e9a0	Bit Depth Reduction
+1002e9c8	Supports Child Item Creation
+1002ea04	Compression
+1002ea1c	Planar
+1002ea2c	Preferred Format
+1002ea50	Buffer Size
+1002ea68	Item Size
+1002ea7c	Number of Lines
+1002ea9c	Bytes Per Line
+1002eabc	Pixels Per Line
+1002eadc	Current Intent
+1002eafc	Photometric Interpretation
+1002eb34	Mirror
+1002eb44	Media Type
+1002eb5c	Format
+1002eb6c	Bits Per Channel
+1002eb90	Channels Per Pixel
+1002ebb8	Bits Per Pixel
+1002ebd8	Data Type
+1002ebec	Threshold
+1002ec00	Contrast
+1002ec14	Brightness
+1002ec2c	Vertical Extent
+1002ec4c	Horizontal Extent
+1002ec70	Vertical Start Position
+1002eca0	Horizontal Start Position
+1002ecd4	Vertical Resolution
+1002ecfc	Horizontal Resolution
+1002ed28	Filename extension
+1002ed50	Minimum Vertical Scan Size
+1002ed88	Minimum Horizontal Scan Size
+1002edc4	Maximum Vertical Scan Size
+1002edfc	Maximum Horizontal Scan Size
+1002ee38	Segmentation
+1002ee54	DeskewY
+1002ee64	DeskewX
+1002ee74	Rotation
+1002ee88	Vertical Bed Registration
+1002eebc	Horizontal Bed Registration
+1002eef4	Sheet Feeder Registration
+1002ef28	Pages
+1002ef34	Document Handling Select
+1002ef68	Vertical Sheet Feed Size
+1002ef9c	Horizontal Sheet Feed Size
+1002efd4	Preview
+1002efe4	Max Scan Time
+1002f000	Vertical Bed Size
+1002f024	Horizontal Bed Size
+1002f04c	Vertical Optical Resolution
+1002f084	Horizontal Optical Resolution
+1002f0c0	Pixel Type
+1002f0d8	Image Class
+1002f0f0	Document Handling Status
+1002f124	Document Handling Capabilities
+1002f164	Item Category
+1002f180	Access Rights
+1002f19c	Firmware Version
+1002f1d0	Save as PDF file (Black Start button)
+1002f220	Save as PDF file (Color Start button)
+1002f270	Film Scan to Save (Black Start button)
+1002f2c0	Film Scan to Save (Color Start button)
+1002f310	Open with application (Black Start button)
+1002f368	Open with application (Color Start button)
+1002f3c0	Attach to E-mail (Black Start button)
+1002f410	Attach to E-mail (Color Start button)
+1002f45c	Open with application
+1002f488	Attach to E-mail
+1002f4ac	Save as PDF file
+1002f4d0	Save to PC
+1002f4e8	Device Connected
+1002f50c	Black Start Button
+1002f534	Color Start Button
+1002f55c	PDF Button (BLACK and WHITE)
+1002f598	CanoScan PHOTO/FILM Button
+1002f5d0	CanoScan PHOTO Button
+1002f5fc	CanoScan PDF Button (FINISH)
+1002f638	CanoScan PDF Button (CUSTOM)
+1002f678	CanoScan PDF Button (BLACK and WHITE)
+1002f6c4	CanoScan PDF Button (COLOR)
+1002f6fc	CanoScan POTO/FILM Button
+1002f730	sti.dll,-2006
+1002f74c	Build device tree
+1002f770	sti.dll,-2005
+1002f78c	Delete device tree
+1002f7b4	sti.dll,-2002
+1002f7d0	Delete all items
+1002f7f4	sti.dll,-2000
+1002f810	Synchronize
+1002f828	CanoScan PDF Button
+1002f850	CanoScan E-MAIL Button
+1002f880	CanoScan COPY Button
+1002f8ac	CanoScan SCAN Button
+1002f8d8	sti.dll,-1001
+1002f8f4	CanoScan Device Connected
+1002f928	IX-24135H       
+1002f94c	IX-48075H       
+1002f970	IX-48085H       
+1002f994	MP240 series    
+1002f9b8	MP260 series    
+1002f9dc	MP480 series    
+1002fa00	MP540 series    
+1002fa24	MP620 series    
+1002fa48	MP630 series    
+1002fa6c	MP980 series    
+1002fa90	%ws\%ws
+1002faa0	IX-24135H       
+1002fac4	IX-48075H       
+1002fae8	IX-48085H       
+1002fb0c	MP240 series    
+1002fb30	MP260 series    
+1002fb54	MP480 series    
+1002fb78	MP540 series    
+1002fb9c	MP620 series    
+1002fbc0	MP630 series    
+1002fbe4	MP980 series    
+10030018	IX-24135H       
+1003003c	IX-48075H       
+10030060	IX-48085H       
+10030084	MP240 series    
+100300a8	MP260 series    
+100300cc	MP480 series    
+100300f0	MP540 series    
+10030114	MP620 series    
+10030138	MP630 series    
+1003015c	MP980 series    
+100301b8	CNQ2413I.DLL
+100301d4	CNQ4807I.DLL
+100301f0	CNQ4808I.DLL
+1003020c	CNC240I.DLL
+10030224	CNC260I.DLL
+1003023c	CNC480I.DLL
+10030254	CNC540I.DLL
+1003026c	CNC620I.DLL
+10030284	CNC630I.DLL
+1003029c	CNC980I.DLL
+100302c0	CreateICMObj
+100302d0	CreateImgEnhObj
+100302e0	DeleteICMObj
+100302f0	DeleteImgEnhObj
+10030308	DspGamma
+1003031c	HiDefinitionMode
+10030340	UnsharpMask
+10030358	ColorMatch
+10030370	Descreen
+10030384	TextEnhance
+10030418	Software
+1003042c	option
+1003043c	Canon
+10030450	Devices
+10030460	%ws\%ws\%ws\%ws\%ws\%ws
+1003059c	EncodePointer
+100305ac	KERNEL32.DLL
+100305bc	DecodePointer
+100305cc	FlsFree
+100305d4	FlsSetValue
+100305e0	FlsGetValue
+100305ec	FlsAlloc
+100305f8	Invalid parameter passed to C runtime function.\n
+1003062c	CorExitProcess
+1003063c	mscoree.dll
+10030648	runtime error 
+1003065c	TLOSS error\r\n
+1003066c	SING error\r\n
+1003067c	DOMAIN error\r\n
+10030690	R6034\r\nAn application has made an attempt to load the C runtime library incorrectly.\nPlease contact the application's support team for more information.\r\n
+10030730	R6033\r\n- Attempt to use MSIL code from this assembly during native code initialization\nThis indicates a bug in your application. It is most likely the result of calling an MSIL-compiled (/clr) function from a native constructor or from DllMain.\r\n
+10030828	R6032\r\n- not enough space for locale information\r\n
+10030860	R6031\r\n- Attempt to initialize the CRT more than once.\nThis indicates a bug in your application.\r\n
+100308c4	R6030\r\n- CRT not initialized\r\n
+100308e4	R6028\r\n- unable to initialize heap\r\n
+1003090c	R6027\r\n- not enough space for lowio initialization\r\n
+10030944	R6026\r\n- not enough space for stdio initialization\r\n
+1003097c	R6025\r\n- pure virtual function call\r\n
+100309a4	R6024\r\n- not enough space for _onexit/atexit table\r\n
+100309dc	R6019\r\n- unable to open console device\r\n
+10030a08	R6018\r\n- unexpected heap error\r\n
+10030a2c	R6017\r\n- unexpected multithread lock error\r\n
+10030a5c	R6016\r\n- not enough space for thread data\r\n
+10030a88	\r\nThis application has requested the Runtime to terminate it in an unusual way.\nPlease contact the application's support team for more information.\r\n
+10030b20	R6009\r\n- not enough space for environment\r\n
+10030b4c	R6008\r\n- not enough space for arguments\r\n
+10030b78	R6002\r\n- floating point support not loaded\r\n
+10030ba8	Microsoft Visual C++ Runtime Library
+10030bd4	<program name unknown>
+10030bec	Runtime Error!\n\nProgram: 
+10030c18	bad exception
+10030c28	(null)
+10030c40	e+000
+10034ede	.= Complete Object Locator'
+10034efc	 Class Hierarchy Descriptor'
+10034f1c	 Base Class Array'
+10034f30	 Base Class Descriptor at (
+10034f4c	 Type Descriptor'
+10034f60	`local static thread guard'
+10034f7c	`managed vector copy constructor iterator'
+10034fa8	`vector vbase copy constructor iterator'
+10034fd4	`vector copy constructor iterator'
+10034ff8	`dynamic atexit destructor for '
+1003501c	`dynamic initializer for '
+10035038	`eh vector vbase copy constructor iterator'
+10035064	`eh vector copy constructor iterator'
+1003508c	`managed vector destructor iterator'
+100350b4	`managed vector constructor iterator'
+100350dc	`placement delete[] closure'
+100350fc	`placement delete closure'
+10035118	`omni callsig'
+10035128	 delete[]
+10035134	 new[]
+1003513c	`local vftable constructor closure'
+10035160	`local vftable'
+10035170	`RTTI
+1003517c	`udt returning'
+1003518c	`copy constructor closure'
+100351a8	`eh vector vbase constructor iterator'
+100351d0	`eh vector destructor iterator'
+100351f0	`eh vector constructor iterator'
+10035214	`virtual displacement map'
+10035230	`vector vbase constructor iterator'
+10035254	`vector destructor iterator'
+10035274	`vector constructor iterator'
+10035294	`scalar deleting destructor'
+100352b4	`default constructor closure'
+100352d4	`vector deleting destructor'
+100352f4	`vbase destructor'
+10035308	`string'
+10035314	`local static guard'
+1003532c	`typeof'
+10035338	`vcall'
+10035340	`vbtable'
+1003534c	`vftable'
+100353d4	operator
+100353f8	 delete
+10035408	__unaligned
+10035414	__restrict
+10035420	__ptr64
+10035428	__clrcall
+10035434	__fastcall
+10035440	__thiscall
+1003544c	__stdcall
+10035458	__pascal
+10035464	__cdecl
+1003546c	__based(
+100355f8	InitializeCriticalSectionAndSpinCount
+10035620	kernel32.dll
+10035e48	HH:mm:ss
+10035e54	dddd, MMMM dd, yyyy
+10035e68	MM/dd/yy
+10035e7c	December
+10035e88	November
+10035e94	October
+10035e9c	September
+10035ea8	August
+10035ec0	April
+10035ec8	March
+10035ed0	February
+10035edc	January
+10035f14	Saturday
+10035f20	Friday
+10035f28	Thursday
+10035f34	Wednesday
+10035f40	Tuesday
+10035f48	Monday
+10035f50	Sunday
+10035f74	GetProcessWindowStation
+10035f8c	GetUserObjectInformationA
+10035fa8	GetLastActivePopup
+10035fbc	GetActiveWindow
+10035fcc	MessageBoxA
+10035fd8	USER32.DLL
+10035fec	Unknown exception
+100360fc	floor
+10036114	exp10
+10036130	log10
+10036140	SetThreadStackGuarantee
+10036158	SunMonTueWedThuFriSat
+10036170	JanFebMarAprMayJunJulAugSepOctNovDec
+10036198	1#QNAN
+100361a0	1#INF
+100361a8	1#IND
+100361b0	1#SNAN
+100361b8	_nextafter
+10036230	CONOUT$
+10037416	wiasGetDrvItem
+10037428	wiasWriteMultiple
+1003743c	wiasGetImageInformation
+10037456	wiasReadPropLong
+1003746a	wiasReadPropGuid
+1003747e	wiasValidateItemProperties
+1003749c	wiasFreePropContext
+100374b2	wiasUpdateValidFormat
+100374ca	wiasUpdateScanRect
+100374e0	wiasGetRootItem
+100374f2	wiasCreatePropContext
+1003750a	wiasGetItemType
+1003751c	wiasReadPropStr
+1003752e	wiasSetItemPropAttribs
+10037548	wiasWritePropLong
+1003755c	wiasWritePropStr
+10037570	wiasCreateDrvItem
+10037584	wiasSetValidListLong
+1003759c	wiasGetChangedValueLong
+100375b6	wiasSetPropChanged
+100375cc	wiasSetItemPropNames
+100375e4	wiasGetContextFromName
+100375fe	wiasWritePropGuid
+10037610	wiaservc.dll
+10037620	EnterCriticalSection
+10037638	LeaveCriticalSection
+10037650	InterlockedIncrement
+10037668	InterlockedDecrement
+10037680	DeleteCriticalSection
+10037698	CloseHandle
+100376a6	GlobalFree
+100376b4	MultiByteToWideChar
+100376ca	lstrlenA
+100376d6	GlobalAlloc
+100376e4	GetModuleHandleW
+100376f8	Sleep
+10037700	FreeLibrary
+1003770e	LoadLibraryW
+1003771e	GetSystemDefaultLangID
+10037738	GetPrivateProfileStringW
+10037754	GetWindowsDirectoryW
+1003776c	CreateEventW
+1003777c	InitializeCriticalSection
+10037798	ReleaseMutex
+100377a8	WaitForSingleObject
+100377be	WideCharToMultiByte
+100377d4	lstrcmpW
+100377e0	ResetEvent
+100377ee	TerminateThread
+10037800	SetEvent
+1003780c	ExitThread
+1003781a	CreateMutexW
+1003782a	OpenMutexW
+10037838	GetProcAddress
+1003784a	GetSystemDirectoryW
+10037860	ReadFile
+1003786c	CreateFileW
+1003787a	CreateThread
+1003788a	HeapFree
+10037896	HeapAlloc
+100378a2	GetProcessHeap
+100378b4	lstrlenW
+100378c0	lstrcatW
+100378cc	GetTempPathW
+100378dc	DisableThreadLibraryCalls
+100378f8	GetVersionExW
+10037908	GetVersion
+10037914	KERNEL32.dll
+10037924	LoadStringW
+10037930	USER32.dll
+1003793e	RegCloseKey
+1003794c	RegQueryValueExW
+10037960	RegOpenKeyExW
+10037970	RegSetValueExW
+10037982	SetSecurityDescriptorDacl
+1003799e	InitializeSecurityDescriptor
+100379be	RegEnumValueW
+100379ce	RegFlushKey
+100379dc	RegDeleteValueW
+100379ee	RegCreateKeyExW
+100379fe	ADVAPI32.dll
+10037a0e	CoTaskMemAlloc
+10037a20	CoTaskMemFree
+10037a2e	ole32.dll
+10037a38	OLEAUT32.dll
+10037a48	RaiseException
+10037a5a	GetLastError
+10037a6a	RtlUnwind
+10037a76	SetFilePointer
+10037a88	GetFileType
+10037a96	GetCommandLineA
+10037aa8	GetVersionExA
+10037ab8	HeapReAlloc
+10037ac6	TerminateProcess
+10037ada	GetCurrentProcess
+10037aee	UnhandledExceptionFilter
+10037b0a	SetUnhandledExceptionFilter
+10037b28	HeapDestroy
+10037b36	HeapCreate
+10037b44	VirtualFree
+10037b52	VirtualAlloc
+10037b62	GetCPInfo
+10037b6e	GetACP
+10037b78	GetOEMCP
+10037b84	GetModuleHandleA
+10037b98	TlsGetValue
+10037ba6	TlsAlloc
+10037bb2	TlsSetValue
+10037bc0	TlsFree
+10037bca	SetLastError
+10037bda	GetCurrentThreadId
+10037bf0	OutputDebugStringA
+10037c06	ExitProcess
+10037c14	WriteFile
+10037c20	GetStdHandle
+10037c30	GetModuleFileNameA
+10037c46	HeapSize
+10037c52	SetStdHandle
+10037c62	SetHandleCount
+10037c74	GetStartupInfoA
+10037c86	GetConsoleCP
+10037c96	GetConsoleMode
+10037ca8	FreeEnvironmentStringsA
+10037cc2	GetEnvironmentStrings
+10037cda	FreeEnvironmentStringsW
+10037cf4	GetEnvironmentStringsW
+10037d0e	QueryPerformanceCounter
+10037d28	GetTickCount
+10037d38	GetCurrentProcessId
+10037d4e	GetSystemTimeAsFileTime
+10037d68	LCMapStringA
+10037d78	LCMapStringW
+10037d88	GetStringTypeA
+10037d9a	GetStringTypeW
+10037dac	GetLocaleInfoA
+10037dbe	LoadLibraryA
+10037dce	WriteConsoleA
+10037dde	GetConsoleOutputCP
+10037df4	WriteConsoleW
+10037e04	VirtualProtect
+10037e16	GetSystemInfo
+10037e26	VirtualQuery
+10037e36	CreateFileA
+10037e44	FlushFileBuffers
+10037e58	SizeofResource
+10037e6a	LockResource
+10037e7a	LoadResource
+10037e8a	FindResourceW
+10037e9a	IsDebuggerPresent
+10037eae	DeleteObject
+10037ebc	GDI32.dll
+10037f2a	CNx2008C.dll
+10037f37	CreateUSD
+10037f41	DeleteUSD
+10037f4b	DllCanUnloadNow
+10037f5b	DllGetClassObject
+10037f6d	DllMain
+10038008	.?AUINonDelegatingUnknown@@
+1003802c	.?AVBaseUSD@@
+10038044	.?AUIStiUSD@@
+1003805c	.?AUIUnknown@@
+10038074	.?AUIWiaMiniDrv@@
+10038090	.?AVCANONAPI@@
+100380a8	.?AVNonStiDeviceControl@@
+100380cc	.?AUIStiDeviceControl@@
+100380ec	.?AVCanonUSDClassFactory@@
+10038110	.?AUIClassFactory@@
+1003812c	.?AVCS_ImageData@@
+10038148	.?AVAssociation@@
+10038164	.?AVAssociationSet@@
+10038184	.?AVCDMRCSecureLibrary@@
+100381a8	.?AVCDMRCLibrary@@
+100386f6	abcdefghijklmnopqrstuvwxyz
+10038716	ABCDEFGHIJKLMNOPQRSTUVWXYZ
+10038901	abcdefghijklmnopqrstuvwxyz
+10038921	ABCDEFGHIJKLMNOPQRSTUVWXYZ
+10038c80	.?AVbad_exception@std@@
+10038ca0	.?AVexception@@
+104c12ba	StringFileInfo
+104c12de	040904b0
+104c12f6	CompanyName
+104c1310	CANON INC.
+104c132e	FileDescription
+104c1350	WIA Scanner Driver
+104c137e	FileVersion
+104c1398	1, 1, 3, 0
+104c13b6	InternalName
+104c13d0	CNx2008C
+104c13ea	LegalCopyright
+104c1408	Copyright CANON INC. 2008 All Rights Reserved
+104c146a	OriginalFilename
+104c148c	CNx2008C.dll
+104c14ae	ProductName
+104c14c8	WIA Scanner Driver
+104c14f6	ProductVersion
+104c1514	1, 2, 0, 0
+104c1532	VarFileInfo
+104c1552	Translation
+104c1570	<assembly xmlns="urn:schemas-microsoft-com:asm.v1" manifestVersion="1.0">\r\n</assembly>PAPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGXXPADDINGPADDINGX
+ffdfff50	00000000-0000-0000-0000-000000000000
